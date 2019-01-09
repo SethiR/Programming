@@ -91,6 +91,8 @@ range(start, stop, increment)
 - Nested loop
 - `Break` and `Continue`
 - `else` clause on loop
+- enumerate
+- zip()
 
 **While Loop**
 
@@ -127,69 +129,50 @@ print(letters) # ['a', 'b', 'C', 'D', 'E', 'f', 'g']
 a = [1,2,4]
 len(a)  # 3
 
+# Deleting based on index
+del a[0]
+print(a) # [2, 4]
 
 # Other list methods
 # - pop
 # - count
 ```
 
-*Mini Project*
+**List Comprehension**
 
 ```python
-# How many relevant words in a story.
+# Creating a list of squares
+[x**2 for x in range(10)]
+
+# Creating a list of tuples
+[(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+
+# Nested functions in list
+[str(round(pi, i)) for i in range(1, 6)]
 ```
 
-#### Dictionaries
+**Dictionaries**
+
 - create dict
 - add to dict
 - delete from dict
+- dictionary comprehension
 
 
-##### Mini Project
-- JSON Data
-  - Read and Write
 
-#### Tuples
+**Tuples**
+
+Tuples are immutable.
+
+```python
+t = 12345, 54321, 'hello!'
+t = (12345, 54321, 'hello!')
+```
+
+
 #### Sets
+A set is an unordered collection with no duplicate elements. Set objects also support mathematical operations like union, intersection, difference, and symmetric difference.
 
-### Standard Modules
-- Where are the modules stored
-- How to import modules
-- How to install modules
-  - With pip
-  - With Pycharm
-
-#### Mini Project
-- Use random module to generate numbers. (8-Ball Game)
-- Use csv module to read data from file and compute something.
-
-### Functions
-- Simple Functions
-- Arguments
-  - Default value of arguments
-  - args, kwargs
-- Function returning
-- Functions calling functions
-- Lambda functions
-
-#### Mini Project
-- Project 1
-- Project 2
-
-### Exceptions
-
-## Structure Python Code
-- Create own Modules
-- Import module
-- `if __name__ == "__main__":`
-- Create package
-- `__init__` file
-- Create package via pycharm
-- Show some standard packages like date type, ctypes etc...
-
-#### Mini Poject
-- Project 1
-  - Multiple modules back and fro data
-- Project 2
-  - Get data from REST
-  - Create own package to process that data
+```python
+basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
+```

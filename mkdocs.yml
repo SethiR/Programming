@@ -16,5 +16,8 @@ markdown_extensions:
 nav:
   - Home: 'index.md'
   - Python:
-    - 1. Core Python: 'python/core_python.md'
-    - 2. OOP Python: 'python/object_oriented_python.md'
+    - 1. Core Python: 'python/core.md'
+    - 2. Functions: 'python/functions.md'
+    - 3. Seperating code: 'python/modules_and_packages.md'
+    - 4. OOP: 'python/object_oriented_python.md'
+    - 5. Projects: 'python/projects.md'

@@ -6,8 +6,7 @@
 - Constructors
 - Methods
 
-#### Mini Project
-- Car race with objects
+
 
 ### Part-II
 - Printing objects
