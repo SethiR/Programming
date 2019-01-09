@@ -1,0 +1,20 @@
+site_name: Programming
+docs_dir: website
+
+# Theme configuration
+theme:
+  name: material
+  feature:
+    tabs: true
+
+
+markdown_extensions:
+  - codehilite:
+      linenums: true
+  - admonition
+
+nav:
+  - Home: 'index.md'
+  - Python:
+    - 1. Core Python: 'python/core_python.md'
+    - 2. OOP Python: 'python/object_oriented_python.md'
