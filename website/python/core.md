@@ -28,6 +28,8 @@ print(type(b))
 5**2    # Power
 ```
 
+---
+
 **Strings**
 
 ```python
@@ -48,7 +50,7 @@ str[0:2]  # He
 len(str)    #5
 ```
 
-**Indeces of Strings**
+*Indeces of Strings*
 ```python
 +---+---+---+---+---+---+
  | P | y | t | h | o | n |
@@ -57,7 +59,9 @@ len(str)    #5
 -6  -5  -4  -3  -2  -1      (R to L)
 ```
 
-**String Operations**
+
+
+*String Operations*
 
 There are lots of string methods which do operations on the string variables. Some of the common methods are described below.
 You can find more information on the string methods [here](https://docs.python.org/3.7/library/stdtypes.html#string-methods)
@@ -73,16 +77,22 @@ a = 'Today is Monday'
 a.split(' ')    # ['Today', 'is', 'Monday'] --> Splits the string on delimeter.
 ```
 
+---
+
 **Conditionals**
 - If
 - Nested If
 - Pass statement
+
+---
 
 **Range Object**
 
 ```python
 range(start, stop, increment)
 ```
+
+---
 
 **For Loop**
 
@@ -96,7 +106,7 @@ range(start, stop, increment)
 
 **While Loop**
 
-### Data Structures
+## Data Structures
 
 **Lists**
 
@@ -138,7 +148,7 @@ print(a) # [2, 4]
 # - count
 ```
 
-**List Comprehension**
+*List Comprehension*
 
 ```python
 # Creating a list of squares
@@ -158,7 +168,7 @@ print(a) # [2, 4]
 - delete from dict
 - dictionary comprehension
 
-
+---
 
 **Tuples**
 
@@ -169,8 +179,10 @@ t = 12345, 54321, 'hello!'
 t = (12345, 54321, 'hello!')
 ```
 
+---
 
-#### Sets
+**Sets**
+
 A set is an unordered collection with no duplicate elements. Set objects also support mathematical operations like union, intersection, difference, and symmetric difference.
 
 ```python
