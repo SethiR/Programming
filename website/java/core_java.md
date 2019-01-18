@@ -424,7 +424,7 @@ We use `getters` and `setters` instead of exposing the fields of the class.
 
 ---
 
-__Establishing Initial State__
+__Establishing Initial State of the fields__
 
 There are 3 ways to do this
 
@@ -468,6 +468,280 @@ __2. Constructors__
 
 _2.1 Chaining Constructors_
 
+- You can call another constructor from within an other constructor. (This is called constructor chaining). You can do that by using `this()`
+- Call to other constructor must be the first line of the current constructor.
+
+e.g.
+
+- In this class we have 4 constructors. Not all the constructors need to be `public`.
+
+```Java
+public class Passenger{
+
+    public Passenger(){}
+
+    public Passenger(int freeBags){
+        this(freeBags > 1 25.0 : 50.0);
+        this.freeBags = freeBags
+    }
+
+    public Passenger(int freeBags, int checkedBags){
+        this(freeBags);
+        this.checkedBags = checkedBags;
+    }
+
+    private Passenger(double perBagFee){
+        this.perBagFee = perBagFee;
+    }
+
+}
+```
+```Java
+// Main
+Passenger jane = new Passenger(2,3);
+```
+
+1. `public Passenger(int freeBags, int checkedBags)`
+2. then `this(freeBags)` is called from the above constructor
+3. Which calls `public Passenger(int freeBags)`
+4. Which in turn calls the `private Passenger(double perBagFee)` for setting the perBagFee
+5. ...
 
 
 __3. Initialization Blocks__
+
+- Initialization blocks are share across all constructors
+- Executed as if the code was placed at start of each constructor.
+- There can be multiple initialization blocks and they are executed in top down fashion
+
+```Java
+public class Flight{
+
+    private int seats;
+
+    { // Start of initialization block
+
+    } // end of initialization block
+
+    public Flight(){
+
+    }
+
+
+}
+```
+
+__Order of Execution__
+
+Java follows the below mentioned order for field initialization and constructor.
+
+1. Field Initialization (Field initial state)
+2. Initialization Block
+3. Constructor
+
+
+---
+
+__Overloading__
+
+A class can have the same method name multiple times. Signature needs to be different e.g.
+
+- Number of parameters
+- Type of each parameter
+
+---
+
+__Any number of parameters__
+
+A method can be declared to accept variable number of parameters.
+- Place `...` after parameter type
+- It can be done only for the last parameter
+
+```Java
+public class Flight{
+
+    public void addPassenger(Passenger... list){ // same as *args in Python
+        for (Passenger p: list){
+            // Code here
+        }
+    }
+
+}
+```
+
+---
+
+### Inheritance
+
+Use `extends` keyword.
+
+```Java
+public class CargoFlight extends Flight{
+
+}
+```
+
+One not commonly known phoenomenon is objects of the derived class can be created using the Base type
+
+e.g.
+
+```Java
+Flight f = new CargoFlight();
+```
+
+now in `f` we can use `Flight` class methods and capabilities but not `CargoFlight` class capabilities. This is uselful in grouping the objects.
+
+---
+
+__Object Class__
+
+The object class is the root of the java class hierarchy. So we can reference the object class as well.
+
+```Java
+Object[] stuff = new Object[3];
+stuff[0] = new Flight();
+stuff[1] = new Passenger(2, 4);
+stuff[2] = new CargoFlight();
+```
+
+Another example
+
+```Java
+Object o = new Passenger();
+o = new CargoFlight();
+
+// as of yet o will only be able to access functionality of 'Object' class in Java
+// When you need o to access functionality of CargoFlight you need to do the following
+
+CargoFlight cf = (CargoFlight) o; // Typecast o to CargoFlight and cf will point to save memory address of o but will be able to access methods of CargoFlight class.
+
+cf.addPassenger();
+```
+
+_Methods of Object class_
+
+- `clone`
+- `hashCode`
+- `getClass`
+- `finalize`
+- `toString`
+- `equals`
+
+---
+
+**Equality**
+
+`==`
+
+- For reference types it checks if the objects point to the same instance.
+
+You can override the default `equals` implementations.
+
+```Java
+class Flight{
+    private int flightNumber;
+    private int flightClass;
+
+    @Override
+    public boolean equals(Object o){
+
+        // As we are getting object o and we need data from the Flight class we need to cast it.
+        if (!(o instanceof Flight){)
+            return false;
+
+        Flight other = (Flight) o;
+        return this.flightNumber == other.flightNumber;
+    }
+}
+```
+
+---
+
+**Super**
+
+- `Super` treats the object as if it was an instance of its base class
+- useful for accessing base class members that have been overridden
+
+```Java
+class Flight extends object
+{
+    @Override
+    public boolean equals(Object o)
+    {
+        super.equals(o);  // Calling the super class method
+    }
+}
+```
+
+---
+
+**Final and Abstract**
+
+- By default all classes can be extended
+
+Creating a final class. A `final` class cannot be extended or inherited from.
+
+```Java
+public final class Passenger{
+
+}
+```
+
+You can also make a particular method as final and not the whole class thus that method cannot be overriden.
+
+```Java
+public class CargoFlight{
+    public void methodA(){}
+    public final void methodB(){}
+}
+```
+
+__Abstract__
+
+`Abstract` will require that the class _will be_ inherited or a method _will be_ overriden. If any method in a class is abstract you need to mark the whole class as abstract.
+
+```Java
+public abstract class Pilot{
+    public void methodA(){
+
+    }
+
+    public abstract boolean canAccept(Flight f);  // this is an abstract method.
+}
+```
+
+
+Abstract class cannot be instanciated. The below code will give you an error.
+
+```Java
+abstract class Pilot{
+    Pilot(){}
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Pilot p1 = new Pilot();  // Trying to instanciate a abstract class.
+    }
+}
+```
+
+---
+
+**Inheritance and Constructor**
+
+- Constructors are not inherited
+- A base class constructor must always be called.
+    - If you do not do this explicitly, Java will call the base class no argument constructor automatically.
+    - If you call manually make sure you call the base class constructor in the first line of the current class constructor.
+
+
+```Java
+// TODO example (added a note on the video)
+```
+
+
+### More Data Types
+
+**Strings**
+
