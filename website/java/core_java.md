@@ -740,8 +740,235 @@ public class Main {
 // TODO example (added a note on the video)
 ```
 
+---
 
-### More Data Types
+## More Data Types
 
 **Strings**
 
+- Java string has UTF-16 encoding
+- Use double quotes ""
+- contatenate using `+`
+- String objects are immutable. (They cannot be changed but new value can be assigned to them). This can be inefficient
+
+
+_Methods_
+
+- `length`
+- `valueOf` - convert non string value to a string
+- `concat`
+- `replace`
+- `toLowerCase`
+- `trim`
+- `split`
+- `format`
+- `chatAt`
+- `substring`
+- `contains`
+- `startsWith`
+- `equals`
+- `equalsIgnoreCase`
+- `...`
+
+
+[Documentation on `String` Methods](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html)
+
+
+---
+
+**String Equality**
+
+```Java
+String s1 = "I Love";
+s1 += "Java";
+
+String s2 = "I";
+s1 += " Love Java";
+
+if (s1 == s2) {} // Its False
+
+```
+
+The above example returns false because they are not the exact same instance of the String even though they have the same value in them.
+
+```Java
+if (s1.equals(s2)){}  //  This will return True
+```
+
+`.equals` does a char by char comparison.
+
+As the char based comparisons are quiet expensive we use the `intern` method to compare strings. `intern` method returns a cannonical form of the string based on its value.
+
+```Java
+s1.intern() == s2.intern(); // Will return true
+```
+
+`intern` does have its overhead so use it only if you are doing comparisons over and over again. So lets say you have multiple strings which are master data and you want to search (multiple times) a new string exists in this array of strings or not. In this case turn the array of strings into `intern` and comapre using the `==` operator which will be inexpensive.
+
+
+---
+
+**Convert to String**
+
+```Java
+int iVal = 100;
+String sVal = String.valueOf(iVal);
+
+// sVal = "100"
+```
+
+Remember that `object` class provides some standard methods that all classes will have. Such a method is `toString` which is used to get the string representation of various objects e.g. an object of a class.
+
+
+```Java
+public class Flight{
+    int flightNumber;
+
+    @Override
+    public String toString(){
+        return "I fly to" + flightNumber;
+    }
+}
+```
+
+---
+
+**String Builder**
+
+Remember strings are immutable but sometimes we wish to manipulate them.
+
+- StringBuilder provides mutable string buffer
+    - General recomendation --> pre-size buffer
+
+
+```Java
+StringBuilder sb = new StringBuilder(40);
+
+// Sample methods
+// append
+// insert
+
+sb.append("I flew to ");
+sb.append("Florida");
+
+sb.insert(4, "at"); 
+
+// convert back to String
+String message = sb.toString();
+```
+
+
+---
+
+**Classes vs Primitives**
+
+!!! note ""
+    You may not use this very often.
+
+Classes
+
+- Provide convenience
+- incurs an overhead
+
+Primitives
+
+- Provide efficiency
+
+
+So we sometimes we use `Primitive Wrapper Class`. The standard class hierarchy for primitive type looks like this.
+
+Classes shown below: - 
+
+    Object
+        Boolean
+        Number
+            Byte
+            Short
+            Integer
+            Long
+            Float
+            Double
+        Character
+
+
+- All primitive wrapper class instances are immutable.
+
+When you create an `int` variable it is an instance/object of the `Integer` class shown above. The conversion is done automatically.
+
+Java also provides methods for explicit conversions. 
+
+- Primitive to wrapper -> `valueOf`. This is known as boxing.
+- Wrapper to primitive => `xxxValue`. This is known as unboxing.
+- String to primitive -> `parseXxx`
+- String to wrapper -> `valueOf`
+
+Using this you can treat the primitive type as an object. 
+
+_Example 1 - Treat as object_
+
+```Java
+Object[] stuff = new Object[3];
+stuff[0] = new Flight();
+stuff[1] = new Passenger(0,2);
+stuff[2] = 100;
+```
+
+_Example 2 - Null References_
+
+```Java
+public class Flight{
+    Integer flightNumber;  // note we are not creating int but Integer which creates it as an object
+    Character flightClass;  // same as above
+
+    @Override
+    public String toString(){
+        if (flightNumber != null){  // we can now compare int to null because its an object. Else as soon as you create an object of flight class the int will get value of 0 and if there is any flight number with value 0 the comparison will not work e.g. flightNumber != 0 is leaving 1 case out where as using int as Integer i.e. as object we can also cover the case of 0.
+
+        }
+        else if(flightClass != null){
+
+        }
+    }
+}
+```
+
+[Sample documentation for Interger Class](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html)
+
+Refer the same for other primitive wrapper classes.
+
+**Wrapper Class Equality**
+
+Did not read a lot on this becase seemed I may never use it. (Check slides)
+
+
+**Final Fields**
+
+- Final
+- Static - Cannot be set by an object instance.
+
+
+```Java
+public class Flight{
+    static final int MAX_FAA_SEATS = 500;
+}
+```
+
+**Enumeration types**
+
+Its useful for defining a type with a finite list of valid values. Declare with keyword `enum` and provide a comma separated value list of types.
+
+```Java
+
+public enum FlightCrewJob {
+    Pilot,
+    CoPilot,
+    FlightAttendant
+}
+
+public class CrewMember{
+    private FlightCrewJob job;
+}
+
+// How to create
+CrewMember judy = newCrewMember(FlightCrewJob.CoPilot);
+```

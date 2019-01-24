@@ -6,7 +6,7 @@
 
 #### Mini Project
 - Use random module to generate numbers. (8-Ball Game)
-- Use csv module to read data from file and compute something.
+- Use csv module to read data from file and compute something. (Stock exchange)
 
 
 Todo.txt
