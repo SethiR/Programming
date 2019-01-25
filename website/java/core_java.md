@@ -851,7 +851,7 @@ StringBuilder sb = new StringBuilder(40);
 sb.append("I flew to ");
 sb.append("Florida");
 
-sb.insert(4, "at"); 
+sb.insert(4, "at");
 
 // convert back to String
 String message = sb.toString();
@@ -877,7 +877,7 @@ Primitives
 
 So we sometimes we use `Primitive Wrapper Class`. The standard class hierarchy for primitive type looks like this.
 
-Classes shown below: - 
+Classes shown below: -
 
     Object
         Boolean
@@ -895,14 +895,14 @@ Classes shown below: -
 
 When you create an `int` variable it is an instance/object of the `Integer` class shown above. The conversion is done automatically.
 
-Java also provides methods for explicit conversions. 
+Java also provides methods for explicit conversions.
 
 - Primitive to wrapper -> `valueOf`. This is known as boxing.
 - Wrapper to primitive => `xxxValue`. This is known as unboxing.
 - String to primitive -> `parseXxx`
 - String to wrapper -> `valueOf`
 
-Using this you can treat the primitive type as an object. 
+Using this you can treat the primitive type as an object.
 
 _Example 1 - Treat as object_
 
@@ -972,3 +972,181 @@ public class CrewMember{
 // How to create
 CrewMember judy = newCrewMember(FlightCrewJob.CoPilot);
 ```
+
+
+## Exceptions
+
+- `try/catch/finally`
+- `Try` block will run the normal code
+- `Catch` block is called only if matching exception is thrown
+- runs in all cases when `try` block or `catch` block finishes. It usually contains clean up code.
+
+```Java
+public class test {
+    public static void main(String[] args) {
+        int i = 1;
+        int j = 0;
+
+        try {
+            System.out.println(i/j);
+        }catch (Exception e){
+            System.out.println("Error : " + e.getMessage());
+            System.out.println(e.getStackTrace());
+        }finally {
+            System.out.println("Program continues...");
+        }
+
+    }
+}
+```
+
+Reading file in `JAVA` using exception handling.
+
+```Java
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class test {
+    public static void main(String[] args) {
+
+        BufferedReader reader = null;
+        int total = 0;
+
+        try {  // try reading the file
+            reader = new BufferedReader(new FileReader("C:\\a.txt"));
+            String line = null;
+
+            while((line = reader.readLine()) != null){  // read line by line
+                System.out.println(line);
+                total += Integer.valueOf(line);
+                System.out.println("Total = " + total);
+            }
+        }
+        catch (Exception e){  // print any exception when reading the file
+            System.out.println(e.getMessage());
+        }
+        finally {  // here we close the file using nested try and catch
+            try {
+                if (reader != null)
+                    reader.close();
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+}
+
+```
+
+---
+
+**Exception Class Hierarchy**
+(Check slide)
+
+- Object
+    - Throwable
+        - Error
+            - Linkage Error
+            - ...
+        - Exception
+            -Runtime Exception
+              - Null Pointer Exception
+            - ...
+
+
+Some of the excpetions are checked exceptions and some are unchecked exceptions. Its mandatory to handle `Checked Exceptions`
+
+Exception are handled by Type
+
+- Each type of exception can have a seperate catch block.
+- each catch is tested from top to bottom
+- first assignable catch is selected
+
+- You should start with Specific exceptions at the top and then get general as you go down.
+
+---
+
+__Exception and methods__
+
+In some cases a method does a processing of say a file open. But the file name is being passed by another method.
+
+The method which is opening the file will get the exception if the file name is not correct but it should be the method which sends the file name which should be made aware of this exception so we can use `throws Exception` on the method which is opening the file and this will propogate up the call stack.
+
+
+```Java
+public class Flight{
+    public void addPassengers(String filename) throws IOException{
+        // ...
+        try{
+            // open file
+        }
+        finally{
+            // close file
+        }
+    }
+}
+```
+
+As you see in the above example the method which is receiving the file name is not catching the exception its just `throws IOException` to the caller method.
+
+- The throws clause of an overriding method must be compatable with the throws clause of the overriden method.
+
+---
+
+__Throwing Exception__
+
+Exceptions are objects, they have to be created before they are thrown. Put meaning full information in it. When caused by another exception, include orignal originating exception by using `initCause` method.
+
+
+You can also create your own excpetion types and throw them however in most of the cases you will use the existing exception types.
+
+- Inherit from Exception class.
+- Make them checked excpetions.
+- Constructors are often their only members
+
+
+---
+
+## Packages
+
+A package is a group of related types
+
+- It creates a namespace, useful in naming collisions. Usually use reverse domain naming.
+- It provides access boundaries
+- It acts as a unit of distribution
+
+e.g.
+
+```Java
+package com.examplesite.travel;
+public class Flight{
+
+}
+```
+
+to use this you can fully qualify the type like we do below
+```Java
+com.examplesite.travel.Flight lax178 = ...;
+```
+
+- Whenever you are working in package you don't have to fully qualify
+- standard ones need not be fully qualify
+- for others use type imports
+
+_Type imports_
+
+we do this using `import` statement.
+
+e.g.
+```Java
+import com.pluralsight.travel.Flight;
+import com.xyzcompany.bar;
+
+Flight = ;
+Wine = ;
+```
+
+Package can serve as an access boundary. No access modifier is by default a package private. Others are public, private and protected.
