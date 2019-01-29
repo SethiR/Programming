@@ -60,6 +60,12 @@ public class MathEquation {
             case 'd':
                 result = leftVal / rightVal;
                 break;
+            case 'm':
+                result = leftVal - rightVal;
+                break;
+            case 's':
+                result = leftVal - rightVal;
+                break;
             default:
                 result = 0;
                 break;

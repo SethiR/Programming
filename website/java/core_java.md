@@ -742,6 +742,157 @@ public class Main {
 
 ---
 
+### Interfaces
+
+- What is interface?
+    - Do not provide implementation. Only the contract is provided.
+
+e.g. an existing interface is `java.lang.Comparable`. It says that we should implement a `compareTo` method. This method returns negetive value (we should come before), positive value (we should come after) and 0 (if equal).
+
+
+Now lets use this in our flight class.
+
+```Java
+public class Passenger implements Comparable{
+
+    private int memberLevel;
+    private int memberDays;
+
+    public int compareTo(object o){
+        Passenger p = (passenger) o;
+        if (this.memberLevel > p.memberLevel)
+            return -1;
+        else if (this.memberLevel < p.memberLvel)
+            return 1;
+        return 0;
+    }
+
+}
+```
+
+Because our class conforms to the Comparable interface we can create a array of passenger objecs and sort it.
+
+```Java
+Passenger[] passengers  = {bob, jane, steve, lisa};
+Arrays.sort(passengers); // because the Passenger class conforms to the Comparable interface.
+```
+
+---
+
+Some interfaces require another types `generics`.
+
+e.g.
+
+```Java
+public interface Comparable<T>{
+
+}
+```
+
+So you can specify the `<T>` type as shown below. Then you can specify which object will be compared thus getting rid of the type casting from object to Flight or Passenger object.
+
+```Java
+public class Flight implements Comparable<Flight> {
+    private int flightTime;
+
+    public int compareTo(Flight f){ // notice the type parameter
+        return this.flightTime - f.flightTime;
+
+    }
+}
+```
+
+- Classes are free to implement multiple interfaces but can only extend 1 class. e.g.
+
+
+```Java
+public class Flight implements Comparable<flight>, Iterable<Person>{
+
+}
+```
+
+---
+
+__Declaring an Interface__
+
+- Can have methods but no implementations.
+- Can have constants.
+- Can extend other interfaces.
+
+
+### Static
+
+__Static Members__
+
+- Static members are shared class wide.
+- Declared using the `static` keyword.
+- Can be accessed using the class name.
+- You can also access them directly without putting class name in front of them if you did a static import.
+
+e.g.
+
+```Java
+public class Flight{
+    static int allPassengers;
+
+    public static void resetAllPassengers(){
+        allPassengers = 0;
+    }
+}
+```
+
+```Java
+import static com.company.travel.Flight.resetAllPassengers;  // static import
+
+public class main{
+    public static main(String args[]){
+        resetAllPassengers(); // do not need to do Flight.resetAllPassengers();
+    }
+}
+```
+
+---
+
+__Static initialization blocks__
+
+- One time
+- Execute automatically before the static type is used.
+- Must handle all checked exceptions, no concept of `throws` keyword.
+
+```Java
+public class Flight{
+    static { // static initilization block
+
+    }
+}
+```
+
+---
+
+### Nested types
+
+- Classes within classes and interfaces
+- Interface within classes and interfaces
+- The nested type is treated as a type of the enclosing type and has access to its private members
+
+_Why use them_
+
+- Structure and scoping (Static inner class)
+- Inner classes (each instance of nested class is associated with the instance of enclosing class) (non static inner class)
+---
+
+__Inner Class__
+
+---
+
+__Anonymous Classes__
+- Useful for extend interface/classes to solve a particular problem which is not code wide.
+
+
+
+
+---
+
 ## More Data Types
 
 **Strings**
@@ -1150,3 +1301,8 @@ Wine = ;
 ```
 
 Package can serve as an access boundary. No access modifier is by default a package private. Others are public, private and protected.
+
+__Jar Files__
+
+You can distribute your entire package or library of code using single jar file which maintains the folder structure in that file. In addition to that it can also contains a manifest file which provides information about that Jar file. Its usually in named value format. You can find more information about it [here](https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html#Manifest_Specification)
+

@@ -10,6 +10,15 @@ public class Main {
             equation.execute();
             System.out.println(equation.getResult());
         }
+
+        System.out.println("Using overlaods");
+        MathEquation overload = new MathEquation('a');
+        overload.execute(10.1, 20.5);
+        System.out.println(overload.getResult());
+
+        MathEquation overload1 = new MathEquation('a');
+        overload1.execute(10, 20);
+        System.out.println(overload1.getResult());
     }
 
 

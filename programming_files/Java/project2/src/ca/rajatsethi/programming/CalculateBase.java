@@ -1,9 +1,10 @@
 package ca.rajatsethi.programming;
 
-public class CalculateBase {
+public abstract class CalculateBase {
     private double leftVal;
     private double rightVal;
     private double result;
+
 
     public double getLeftVal() {
         return leftVal;
@@ -25,10 +26,17 @@ public class CalculateBase {
         return result;
     }
 
-    public CalculateBase(double leftVal, double rightVal) {
+    public void setResult(double result) {
+        this.result = result;
+    }
+
+    CalculateBase(){}
+
+    CalculateBase(double leftVal, double rightVal){
         this.leftVal = leftVal;
         this.rightVal = rightVal;
     }
 
-    public CalculateBase(){}
+    public abstract void calculate();
+
 }
