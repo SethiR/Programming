@@ -24,3 +24,5 @@ nav:
   - Java:
     - 1. The Java World: 'java/overview_of_the_java_world.md'
     - 2. Core Java: 'java/core_java.md'
+    - 3. Collections: 'java/collections.md'
+    - 4. Core Platform: 'java/core_platform.md'
