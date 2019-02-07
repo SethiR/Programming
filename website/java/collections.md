@@ -459,4 +459,398 @@ public class Main {
 }
 ```
 
-A more real world example of queue is provided below.
+A more real world example of helpdesk implemented with queue is provided below.
+
+```Java
+// Category.java
+public enum Category {
+    PRINTER,
+    COMPUTER,
+    PHONE,
+    TABLET
+}
+```
+
+```Java
+//Customer.java
+public class Customer
+{
+    private final String name;
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public void reply(final String message)
+    {
+        System.out.println(this.name +" : "+ message);
+    }
+
+    public static final Customer JACK = new Customer("Jack");
+    public static final Customer JILL = new Customer("Jill");
+    public static final Customer MARY = new Customer("Mary");
+}
+```
+
+```Java
+// Enquiry.java
+public class Enquiry {
+    private final Customer customer;
+    private final Category category;
+
+    public Enquiry(Customer customer, Category category) {
+        this.customer = customer;
+        this.category = category;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Enquiry{customer = " +
+                customer +
+                ", category = "+
+                category +
+                "}";
+    }
+}
+```
+
+
+```Java
+//Helpdesk.java
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+public class HelpDesk
+{
+
+    private final Queue<Enquiry> enquiries = new ArrayDeque<>();
+
+    public void eqnuire(final Customer customer, Category category)
+    {
+        enquiries.offer(new Enquiry(customer, category));
+    }
+
+    public void processAllEnquiries()
+    {
+        Enquiry enquiry;
+        while ((enquiry = enquiries.poll()) != null)
+        {
+            enquiry.getCustomer().reply("Have you tried turning if off and on again?");
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        HelpDesk helpDesk = new HelpDesk();
+
+        helpDesk.eqnuire(Customer.JACK, Category.PHONE);
+        helpDesk.eqnuire(Customer.JILL, Category.PRINTER);
+
+        helpDesk.processAllEnquiries();
+    }
+}
+```
+
+---
+
+*Using Priority Queue*
+
+We can actually use priority queue to sort the enquiry using some priority. In the `Helpdesk.java` class we will now implement priorityQueue.
+
+```Java
+Helpdesk.java
+
+import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+/**
+ * Created by sethir on 2019/02/01.
+ */
+public class HelpDesk
+{
+
+    private final Queue<Enquiry> enquiries = new PriorityQueue<>(BY_CATEGORY);  // creating a priority queue by using category comparator.
+
+    public void eqnuire(final Customer customer, Category category)
+    {
+        enquiries.offer(new Enquiry(customer, category));
+    }
+
+    public static final Comparator<Enquiry> BY_CATEGORY = new Comparator<Enquiry>() {  // implementing comparator.
+        @Override
+        public int compare(Enquiry o1, Enquiry o2) {
+            return o1.getCategory().compareTo(o2.getCategory());
+        }
+    };
+
+    public void processAllEnquiries()
+    {
+        Enquiry enquiry;
+        while ((enquiry = enquiries.poll()) != null)
+        {
+            enquiry.getCustomer().reply("Have you tried turning if off and on again?");
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        HelpDesk helpDesk = new HelpDesk();
+
+        helpDesk.eqnuire(Customer.JACK, Category.TABLET);
+        helpDesk.eqnuire(Customer.JILL, Category.PRINTER);
+        helpDesk.eqnuire(Customer.MARY, Category.PHONE);
+
+        helpDesk.processAllEnquiries();
+    }
+}
+```
+
+The result is sorted based on the enum ordering.
+
+```Java
+// output
+Jill : Have you tried turning if off and on again?
+Mary : Have you tried turning if off and on again?
+Jack : Have you tried turning if off and on again?
+```
+
+
+---
+
+**Stack and Deque**
+
+Stacks are `Last In - First Out`
+
+Java.util.stack is deprecated and should not be used. You should be using Deque, they are the correct way to use stacks. Deque (double ended queue) --> Use 2 ends.
+
+Below are the methods which we can use for Deque to implement stack.
+
+- boolean offerFirst(E e)
+- boolean offerLast(E e)
+- void addFirst(E e)
+- void addLast(E e)
+- E removeFirst()
+- E removeLast()
+- E pollFirst()
+- E pollLast()
+- E getFirst()
+- E getLast()
+- E peekFirst()
+- E peekLast()
+
+
+If the above methods are confuing .
+
+- void Push(E e)
+- void pop()
+
+Example of Calculator provided below.
+
+```Java
+// Calculator.Java
+package ca.rajatsethi.programming;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class Calculator {
+
+    public int evaluate(final String input)
+    {
+        final Deque<String> stack = new ArrayDeque<>();
+
+        final String[] tokens = input.split(" ");
+
+        for(String token: tokens)
+        {
+            stack.push(token);
+        }
+
+        while (stack.size() > 1)
+        {
+            int left = Integer.parseInt(stack.pop());
+            String operator = stack.pop();
+            int right = Integer.parseInt(stack.pop());
+
+            int result = 0;
+
+            switch (operator)
+            {
+                case "+":
+                    result = left + right;
+                    break;
+                case "-":
+                    result = left - right;
+                    break;
+            }
+            stack.push(String.valueOf(result));
+        }
+
+        return Integer.parseInt(stack.pop());
+
+    }
+}
+```
+
+```Java
+// Main.java
+package ca.rajatsethi.programming;
+
+public class Main {
+
+    public static void main(String[] args) {
+	    Calculator calculator = new Calculator();
+
+        System.out.println(calculator.evaluate("1 + 2"));
+        System.out.println(calculator.evaluate("1 + 2 - 11 - 12 - 18 + 109"));
+        System.out.println(calculator.evaluate("1 + 6"));
+    }
+}
+```
+
+```Java
+// output
+3
+103
+7
+```
+
+
+## Maps
+
+Maps are key value pairs like dictionaries in Python. A quick example with maps is given below.
+
+```Java
+// product.java
+
+package ca.rajatsethi.programming;
+
+import java.util.Comparator;
+
+public class Product {
+    private int id;
+    private String name;
+    private int weight;
+
+    public Product(int id, String name, int weight) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    // Implementing comparator
+    public static final Comparator<Product> BY_WEIGHT = Comparator.comparing(Product::getWeight);
+    public static final Comparator<Product> BY_NAME = Comparator.comparing(Product::getName);
+}
+```
+
+```Java
+// ProductLookupTable.java --> Interface
+package ca.rajatsethi.programming;
+
+public interface ProductLookupTable {
+
+    Product lookupByID(int id);
+    void addProduct(Product productToAdd);
+    void clear();
+
+}
+```
+
+We first see how we do things without a map. The below is using lists.
+
+```Java
+// NaiveProductLookupTable.Java
+
+package ca.rajatsethi.programming;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NaiveProductLookupTable implements ProductLookupTable{
+
+    private List<Product> products = new ArrayList<>();
+
+    @Override
+    public Product lookupByID(int id) {
+        for (Product product : products){
+            if (product.getId() == id){
+                return product;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void addProduct(Product productToAdd) {
+        for (Product product : products){
+            if (product.getId() == productToAdd.getId()){
+                throw new IllegalArgumentException("Unable to add : duplicate id : "
+                        + product.getId());  // throwing exception because we found a duplicate id
+            }
+        }
+        products.add(productToAdd);
+    }
+
+    @Override
+    public void clear() {
+        products.clear();
+    }
+}
+```
+
+Now that we have seen list, we do the same using maps below. The code is cleaner and performs much better.
+
+```Java
+// MapProductLookupTable.Java
+
+package ca.rajatsethi.programming;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapProductLookupTable implements ProductLookupTable{
+
+    private final Map<Integer, Product> products = new HashMap<>();
+
+    @Override
+    public Product lookupByID(int id) {
+        return products.get(id);
+    }
+
+    @Override
+    public void addProduct(Product productToAdd) {
+        if (products.containsKey(productToAdd.getId())){
+            throw new IllegalArgumentException("Unable to add product, id already exists : " + productToAdd.getId());
+        }
+        products.put(productToAdd.getId(), productToAdd);
+    }
+
+    @Override
+    public void clear() {
+        products.clear();
+    }
+}
+```
