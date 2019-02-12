@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2862465-6806-43a7-9f8d-0c7a32501d60" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../project5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project6/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project6/out/production/project6/ca/rajatsethi/programming/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project6/project6.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project6/src/ca/rajatsethi/programming/Main.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ca/rajatsethi/programming/Java8Enhacements.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ca/rajatsethi/programming/ShoppingBasket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../mkdocs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../mkdocs.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/project9_maps/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/project9_maps/ca/rajatsethi/programming/MapProductLookupTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/project9_maps/ca/rajatsethi/programming/MapProductLookupTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/project9_maps/ca/rajatsethi/programming/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/project9_maps/ca/rajatsethi/programming/Product.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../website/java/collections.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../website/java/collections.md" afterDir="false" />
     </list>
     <ignored path="project_maps.iws" />
@@ -30,12 +32,48 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/MapProductLookupTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+            <state relative-caret-position="243">
+              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#273#274#0" expanded="true" />
                 <element signature="e#312#313#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ViewsOverMaps.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/Java8Enhacements.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ShoppingBasket.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="674">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/NaiveProductLookupTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="15" column="9" lean-forward="true" selection-end-line="35" />
+            <state relative-caret-position="378">
+              <caret line="15" column="9" selection-end-line="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#888#889#0" expanded="true" />
@@ -67,11 +105,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+            <state relative-caret-position="702">
+              <caret line="33" column="57" selection-start-line="33" selection-start-column="57" selection-end-line="33" selection-end-column="57" />
               <folding>
                 <element signature="e#321#322#0" expanded="true" />
                 <element signature="e#346#347#0" expanded="true" />
+                <element signature="e#733#734#0" expanded="true" />
+                <element signature="e#802#803#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,7 +121,7 @@
         <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ProductLookupTable.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret selection-end-line="9" />
+              <caret column="20" selection-start-column="20" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -103,11 +143,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/Main.java" />
-        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java" />
         <option value="$PROJECT_DIR$/src/Product.java" />
         <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/NaiveProductLookupTable.java" />
         <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/MapProductLookupTable.java" />
         <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/ProductLookupTable.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/ViewsOverMaps.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/Java8Enhacements.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/A.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/UnmodifyableExample.java" />
+        <option value="$PROJECT_DIR$/src/ca/rajatsethi/programming/ShoppingBasket.java" />
       </list>
     </option>
   </component>
@@ -117,13 +162,15 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="173" />
+    <option name="y" value="146" />
     <option name="width" value="1938" />
     <option name="height" value="1060" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -156,12 +203,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549507030911" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549572328163" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -175,7 +222,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ShoppingBasket">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -272,11 +319,50 @@
       <listeners />
       <method />
     </configuration>
+    <configuration name="Java8Enhacements" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ca.rajatsethi.programming.Java8Enhacements" />
+      <module name="project9_maps" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.rajatsethi.programming.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="ca.rajatsethi.programming.Main" />
       <module name="project9_maps" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingBasket" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ca.rajatsethi.programming.ShoppingBasket" />
+      <module name="project9_maps" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.rajatsethi.programming.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewsOverMaps" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ca.rajatsethi.programming.ViewsOverMaps" />
+      <module name="project9_maps" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.rajatsethi.programming.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -347,6 +433,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ShoppingBasket" />
+        <item itemvalue="Application.Java8Enhacements" />
+        <item itemvalue="Application.ViewsOverMaps" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -362,18 +451,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1060" extended-state="0" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Palette&#9;" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32960895" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2916201" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -381,9 +468,10 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="right" id="Maven" order="0" weight="0.32975295" />
       <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" x="0" y="0" width="434" height="860" id="Documentation" order="2" side_tool="true" weight="0.32975295" />
+      <window_info anchor="right" x="0" y="0" width="434" height="860" id="Documentation" order="2" sideWeight="0.5005587" side_tool="true" weight="0.26262084" />
       <window_info anchor="right" id="Commander" order="3" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
@@ -392,7 +480,7 @@
       <window_info anchor="right" id="Designer" order="8" />
       <window_info anchor="right" id="Maven Projects" order="9" weight="0.3299356" />
       <window_info anchor="right" id="Structure" order="10" weight="0.16487648" />
-      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="11" visible="true" weight="0.17132115" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="11" sideWeight="0.49944136" visible="true" weight="0.26638025" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.17167382" />
@@ -447,46 +535,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Product.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="239" column="6" selection-start-line="239" selection-start-column="6" selection-end-line="239" selection-end-column="6" />
+        <state relative-caret-position="351">
+          <caret line="324" column="11" selection-start-line="324" selection-start-column="11" selection-end-line="324" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="22" selection-start-column="22" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-          <folding>
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ProductLookupTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/A.java" />
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/UnmodifyableExample.java" />
     <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/MapProductLookupTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+        <state relative-caret-position="243">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#273#274#0" expanded="true" />
             <element signature="e#312#313#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ViewsOverMaps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/Java8Enhacements.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -500,12 +586,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/NaiveProductLookupTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="15" column="9" lean-forward="true" selection-end-line="35" />
+        <state relative-caret-position="378">
+          <caret line="15" column="9" selection-end-line="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#888#889#0" expanded="true" />
             <element signature="e#920#921#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/Product.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="33" column="57" selection-start-line="33" selection-start-column="57" selection-end-line="33" selection-end-column="57" />
+          <folding>
+            <element signature="e#321#322#0" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#733#734#0" expanded="true" />
+            <element signature="e#802#803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ProductLookupTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" selection-start-column="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ca/rajatsethi/programming/ShoppingBasket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#376#377#0" expanded="true" />
+            <element signature="e#406#407#0" expanded="true" />
+            <element signature="e#449#450#0" expanded="true" />
+            <element signature="e#547#548#0" expanded="true" />
           </folding>
         </state>
       </provider>

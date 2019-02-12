@@ -854,3 +854,285 @@ public class MapProductLookupTable implements ProductLookupTable{
     }
 }
 ```
+
+Methods for Maps
+
+- put(K key, V value)  --> if you add some key which is already there, it will update the existing value.
+- putAll(Map<>)
+- get(Object key)
+- boolean containsKey(key)
+- booleans containsValue(value)
+- remove(key)
+- clear()
+- int size()
+- boolean isEmpty()
+
+!!!note
+    Map is the only collections that don't extend or implement the Collection interface.
+
+---
+
+**Views Over Maps**
+
+Similar to lists which have views over them i.e. created by `subList`. Even maps have views. The methods are given below.
+
+- keySet()
+- values()
+- entrySet()
+
+The above methods are demonstrated in the below program.
+
+ ```Java
+//  ViewsOverMaps.java
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class ViewsOverMaps {
+    public static void main(String[] args) {
+        final Map<Integer, Product> products = new HashMap<>();
+
+        products.put(1, new Product(1, "Door", 35));
+        products.put(2, new Product(2, "Window", 55));
+        products.put(3, new Product(3, "Frame", 75));
+
+        System.out.println(products);
+        System.out.println();
+
+        Set<Integer> ids = products.keySet();
+        System.out.println(ids);
+        System.out.println();
+
+        // if you remove something from this set of ids now it also gets removed from the products map
+        ids.remove(1);
+        System.out.println(ids);
+        System.out.println(products);
+        System.out.println();
+
+
+        // values()
+        Collection<Product> values = products.values();
+        System.out.println(values);
+        System.out.println();
+
+        Set<Map.Entry<Integer, Product>> entries = products.entrySet();
+        System.out.println(entries);
+        System.out.println();
+        for (Map.Entry<Integer, Product> entry : entries){
+            System.out.println(entry);
+            if (entry.getKey() == 2){
+                entry.setValue(new Product(entry.getKey(), "Pipe", 10));  // you can update the value for the entry
+            }
+        }
+        System.out.println(entries);
+        System.out.println();
+
+    }
+}
+```
+
+---
+
+**Sorted and Navigable Maps**
+
+- SortedMap is supersceded by NavigableMap
+
+These will enforce order (usually by key in ascending order). Some of the methods of SortedMap are provided below : -
+
+- firstKey()
+- lastKey()
+
+This also has views over the Map
+
+- tailMap(key)
+- headMap(key)
+- subMap(from key, to key)
+
+The key should be comparable or we need to provide a comparator.
+
+---
+
+The NavigableMap add more features to sorted map.
+
+- firstEntry()
+- lastEntry()
+- pollFirstEntry() --> removes and returns the first entry
+- pollLastEntry() --> removes the last entry
+- lowerEntry()
+- higherEntry()
+- lowerKey()
+- higherKey()
+- floorEntry(k) --> previous entry
+- ceilingEntry(k) --> next entry for the provided key
+- floorKey(k)
+- ceilingKey(k)
+
+There are a lot of methods which were added by Java-8 to the Maps for ease of use. Below is examples of how to use them.
+
+```Java
+// Java8Enhacements.Java
+package ca.rajatsethi.programming;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Java8Enhacements {
+    public static void main(String[] args) {
+        final Map<Integer, Product> products = new HashMap<>();
+
+        products.put(1, new Product(1, "Door", 20));
+        products.put(2, new Product(2, "Window", 25));
+        products.put(3, new Product(3, "Frame", 30));
+
+
+        Product defualtProduct = new Product(-1, "Default", 0);
+
+        // getOrDefault --> If something is not there in the map it will get you default value.
+        System.out.println(products.getOrDefault(10, defualtProduct));
+
+        // replace
+        System.out.println(products.replace(1, new Product(1, "Big Door", 50)));
+
+        // replaceAll --> with new products of weight 10
+        products.replaceAll((id, oldProduct) ->
+            new Product(id, oldProduct.getName(), oldProduct.getWeight() + 10)
+        );
+        System.out.println(products);
+
+        //computeIfAbsent  -> creates new entry in map if the key is missing.
+        Product result = products.computeIfAbsent(10, (id) -> new Product(id, "Custom Product", 25));
+        System.out.println(result);
+        System.out.println(products);
+
+
+        // with java-8 you can loop on the map itself using lambda expressions
+        products.forEach((key, value) ->
+        {
+            System.out.println(key + " -> " + value);
+        });
+
+    }
+}
+```
+
+---
+
+There are 3 general purpose maps
+
+- HashMap
+- LinkedHashMap
+- TreeMap  --> kind of balanced binary tree and is using red-black tree under the hood.
+
+There are 3 special purpose maps
+
+- x
+- x
+- x
+
+*HashMap*
+
+- General purpose
+- Uses the .hashcode()
+
+---
+
+## Collections Operations
+
+This section contains details about the common operations provided by the Java collections class across all data structure types.
+
+**Algorithms**
+
+- rotate()
+- shuffle()  -> rearrange randomly
+- sort()
+
+---
+
+**Factories**
+
+These are static methods on the collections class which will create a collection with some properties.
+
+*Singletons*
+
+- singleton --> only contain single value. They are immutable.
+
+*Empty Collections*
+
+- return immutable empty set, or list or map
+- e.g. `Collections.emptySet(0)` or `Collections.emptyList()`
+
+These empty collections are useful when you want to pass no values to a method which takes in a collection.
+
+*Unmodifyable collections*
+
+Lets consider a code where we have a list. It returns the shopping list but then someone from the main function adds something to it thus modifying the shopping list as shown below.
+
+```Java
+package ca.rajatsethi.programming;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShoppingBasket {
+
+    private final List<Product> products = new ArrayList<>();
+    private int total_weight = 0;
+
+    public void add(Product product){
+        products.add(product);
+        total_weight += product.getWeight();
+    }
+
+    public List<Product> getItems(){
+        return products;
+    }
+
+    @Override
+    public String toString() {
+        return "Shopping basket of " + products + "with weight of " + total_weight + " kg";
+    }
+
+    public static void main(String[] args) {
+        ShoppingBasket s1 = new ShoppingBasket();
+        s1.add(new Product(1, "Apple", 10));
+
+        System.out.println(s1);
+
+        s1.getItems().add(new Product(2, "Banana", 2));
+        System.out.println(s1);
+    }
+}
+```
+
+You will see that because the item is added in the main function the weight is not updated.
+
+```
+//output
+Shopping basket of [{ 1, Apple, 10 }]with weight of 10 kg
+Shopping basket of [{ 1, Apple, 10 }, { 2, Banana, 2 }] with weight of 10 kg
+```
+
+In this case its better to return a collection which is unmodifyable. So that no one can add to the list in the main funciton.
+
+```Java
+    public List<Product> getItems(){
+        return Collections.unmodifiableList(products);
+    }
+```
+
+
+---
+
+**Utility Methods of Collection Methods**
+
+Instead of adding products one by one you should use the below : -
+
+```Java
+Collections.addAll(products, door, window, frame);
+```
+
+- Collections.min()
+- Collections.max()
+
+---

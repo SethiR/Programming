@@ -28,4 +28,9 @@ public class Product {
     // Implementing comparator
     public static final Comparator<Product> BY_WEIGHT = Comparator.comparing(Product::getWeight);
     public static final Comparator<Product> BY_NAME = Comparator.comparing(Product::getName);
+
+    @Override
+    public String toString() {
+        return "{ " + id + ", " + name + ", " + weight + " }";
+    }
 }

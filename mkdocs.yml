@@ -26,3 +26,6 @@ nav:
     - 2. Core Java: 'java/core_java.md'
     - 3. Collections: 'java/collections.md'
     - 4. Core Platform: 'java/core_platform.md'
+    - 5. Generics : 'java/generics.md'
+    - 6. Database with JDBC : 'java/database_with_JDBC.md'
+

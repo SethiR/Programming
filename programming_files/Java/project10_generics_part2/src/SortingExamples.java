@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Main
+public class SortingExamples
 {
     public static void main(String[] args)
     {
@@ -17,7 +17,7 @@ public class Main
         people.add(gandhi);
         people.add(george);
 
-        Collections.sort(people);
+        people.sort(Person.BY_AGE);
         System.out.println(people);
 
     }
