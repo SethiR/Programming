@@ -987,3 +987,376 @@ public class TestCallableInOut {
 	}
 }
 ```
+
+---
+
+**Stored procedure returning ResultSets**
+
+A stored procedure can also return a resultset. In the example below a stored procedure is returning a oracle cursor. We then need to type cast that to resultset and then loop on it.
+(Personal opinion --> looks like a lot of boilerplate code, ORM might be better or some DBUtils packages)
+
+```Java
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+import oracle.jdbc.internal.OracleCallableStatement;
+
+import oracle.jdbc.OracleTypes;
+
+public class TestCallableResultSet {
+
+	public static void main(String[] args) throws SQLException {
+		// TODO Auto-generated method stub
+		try(
+                Connection conn = DBUtil.getConnection(DBType.ORADB);
+                // same as always teh 2nd param will be the resultset
+				CallableStatement callableStatement = conn.prepareCall("{call GetEmployeesByRefCursor(?,?)}");
+				Scanner scanner = new Scanner(System.in);
+				){
+			System.out.print("Enter Department ID : ");
+			int deptno = Integer.parseInt(scanner.nextLine());
+
+			callableStatement.setInt(1, deptno);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR);  // notice the type
+			callableStatement.execute();
+
+            // typecast what is returned to resultset
+			ResultSet rs = ((oracle.jdbc.internal.OracleCallableStatement)callableStatement).getCursor(2);
+
+			String format = "%-4s%-50s%-25s%-10f\n";
+
+            // loop and display values.
+			while(rs.next()){
+				System.out.format(format,rs.getString("Employee_ID"),rs.getString("Employee_Name"),rs.getString("Email"),rs.getFloat("Salary"));
+			}
+
+		}
+		catch(SQLException ex){
+			DBUtil.showErrorMessage(ex);
+		}
+
+	}
+
+}
+```
+
+### Transaction Management using JDBC
+
+Lets say we have 2 people. We are deducting $100 from personA and depositing to personB. The first operation of deductoin passes but the next one of deposit to personB fails.
+
+In this case transaction management can be used to specify commit all or rollback all.
+
+```Java
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class TestTransactionManagement {
+
+	public static void main(String[] args) throws SQLException{
+
+    try{
+        Connection conn = DBUtil.getConnection(DBType.ORADB);
+        // set the auto commit functionality to false.
+		conn.setAutoCommit(false);
+
+		PreparedStatement pstmt = null;
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("PSBank Transactions");
+		System.out.println("----------------------");
+		System.out.print("Enter From Account # :");
+		int fromAcno = Integer.parseInt(scanner.nextLine());
+		System.out.print("Enter To Account # : ");
+		int toAcno = Integer.parseInt(scanner.nextLine());
+		System.out.print("Enter Amount To Transfer : ");
+		double amount = Double.parseDouble(scanner.nextLine());
+
+		String withdrawSQL = "Update PSBank set Amount = Amount - ? where Acno = ?";
+		pstmt = conn.prepareStatement(withdrawSQL);
+		pstmt.setDouble(1, amount);
+		pstmt.setInt(2, fromAcno);
+		pstmt.executeUpdate();
+
+		String depositSQL = "Update PSBank set Amount = Amount + ? where Acno = ?";
+		pstmt = conn.prepareStatement(depositSQL);
+		pstmt.setDouble(1, amount);
+		pstmt.setInt(2, toAcno);
+		pstmt.executeUpdate();
+
+		String sql = "Select Amount From PSBank where Acno = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, fromAcno);
+		ResultSet rs = pstmt.executeQuery();
+		double balanceAmount=0;
+		if( rs.next()){
+			balanceAmount = rs.getDouble("Amount");
+		}
+
+		if( balanceAmount >= 5000){
+            // if everything is ok we then commit.
+			conn.commit();
+			System.out.println("Amount Transferred Successfully...");
+		}
+		else{
+            // else we rollback.
+			conn.rollback();
+			System.out.println("Insufficient Funds : " + balanceAmount + " Transactions Rollbacked..");
+		}
+
+		scanner.close();
+		pstmt.close();
+		conn.close();
+		}
+		catch(Exception ex){
+			System.err.println(ex.getMessage());
+		}
+	}
+
+}
+```
+
+### Working with CLOB and BLOB
+
+**CLOB**
+
+
+- CLOB -> (Character Large Object) is a collection of character data stored in database as single entity. Used to store large text documents e.g. plain text or xml. Also not all database support CLOB. MYSQL you need to use LongText which can store upto 4GB data. In ORACLE we use CLOB.
+    - In order to store the file we need to get the file.
+    - Read the contents of the file with help of any input stream reader.
+    - Convert contents to character with help of any ASCI string
+    - Then pass to database using prepared statement or callable statement
+    - In order to read the CLOB data from database use getClob()
+
+Inserting CLOB data
+
+```Java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertCLOBDataToEmpResume {
+
+	public static void main(String[] args) throws SQLException, FileNotFoundException{
+
+		Connection conn = DBUtil.getConnection(DBType.ORADB);
+		PreparedStatement pstmt = null;
+
+        // creating the prepared statement the same way.
+		String sql = "Update NewEmployees set Resume = ? where Employee_ID = 500";
+		pstmt = conn.prepareStatement(sql);
+
+        // read the contents of the file
+		String resumeFile = "d:/PluralSight Demos/SekharResume.txt";
+		File file = new File(resumeFile);
+		FileReader reader = new FileReader(file);
+
+        // Set the file reader into the prepared statement
+		pstmt.setCharacterStream(1, reader, (int)file.length());
+
+        // execute the prepared statement to store the file in database
+		pstmt.executeUpdate();
+
+		System.out.println("Resume Updated Successfully...");
+		pstmt.close();
+		conn.close();
+	}
+}
+```
+
+---
+
+*Fetch CLOB data from DB*
+
+```Java
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+public class RetrieveCLOBDataFromDB {
+
+	public static void main(String[] args) throws SQLException, IOException{
+		Connection conn = DBUtil.getConnection(DBType.ORADB);
+
+		String sql = "select Resume from NewEmployees where Employee_ID = 500";
+
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		if(rs.next()){ // fetch the first row in RS
+			Clob resume = rs.getClob("Resume");
+			Reader data = resume.getCharacterStream();
+
+			int i;
+            String resumeDetails = "";
+
+            // conctenate the characters to create a file
+			while( (i =data.read()) != -1 ){
+				resumeDetails += ((char) i);
+			}
+			System.out.println("Resume Details for Employee 500");
+			System.out.println(resumeDetails);
+		}
+		else{
+			System.err.println("No Record Found For Employee With The ID 500.");
+		}
+
+		rs.close();
+		pstmt.close();
+		conn.close();
+	}
+}
+```
+
+
+---
+
+**BLOB Data**
+
+Blob data stands for Binary Large Object. E.g. Pictures, documents etc...
+
+
+Sending data to DB
+```Java
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertImageWithinDB {
+
+	public static void main(String[] args) throws SQLException, IOException{
+		// TODO Auto-generated method stub
+
+		Connection conn = DBUtil.getConnection(DBType.ORADB);
+
+		String sql = "Update NewEmployees Set Photo = ? where Employee_ID = 500";
+
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		File file = new File("D:/PluralSight Demos/Sekhar.jpg");
+
+		FileInputStream fis = new FileInputStream(file);
+
+		pstmt.setBinaryStream(1, fis, fis.available());
+
+		int count  = pstmt.executeUpdate();
+
+		System.out.println("Total Records Updated : " + count);
+		pstmt.close();
+		conn.close();
+
+	}
+
+}
+```
+
+Retrive BLOB data from DB
+
+```Java
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class RetrieveImageFromDB {
+
+	public static void main(String[] args) throws SQLException, IOException {
+		Connection conn = DBUtil.getConnection(DBType.ORADB);
+
+		String sql = "Select Photo From NewEmployees Where Employee_Id = 500";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		ResultSet rs = pstmt.executeQuery();
+
+		if( rs.next()){
+			Blob imgBlob = rs.getBlob("Photo");
+
+			FileOutputStream fos  = new FileOutputStream("D:/PluralSight Demos/Downloads/img500.jpg");
+
+			fos.write(imgBlob.getBytes(1, (int)imgBlob.length()));
+
+			fos.flush();
+			fos.close();
+
+			System.out.println("Photo of Employee 500 has been Downloaded successfully");
+		}
+		else{
+			System.out.println("Employee Record Not Found.");
+		}
+
+		rs.close();
+		pstmt.close();
+		conn.close();
+	}
+}
+```
+
+### Working with metadata
+
+Check slides and programs
+
+### Connection pooling
+
+Usually each request to DB will not create its own connection to DB (as establishing a connection to DB is very time consuming.) We use the connection pooling to request already established connections to the database and get the logical link to it (not the physical connection itself). Once the transaction to DB is complete we send back the connection to the connection pool.
+
+```Java
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.sql.PooledConnection;
+
+import oracle.jdbc.pool.OracleConnectionPoolDataSource;
+
+public class ConnectionPoolingDemo {
+
+	public static void main(String[] args) throws SQLException {
+
+		OracleConnectionPoolDataSource ds = new OracleConnectionPoolDataSource();
+
+		ds.setDriverType("thin");
+		ds.setServerName("localhost");
+		ds.setPortNumber(1521);
+		ds.setServiceName("xe");
+		ds.setUser("hr");
+		ds.setPassword("hr");
+
+		PooledConnection pconn = ds.getPooledConnection();
+
+		Connection conn = pconn.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("Select * From Departments");
+
+		String format = "%-30s%-50s%-25s\n";
+		System.out.format(format,"Department #","Department Name","Location");
+		System.out.format(format,"-------------","-----------------","-------------");
+
+		while(rs.next()){
+			System.out.format(format,rs.getString("Department_ID"),rs.getString("Department_Name"), rs.getString("Location_Id"));
+		}
+
+		rs.close();
+		stmt.close();
+		conn.close();
+		pconn.close();
+	}
+}
+```

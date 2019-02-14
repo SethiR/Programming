@@ -1136,3 +1136,24 @@ Collections.addAll(products, door, window, frame);
 - Collections.max()
 
 ---
+
+
+## Misc
+
+**Converting between collections and arrays**
+
+Sometimes you need to convert collection to array. Use `toArray()` method. If you do not provide any parameters it will return an array of type `object`. Another version of the `toArray(T[] array)` accepts an array of type specified, this will return the type which you specified.
+
+
+Arrays can also be retrived as collection. Use Array class `asList` method.
+
+```Java
+// Collection to array
+Myclass[] a1 = list.toArray(new MyClass[0]);
+```
+
+```Java
+// Array to collection
+Collection<MyClass> list = Arrays.asList(myArray);
+```
+
