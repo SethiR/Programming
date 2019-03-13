@@ -1,3 +1,5 @@
+# Core platform and libraries
+
 ## Streams
 
 - Streams in java are ordered input and output data
@@ -124,10 +126,8 @@ catch{}
 
 **DEMO**
 
-Check stream --> slides and demos.
+Check stream --> slides and demos. The interface AutoCloseable has a method close. The try and catch block will auto call this method close() even if its not called explicitly so the resources are freed up. Also when you use try with resources you may get only 1 exception however there may be other exceptions which are not printed out. So in that case use method `getSuppressed` and you can loop on this and print out all the suppressed exceptions.
 
-The interface AutoCloseable has a method close. The try and catch block will auto call this method close() even if its not called explicitly so the resources are freed up. Also when you use try with resources you may get only 1 exception however there may be other exceptions which are not printed out. So in that case use method `getSuppressed` and you can loop on this and print out all the suppressed exceptions.
----
 
 
 ---
@@ -477,7 +477,211 @@ Log System
 - each logger instance is named
 - there is also a global logger `GLOBAL_LOGGER_NAME`
 
+
 Levels
+
 - Each log entry is associated with a level
 - Each logger has a capture level --> use `setLevel` method. The logger will ignore any entry below that level
--
+- Each level has a numeric value
+    - 7 basic log levels
+    - 2 special levels for Logger
+    - you can also define custom log levels (its rare)
+    - 1000 - SEVERE
+    - 900 - WARNING
+    - 800 - INFO
+    - 700 - CONFIGURATION
+    - 500 - FINE
+    - 400 - FINER
+    - 300 - FINEST
+    - entering - logs at fine level
+    - exiting - logs at fine level
+
+
+**Components of the log system**
+
+- Logger -> Accepts app calls
+- Handler -> Publishes logging info, a logger can have multiple handlers
+    - As logger can have multiple handlers you can set level for each handler. (which should be more restrictive than the logger level)
+- Formatter -> formats log info for publication. each handler has 1 formatter.
+
+(check slides as they have a good diagram to explain this)
+
+**Built in Handlers**
+
+- The built in handlers inherit from the Handler class
+- You can write custom handlers but mostly you will not
+    - ConsoleHandler --> writes to System.err
+    - StreamHandler --> writes to specified output stream
+    - SocketHandler --> writes to network socket
+    - FileHandler --> writes to 1 or more files
+        - can output to single file
+        - can output to rotating set of files
+            - specify size in bytes
+
+File Handler Substitution patterns values (check demo below)
+
+- / - Platform specific slash e.g. ./foo.txt
+- %T - writes to temp directory
+- %h - writes to home directory
+- %g - Rotating log generation
+
+**Built in formatters**
+
+- Inherit from formatter class
+- XMLFormatter
+    - Root element log
+    - each entry goes under named record
+- SimpleFormatter
+    - Formats content as simple text
+    - Format is customizable
+        - Uses standard formatting notation
+        - You can customize this using `java.util.logging.SimpleFormatter.format` -> pass value with Java -D option when run the program (check slides)
+
+
+**Log Configuration File**
+
+You can create a configuration file for your log system. Using configuration file is much simpler.
+
+```
+java.util.logging.ConsoleHandler.level = ALL
+...
+(check slide)
+```
+
+then when you launch the program launch with giving file details
+
+```Java
+java -Djava.util.logging.config.file = log.properties com.pluralsight.training.Main // (the last one is is the app name com.plu....)
+```
+
+**Logger Naming**
+
+- Implies a parent child relationship based on the name we give the loggers.
+- Naming should be hierarchical
+- dot seperates a level
+- generally tied to class's full name e.g. `com.sethirajat.training` `com.sethirajat.training.Main` `com.sethirajat.training.Student`.
+    - In the above case Main and Student will auto become child loggers of `com.sethirajat.training` and any log on the child will be logged on the parent also.
+
+Making the most of hierarchical system
+
+- If a logger level is null it inherits parents level
+- So we primarily set level on parents (and is usually restrictive)
+- if we need more detail then we can set more detailed level on the child logger
+- each logger also does not need to have a handler
+    - if there is no handler it still passes the info up to its parent which will log it
+    - if needed we can add handler to child and start logging at that level as well. (check slide as to how its usually set up)
+
+
+```Java
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.util.logging.*;
+
+public class LogDemo {
+
+    static Logger logger = LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME);  // static reference to a logger and it can now be used anywhere inside the application
+
+    public static void main(String[] args) {
+        logManagerDemo();
+    }
+
+    static void logManagerDemo(){
+        logger.log(Level.INFO, "My first log message");
+        logger.log(Level.INFO, "Another message");
+    }
+
+
+    // logp allows you to specify the class and method explicityly. log infers it.
+    static void logpDemo(){
+        logger.logp(Level.ALL, "LogDemo", "logpDemo", "Log message");  // logp supports parameters
+    }
+
+
+    // this method demostrates how you can piece the components of the logger yourself.
+    // There are 3 components 1) Logger 2) Handler 3) Formatter
+    // You can arrange them as shown below (check slides for diagram)
+    static void logComponentsDemo(){
+        Logger customLogger = Logger.getLogger("com.sethirajat");  // if this logger does not exist it will be created
+        Handler h = new ConsoleHandler();  // using a built in handler which outputs to console.
+        Formatter f = new SimpleFormatter(); // using a built in formatter
+        h.setFormatter(f);
+        customLogger.addHandler(h);
+        customLogger.setLevel(Level.ALL);
+        customLogger.log(Level.INFO, "We are logging this message");
+    }
+
+
+    // this method demonstrates how you can log to a file
+    static void FileHandlerDemo() throws IOException {
+        Logger customLogger = Logger.getLogger("com.sethirajat");
+        FileHandler h = new FileHandler();  // also can do new FileHandler("%h/myapp_%g.log", 1000, 4) --> pattern for
+                                            // file naming, limit, count (check official documentation by going to class or java docs.
+        h.setFormatter(new SimpleFormatter());
+        customLogger.addHandler(h);
+
+        customLogger.log(Level.INFO, "logging");
+
+    }
+
+}
+```
+
+---
+
+## Multi-threading and concurrency
+
+What is a process
+
+- instance of a program or application
+- has resources such as memory
+- has at least 1 thread
+
+
+What is a thread
+
+- It is a sequence of programmed instructions.
+- The thing that executes programs code
+- utilizes process resources.
+
+**Example problem that would benefit from multithreading**
+
+An `Adder` class takes in file with numbers and outputs the total in another file.
+
+In a loop we have 6 input files and the work is done sequentially. Since reading from file and writing from file is non cpu task the cpu is idle. so we can do this problem with multithreading approach.
+
+**Move to multithreading**
+
+Its a explicit choice. you need to break the problem into parts and hand it off for processing.
+
+Java provides high level and low level api's for this.
+
+
+
+<TODO>
+
+---
+
+## Runtime Info & Reflection
+
+Reflection provdies
+
+- Ability to examine types at runtime
+- Dynamically execute & access members
+
+Using reflection
+
+- can fully examine objects at runtime
+- interfaces implemented
+- members
+
+variety of uses
+
+- determine a types capability
+- tools development
+    - type inspector/browser
+    - Schema generation
+- construct instances
+- access fields
+- call methods
+
+Each type has a `Class` class instance. It describes the type in detial.
