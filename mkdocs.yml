@@ -2,10 +2,10 @@ site_name: Programming
 docs_dir: website
 
 # Theme configuration
-theme:
-  name: material
-  feature:
-    tabs: true
+theme: readthedocs
+  # name: material
+  # feature:
+  #   tabs: true
 
 
 markdown_extensions:

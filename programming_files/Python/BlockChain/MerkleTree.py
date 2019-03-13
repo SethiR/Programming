@@ -11,8 +11,9 @@ import hashlib
 class Node:
 
     def __init__(self, data):
+        pass
 
 
 
 class Block:
-    
+    pass
