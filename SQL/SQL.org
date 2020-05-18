@@ -1,0 +1,399 @@
+SQL (Structured Query Lanauage).
+
+There are many database which can be used to learn SQL. I am using
+Postgres. Postgres can be installed on Linux or Windows with ease. In
+this document I am using Linux (Ubuntu 20.04) to connect to Postgres-12
+using terminal.
+
+Once Postgres is installed open terminal to connect to postgres and
+begin.
+
+Connect to postgres.
+
+#+BEGIN_EXAMPLE
+    sudo -i -u postgres
+#+END_EXAMPLE
+
+Once you are connected to postgres you can go to psql prompt using
+=psql= command. As you see the prompt changes.
+
+#+BEGIN_EXAMPLE
+    postgres@X:~$ psql
+    psql (12.2 (Ubuntu 12.2-4))
+    Type "help" for help.
+
+    postgres=# 
+#+END_EXAMPLE
+
+List all databases.
+
+#+BEGIN_EXAMPLE
+    \l
+
+    postgres-# \l
+                                      List of databases
+       Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+    -----------+----------+----------+-------------+-------------+-----------------------
+     postgres  | postgres | UTF8     | en_CA.UTF-8 | en_CA.UTF-8 | 
+     template0 | postgres | UTF8     | en_CA.UTF-8 | en_CA.UTF-8 | =c/postgres          +
+               |          |          |             |             | postgres=CTc/postgres
+     template1 | postgres | UTF8     | en_CA.UTF-8 | en_CA.UTF-8 | =c/postgres          +
+               |          |          |             |             | postgres=CTc/postgres
+#+END_EXAMPLE
+
+Create a new database.
+
+#+BEGIN_EXAMPLE
+    postgres=# CREATE DATABASE test;
+    CREATE DATABASE
+#+END_EXAMPLE
+
+Drop a database
+
+#+BEGIN_EXAMPLE
+    postgres=# DROP DATABASE test;
+    DROP DATABASE
+#+END_EXAMPLE
+
+Using a particular database such as test
+
+#+BEGIN_EXAMPLE
+    postgres=# \c test
+    You are now connected to database "test" as user "postgres".
+#+END_EXAMPLE
+
+Creating a table
+
+#+BEGIN_EXAMPLE
+    test=# CREATE TABLE Customer(
+    test(#     ID INT PRIMARY KEY NOT NULL,
+    test(#     NAME TEXT NOT NULL
+    test(# );
+    CREATE TABLE
+#+END_EXAMPLE
+
+Checking tables in the db
+
+#+BEGIN_EXAMPLE
+    est=# \d
+              List of relations
+     Schema |   Name   | Type  |  Owner   
+    --------+----------+-------+----------
+     public | customer | table | postgres
+#+END_EXAMPLE
+
+Checking the details of a table.
+
+#+BEGIN_EXAMPLE
+    test=# \d customer
+                  Table "public.customer"
+     Column |  Type   | Collation | Nullable | Default 
+    --------+---------+-----------+----------+---------
+     id     | integer |           | not null | 
+     name   | text    |           | not null | 
+    Indexes:
+        "customer_pkey" PRIMARY KEY, btree (id)
+#+END_EXAMPLE
+
+Deleting a database, dropping a database.
+
+#+BEGIN_EXAMPLE
+    test=# drop table customer;
+    DROP TABLE
+    test=# \d
+    Did not find any relations.
+#+END_EXAMPLE
+
+Creating table and inserting data by hand gets very tedius thus we can
+download the northwind database from
+[[https://code.google.com/archive/p/northwindextended/downloads][here]]
+and load it into postgres.
+
+To load do the following - Download the SQL file and keep it in lets say
+downloads folder. - log into psql - load file using
+=\i /home/rs/Downlaods/northwind.postgre.sql=
+
+--------------
+
+Now that I know a little bit about Postgres I will return to standard
+SQL using the northwind database.
+
+#+BEGIN_QUOTE
+
+  #+BEGIN_QUOTE
+
+    #+BEGIN_QUOTE
+      Change here. Using postgres is getting too difficult because the
+      northwind database has quotes "" in table name which are creating
+      issues with query. Also there are user authorization issues which
+      is creating another issue so switching to SQLite3.
+    #+END_QUOTE
+  #+END_QUOTE
+#+END_QUOTE
+
+Using SQLite3 to create a .db using .sql file.
+
+#+BEGIN_EXAMPLE
+    sqlite3 northwind.db < Northwind.Sqlite3.sql
+#+END_EXAMPLE
+
+--------------
+
+A simple select statement
+
+#+BEGIN_SRC sql
+    select ContactName, City from Customers;
+#+END_SRC
+
+Select distince gives unique values.
+
+#+BEGIN_SRC sql
+    select DISTINCT City from Customers;
+    -- will first get distince cities and then count them, so you will have a total of unique values.
+    select count(DISTINCT City) from Customers; 
+#+END_SRC
+
+A simple where clause
+
+#+BEGIN_SRC sql
+    select * from Customers where Country = "Mexico"
+#+END_SRC
+
+The where clause can use ===, =>= etc... and =BETWEEN=, =LIKE= (for a
+pattern) and =IN= (To specify multiple possible values for a column)
+
+#+BEGIN_SRC sql
+    SELECT * FROM Products
+    WHERE Price BETWEEN 50 AND 60;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    WHERE City LIKE 's%';
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    WHERE City LIKE 's%v%';
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    WHERE City IN ('Paris','London');
+#+END_SRC
+
+SQL supports =AND=, =OR=, =NOT= operations primarly on the where clause.
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    WHERE City LIKE 's%' AND Country in ("Spain","Norwary");
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    WHERE Country='Germany' AND (City='Berlin' OR City='München'); 
+#+END_SRC
+
+The =ORDER BY= keyword is used to sort the result-set in ascending or
+descending order.
+
+#+BEGIN_SRC sql
+    select * from Customers order by city;
+#+END_SRC
+
+If you wish to sort by descending order
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    ORDER BY Country DESC;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    ORDER BY Country ASC, City DESC;
+#+END_SRC
+
+Inserting values into the database.
+
+#+BEGIN_SRC sql
+    INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+    VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+#+END_SRC
+
+It is not possible to test for NULL values with comparison operators,
+such as =, <, or <>.
+
+#+BEGIN_SRC sql
+    SELECT * FROM Customers
+    where city is null;
+#+END_SRC
+
+You can also use =IS NOT NULL= for checking non null values.
+
+Updating a row in the database.
+
+#+BEGIN_SRC sql
+    UPDATE Customers
+    SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+    WHERE CustomerID = 1;
+#+END_SRC
+
+Deleting from database is also pretty easy.
+
+#+BEGIN_SRC sql
+    DELETE FROM table_name WHERE condition;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    DELETE FROM Customers; -- deletes all records.
+#+END_SRC
+
+Limiting the number of rows which get returned. Not all database have
+the same syntax as below e.g. =LIMIT 10=, some of them have something
+like =SELECT TOP 10 FROM TABLE=
+
+#+BEGIN_SRC sql
+    SELECT column_name(s)
+    FROM table_name
+    WHERE condition
+    LIMIT number;
+#+END_SRC
+
+MIN and MAX. You can get min and max values directly from the database.
+
+#+BEGIN_SRC sql
+    SELECT MIN(Freight) from Orders where EmployeeId = 2;
+#+END_SRC
+
+SQL can do COUNT(), AVG() and SUM() functions. All of them are fairly
+similar.
+
+#+BEGIN_SRC sql
+    SELECT AVG(Freight) from Orders;
+#+END_SRC
+
+You can tack on where clause if necessary.
+
+SQL Wildcards
+
+Wildcard characters can be used with =LIKE= keyword or =NOT LIKE=
+keyword. The characters are database specific so check out the
+particular database manual.
+
+SQL aliases are used to give a table, column a temporary name.
+
+#+BEGIN_SRC sql
+    SELECT City AS cty, CompanyName AS cn
+    FROM Customers; 
+#+END_SRC
+
+*JOINS*
+
+#+BEGIN_SRC sql
+    SELECT Orders.OrderID,  Customers.ContactName, Orders.OrderDate
+    FROM Orders
+    INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+#+END_SRC
+
+- (INNER) JOIN: Returns records that have matching values in both tables
+- LEFT (OUTER) JOIN: Returns all records from the left table, and the
+  matched - records from the right table
+- RIGHT (OUTER) JOIN: Returns all records from the right table, and the
+  matched - records from the left table
+- FULL (OUTER) JOIN: Returns all records when there is a match in either
+  left or right table
+
+#+BEGIN_SRC sql
+    Select Orders.OrderDate, Orders.ShipCity, Customers.ContactName
+    from Orders
+    Inner join Customers ON orders.CustomerID=Customers.CustomerID
+#+END_SRC
+
+We can inner join multiple tables.
+
+#+BEGIN_SRC sql
+    SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+    FROM (  (Orders
+            INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+    INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID); 
+#+END_SRC
+
+The UNION operator is used to combine the result-set of two or more
+SELECT statements.
+
+#+BEGIN_SRC sql
+    Select * from Customers where CustomerID like "A%"
+    union
+    Select * from Customers where CustomerID like "B%"
+#+END_SRC
+
+The UNION operator selects only distinct values by default. To allow
+duplicate values, use =UNION ALL=
+
+The GROUP BY statement groups rows that have the same values into
+summary rows, like "find the number of customers in each country".The
+GROUP BY statement is often used with aggregate functions (COUNT, MAX,
+MIN, SUM, AVG) to group the result-set by one or more columns.
+
+#+BEGIN_SRC sql
+    SELECT COUNT(CustomerID), Country
+    FROM Customers
+    GROUP BY Country;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT COUNT(CustomerID), Country
+    FROM Customers
+    GROUP BY Country
+    ORDER BY COUNT(CustomerID) DESC;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+    LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+    GROUP BY ShipperName;
+#+END_SRC
+
+A stored procedure is a prepared SQL code that you can save, so the code
+can be reused over and over again. So if you have an SQL query that you
+write over and over again, save it as a stored procedure, and then just
+call it to execute it. You can also pass parameters to a stored
+procedure, so that the stored procedure can act based on the parameter
+value(s) that is passed.
+
+#+BEGIN_SRC sql
+    CREATE PROCEDURE SelectAllCustomers
+    AS
+    SELECT * FROM Customers
+    GO;
+#+END_SRC
+
+To execute the procedure.
+
+#+BEGIN_SRC sql
+    EXEC SelectAllCustomers; 
+#+END_SRC
+
+#+BEGIN_SRC sql
+    CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
+    AS
+    SELECT * FROM Customers WHERE City = @City
+    GO;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    EXEC SelectAllCustomers @City = 'London'; 
+#+END_SRC
+
+Another example
+
+#+BEGIN_SRC sql
+    CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
+    AS
+    SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
+    GO;
+#+END_SRC
+
+#+BEGIN_SRC sql
+    EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP'; 
+#+END_SRC
