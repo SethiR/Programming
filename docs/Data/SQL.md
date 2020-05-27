@@ -10,14 +10,14 @@ begin.
 
 Connect to postgres.
 
-``` {.example}
+```sh
 sudo -i -u postgres
 ```
 
 Once you are connected to postgres you can go to psql prompt using
 `psql` command. As you see the prompt changes.
 
-``` {.example}
+```sh
 postgres@X:~$ psql
 psql (12.2 (Ubuntu 12.2-4))
 Type "help" for help.
@@ -27,7 +27,7 @@ postgres=#
 
 List all databases.
 
-``` {.example}
+```sh
 \l
 
 postgres-# \l
@@ -43,28 +43,28 @@ postgres-# \l
 
 Create a new database.
 
-``` {.example}
+```sh
 postgres=# CREATE DATABASE test;
 CREATE DATABASE
 ```
 
 Drop a database
 
-``` {.example}
+```sh
 postgres=# DROP DATABASE test;
 DROP DATABASE
 ```
 
 Using a particular database such as test
 
-``` {.example}
+```sh
 postgres=# \c test
 You are now connected to database "test" as user "postgres".
 ```
 
 Creating a table
 
-``` {.example}
+```sh
 test=# CREATE TABLE Customer(
 test(#     ID INT PRIMARY KEY NOT NULL,
 test(#     NAME TEXT NOT NULL
@@ -74,7 +74,7 @@ CREATE TABLE
 
 Checking tables in the db
 
-``` {.example}
+```sh
 est=# \d
           List of relations
  Schema |   Name   | Type  |  Owner   
@@ -84,7 +84,7 @@ est=# \d
 
 Checking the details of a table.
 
-``` {.example}
+```sh
 test=# \d customer
               Table "public.customer"
  Column |  Type   | Collation | Nullable | Default 
@@ -97,7 +97,7 @@ Indexes:
 
 Deleting a database, dropping a database.
 
-``` {.example}
+```sh
 test=# drop table customer;
 DROP TABLE
 test=# \d
@@ -131,7 +131,7 @@ SQL using the northwind database.
 
 Using SQLite3 to create a .db using .sql file.
 
-``` {.example}
+```sh
 sqlite3 northwind.db < Northwind.Sqlite3.sql
 ```
 
@@ -139,13 +139,13 @@ sqlite3 northwind.db < Northwind.Sqlite3.sql
 
 A simple select statement
 
-``` {.sql}
+```SQL
 select ContactName, City from Customers;
 ```
 
 Select distince gives unique values.
 
-``` {.sql}
+```SQL
 select DISTINCT City from Customers;
 -- will first get distince cities and then count them, so you will have a total of unique values.
 select count(DISTINCT City) from Customers; 
@@ -153,41 +153,41 @@ select count(DISTINCT City) from Customers;
 
 A simple where clause
 
-``` {.sql}
+```SQL
 select * from Customers where Country = "Mexico"
 ```
 
 The where clause can use `=`, `>` etc... and `BETWEEN`, `LIKE` (for a
 pattern) and `IN` (To specify multiple possible values for a column)
 
-``` {.sql}
+```SQL
 SELECT * FROM Products
 WHERE Price BETWEEN 50 AND 60;
 ```
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 WHERE City LIKE 's%';
 ```
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 WHERE City LIKE 's%v%';
 ```
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 WHERE City IN ('Paris','London');
 ```
 
 SQL supports `AND`, `OR`, `NOT` operations primarly on the where clause.
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 WHERE City LIKE 's%' AND Country in ("Spain","Norwary");
 ```
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 WHERE Country='Germany' AND (City='Berlin' OR City='München'); 
 ```
@@ -195,25 +195,25 @@ WHERE Country='Germany' AND (City='Berlin' OR City='München');
 The `ORDER BY` keyword is used to sort the result-set in ascending or
 descending order.
 
-``` {.sql}
+```SQL
 select * from Customers order by city;
 ```
 
 If you wish to sort by descending order
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 ORDER BY Country DESC;
 ```
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 ORDER BY Country ASC, City DESC;
 ```
 
 Inserting values into the database.
 
-``` {.sql}
+```SQL
 INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
 VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
 ```
@@ -221,7 +221,7 @@ VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway
 It is not possible to test for NULL values with comparison operators,
 such as =, \<, or \<\>.
 
-``` {.sql}
+```SQL
 SELECT * FROM Customers
 where city is null;
 ```
@@ -230,7 +230,7 @@ You can also use `IS NOT NULL` for checking non null values.
 
 Updating a row in the database.
 
-``` {.sql}
+```SQL
 UPDATE Customers
 SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
 WHERE CustomerID = 1;
@@ -238,11 +238,11 @@ WHERE CustomerID = 1;
 
 Deleting from database is also pretty easy.
 
-``` {.sql}
+```SQL
 DELETE FROM table_name WHERE condition;
 ```
 
-``` {.sql}
+```SQL
 DELETE FROM Customers; -- deletes all records.
 ```
 
@@ -250,7 +250,7 @@ Limiting the number of rows which get returned. Not all database have
 the same syntax as below e.g. =LIMIT 10=, some of them have something
 like `SELECT TOP 10 FROM TABLE`
 
-``` {.sql}
+```SQL
 SELECT column_name(s)
 FROM table_name
 WHERE condition
@@ -259,14 +259,14 @@ LIMIT number;
 
 MIN and MAX. You can get min and max values directly from the database.
 
-``` {.sql}
+```SQL
 SELECT MIN(Freight) from Orders where EmployeeId = 2;
 ```
 
 SQL can do COUNT(), AVG() and SUM() functions. All of them are fairly
 similar.
 
-``` {.sql}
+```SQL
 SELECT AVG(Freight) from Orders;
 ```
 
@@ -280,14 +280,14 @@ particular database manual.
 
 SQL aliases are used to give a table, column a temporary name.
 
-``` {.sql}
+```SQL
 SELECT City AS cty, CompanyName AS cn
 FROM Customers; 
 ```
 
 **JOINS**
 
-``` {.sql}
+```SQL
 SELECT Orders.OrderID,  Customers.ContactName, Orders.OrderDate
 FROM Orders
 INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
@@ -302,7 +302,7 @@ INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
 -   FULL (OUTER) JOIN: Returns all records when there is a match in
     either left or right table
 
-``` {.sql}
+```SQL
 Select Orders.OrderDate, Orders.ShipCity, Customers.ContactName
 from Orders
 Inner join Customers ON orders.CustomerID=Customers.CustomerID
@@ -310,7 +310,7 @@ Inner join Customers ON orders.CustomerID=Customers.CustomerID
 
 We can inner join multiple tables.
 
-``` {.sql}
+```SQL
 SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
 FROM (  (Orders
         INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
@@ -320,7 +320,7 @@ INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
 The UNION operator is used to combine the result-set of two or more
 SELECT statements.
 
-``` {.sql}
+```SQL
 Select * from Customers where CustomerID like "A%"
 union
 Select * from Customers where CustomerID like "B%"
@@ -334,20 +334,20 @@ summary rows, like \"find the number of customers in each country\".The
 GROUP BY statement is often used with aggregate functions (COUNT, MAX,
 MIN, SUM, AVG) to group the result-set by one or more columns.
 
-``` {.sql}
+```SQL
 SELECT COUNT(CustomerID), Country
 FROM Customers
 GROUP BY Country;
 ```
 
-``` {.sql}
+```SQL
 SELECT COUNT(CustomerID), Country
 FROM Customers
 GROUP BY Country
 ORDER BY COUNT(CustomerID) DESC;
 ```
 
-``` {.sql}
+```SQL
 SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
 LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
 GROUP BY ShipperName;
@@ -360,7 +360,7 @@ call it to execute it. You can also pass parameters to a stored
 procedure, so that the stored procedure can act based on the parameter
 value(s) that is passed.
 
-``` {.sql}
+```SQL
 CREATE PROCEDURE SelectAllCustomers
 AS
 SELECT * FROM Customers
@@ -369,30 +369,30 @@ GO;
 
 To execute the procedure.
 
-``` {.sql}
+```SQL
 EXEC SelectAllCustomers; 
 ```
 
-``` {.sql}
+```SQL
 CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
 AS
 SELECT * FROM Customers WHERE City = @City
 GO;
 ```
 
-``` {.sql}
+```SQL
 EXEC SelectAllCustomers @City = 'London'; 
 ```
 
 Another example
 
-``` {.sql}
+```SQL
 CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
 AS
 SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
 GO;
 ```
 
-``` {.sql}
+```SQL
 EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP'; 
 ```
