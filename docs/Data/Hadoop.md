@@ -1,5 +1,62 @@
 # Hadoop
 
+## Installing Hadoop
+
+__Installing Java__
+
+Installing Java1.8
+```sh
+sudo apt install openjdk-8-jdk  
+```
+
+Check java version
+```sh
+java -version
+```
+
+Add JAVA_HOME to /etc/environment
+```sh
+vim /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+```
+
+Source the envirounment file again
+```sh
+source /etc/environment
+```
+
+make sure java home details are returned.
+```sh
+$echo JAVA_HOME
+```
+
+If you have multiple java versions installed then you can refer to this [link](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to set default.
+
+__Installing Hadoop__
+
+
+_bashrc add java home_
+
+
+_bashrc add hadoop variables_
+
+
+_Create hdfs dirs_
+
+
+- data directory
+- Namenode directory
+- Datanode directory
+
+when I create these directories these are blank and do not contain anything (just blank of level folders, when hadoop uses them then it adds information to this directory.)
+
+
+
+
+<<<<<< TODO - https://www.youtube.com/watch?v=l2n124ioO1I >>>>>
+
+
+
 ## Technology Stack
 
 - [Ambari](https://ambari.apache.org/) : making hadoop management simpler

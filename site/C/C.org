@@ -1,0 +1,138 @@
+* Keywords
+  :PROPERTIES:
+  :CUSTOM_ID: keywords
+  :END:
+
+- auto
+- else
+- long
+- switch
+- break
+- enum
+- register
+- typedef
+- case
+- extern
+- return
+- union
+- char
+- float
+- short
+- unsigned
+- const
+- for
+- signed
+- void
+- continue
+- goto
+- sizeof
+- volatile
+- default
+- if
+- static
+- while
+- do
+- int
+- struct
+- _Packed
+- double
+
+* Types
+  :PROPERTIES:
+  :CUSTOM_ID: types
+  :END:
+
+- char
+
+  - char
+  - signed char
+  - unsigned char
+
+- int
+
+  - int
+  - unsigned int
+  - short
+  - unsigned short
+  - long
+  - unsigned long
+
+- float
+
+  - float
+  - double
+  - long double
+
+* Structure
+  :PROPERTIES:
+  :CUSTOM_ID: structure
+  :END:
+
+#+BEGIN_SRC C
+    typedef struct {
+        float x;
+        float y;    
+    } point;
+#+END_SRC
+
+*Program*
+
+- =size_t= - size_t can store the maximum size of a theoretically
+  possible object of any type. E.g. for 64 bit computers it will store
+  64 bit.
+- =++i= is a little bit faster becase it just increments where as =i++=
+  copies and then increments.
+
+#+BEGIN_SRC C
+    #include <stdio.h>
+
+    int main(){
+
+        for(size_t i=0; i<=5; ++i){
+            printf("%zu\n",i);
+        }
+
+    }
+#+END_SRC
+
+*Program*
+
+As =size_t= is non negative this program will terminate once i reaches
+0, else would have been like an endless loop.
+
+#+BEGIN_SRC C
+    #include <stdio.h>
+
+    int main(){
+        for(size_t i = 10; i<=10; --i){
+            printf("%zu\n",i);
+        }
+    }
+#+END_SRC
+
+*Program*
+
+Printing floats with precesion.
+
+#+BEGIN_SRC C
+    #include <stdio.h>
+
+    int main(){
+        double eps = 1E-9;
+
+        printf("%.12f", eps);  // 0.000000001000
+
+    }
+#+END_SRC
+
+*Program*
+
+#+BEGIN_SRC C
+    for (;;) {  // its equivalent to while(true)
+        double prod = a * x ;
+        if ( fabs (1.0 - prod ) < eps ) {
+            break ;
+        }
+        x *= (2.0 - prod ) ;
+    }
+#+END_SRC

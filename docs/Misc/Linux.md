@@ -1,5 +1,21 @@
 # Linux
 
+## File structure
+
+Google : "Linx Filesystem Hierarchy Standard" to get the big pdf which explains the file system of a linux system. However its summarized in 3.2 Requirements section as to which root directory is for what purpose.
+
+The root system starts at `/`. Below listed are some of the important dirs and their uses.
+
+- boot - files which boots your system. (It also has files which the grub bootloader reads)
+- dev - files that represent devices. e.g. HardDrive etc...
+- etc - configuration directory. (System and applications) When you remove a package via `apt remove` it does not remove the configuration files for that package. You can use `--purge` to remove the configurations files from `/etc/`
+- lib/lib64 - library files e.g. packages or shared libraries
+- mnt/media - you attach storage media to the system. (Could be a hadoop cluster or a flash drive). Where media is more removable but mnt is for network related.
+- proc - process system related files
+- root - root user does not a dir in `/home`. It stores in `/root`
+- tmp - where temporary files live
+- var - There are various dirs in it but check out `/var/log`. The linux system pretty much logs everything and you can find some details here. (Mostly used for trouble shooting)
+
 ## Useful commands
 
 __Tar__
@@ -29,10 +45,15 @@ tar tvf del.tar
 
 __grep__
 
-Search for a given string in a file.
+Search for a given string in a file or content in a file.
 
 ```sh
 grep "@" lori.christmas.txt
+```
+
+-r is recursive.
+```sh
+grep -r "error" /var/log/syslog
 ```
 
 ---
@@ -123,6 +144,25 @@ __chmod__
 
 Change mode (permissions)
 
+Total 9 charaters govern the permissions (apart from the 1 on the left which tells us that whether its a direcotry (d) file (-) or a symlink (l)). The permissions are divided into 3 of 3 groups (total 9) with user, group and others in that order.
+
+- First 3 - (Read, Write, Execute) - for user.
+- Next 3 - (Read, Write, Execute) - for group.
+- Last 3 - (Read, Write, Execute) - for others (eveyone else).
+
+Each operation has a number assigned to it.
+
+- Read = 4
+- Write = 2
+- Execute = 1
+
+The below command gives all permissions to everyone.
+```sh
+chown 777 abc.txt
+```
+
+Note : If you do not have execute on a directory then you cannot cd into it. i.e. you cannot make it your current working directory.
+
 ---
 
 __chown__
@@ -147,7 +187,208 @@ Whatis command displays a single line description about a command.
 ---
 
 
+__su__
 
+You can switch user using the `su` command.
+
+e.g.
+
+```sh
+su hadoop
+```
+
+or if you wish to login as root (not you executing as root priviledges)
+
+```sh
+sudo su -
+```
+
+---
+
+__systemctl__
+
+Use `systemctl` command to check system services. Some of the options are listed below.
+
+- start
+- stop
+- status
+- disable - when the server restarts this service will not auto run
+- enable - when the server restarts this service will auto run
+
+---
+
+__history__
+
+The `history` command gives you the list of all commands you have executed. You can also grep through it as shoown below
+
+```sh
+history | grep apt
+```
+
+The history command output -- each command is associated with a number. You can reexeucte that command using the `!number` as shown below 
+
+```sh
+!162
+```
+
+---
+
+__head tail__
+
+The cat command shows you the whole file, but head or tail and show you (by default 10) first or last lines. You can customize it with `-n 100` to see 100 (first or last) lines.
+
+You can also use `-f` to follow a file. (This will not return you the prompt back but will update your terminal window with new lines added to this file so its like a live debugger)
+
+For example lets follow the auth log file
+```sh
+tail -f /var/log/auth.log
+```
+
+---
+
+__journalctl__
+
+This is (a upcoming) command where you can check out the logs of a particular service.
+
+```sh
+journalctl -u apache2
+```
+
+To follow logs
+
+```sh
+journalctl -fu apache2
+```
+
+---
+
+__df__
+
+Disk usage command. Tack on -h to get human readable output (also you can do that with ls e.g. `ls -lh`)
+
+
+```sh
+df -h
+```
+
+Gives details of that dir and sub dir.
+```sh
+du -hsc /home/*
+```
+
+You can also use package `ncdu` to get more detail information about the file system disk usage.
+
+---
+
+__find__
+
+File any file which is in that dir and has name ending in .log Use (-iname) for case insensitive.
+```sh
+find /var/log -name "*.log"
+```
+! acts as a negation. Find which does not end in .log
+```sh
+find /var/log ! -name "*.log"
+```
+
+The find command by default does not distinguish b/w files and directory. You can use the `-type d` for dirs and `-type f` for files.
+
+
+```sh
+find /etc -type d -name "x*"
+```
+
+Find files which were modified in certain duration (days)
+```sh
+sudo find /home/rs -mtime 1
+```
+
+Find all markdown files which were modified within last 3 mins
+```sh
+find /home/rs -cmin -3 -name "*.md"
+```
+
+Find command gets advanced and here is a good example below. Find all dirs in the current dir, where permission is not 755 and execute chmod on those dirs (and not files) to make them 755
+
+```sh
+find . -type d ! -perm 755 -exec chmod 755 {} \;
+```
+
+---
+
+
+## Misc topics
+
+### Checking the logs
+
+Check out the `/var/logs/auth*` file to check out. This file logs like package installs, login failures, sudo access and doing stuff etc... and if you see that someone did something you can go to their history file and check out what command they ran.
+
+Check out the `syslog` file in the same place. It also logs all types of things the system does. (e.g. start service, schedule tasks, configuration failures for applications)
+
+Check out hte `apt` dir in `/var/logs` to check out all apt related logs. (only for deb based system which use apt, other distros may have something different e.g. yum or arch equivalent)
+
+### Alias
+
+You can create your own shorthand for long commands.
+
+```sh
+alias cb="vim ~/.bashrc"
+```
+When you create these aliases, they are not stored on the disk and are lost when you close the shell. If you wish to store them you need to store them in your .bashrc file.
+
+### Working with streams
+
+There are total 3 types of streams
+
+- Standard input - Assigned 0
+- Standard output - Assigned 1
+- Standard error - Assigned 2
+
+Any output which is displayed on the terminal is part of the standard output `stdout`.
+
+E.g. take the output produced by the command and save in hello.txt. (As you see 1 is for standard output)
+
+```sh
+echo "Hello World" 1> hello.txt
+```
+
+Another example - When you run a find command some of the dirs you will not have access to. So lets say you only wish to see the dirs which do not result in error, then you can send the error entries to `/dev/null` which is like a black hole in linux. Anything which is sent there (output or file) is effectively deleted or lost.
+
+```sh
+find / -name "log" 2> /dev/null
+    /run/log
+    /usr/src/linux-headers-5.4.0-33-generic/include/config/dm/log
+    /usr/src/linux-headers-5.4.0-33-generic/include/config/nf/log
+    /usr/src/linux-headers-5.4.0-33-generic/include/config/log
+    /usr/src/linux-headers-5.4.0-33-generic/include/config/printk/safe/log
+    /sys/module/vboxguest/parameters/log
+```
+
+
+Find all log files and redirect standard output `>` (by default its assumed to be 1 if not specified) and also send standard error (2) to standard output(1). So results.txt will contain dirs which you have access to and dirs which you do not have access to.
+```sh
+find / -name "log" > results.txt 2>&1
+```
+
+
+Another example : push standard output first (files in all dirs which you have access to) and then append standard error (all dirs which you do not have access to) in results.txt
+
+```sh
+find / -name "log" > results.txt 2>>results.txt
+```
+
+A quick example of standard input command.
+
+```sh
+cat < results.txt
+```
+
+### Background and foreground
+
+
+- Exit long sunning process - `Ctrl + z`
+- Get back to long running progress - `fg`
+- To check applications in backgound run `job` command
 
 ## References
 - [Linx man pages](https://www.kernel.org/doc/man-pages/)
