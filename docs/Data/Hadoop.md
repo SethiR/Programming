@@ -6,7 +6,7 @@ __Installing Java__
 
 Installing Java1.8
 ```sh
-sudo apt install openjdk-8-jdk  
+sudo apt install openjdk-8-jdk
 ```
 
 Check java version
@@ -19,6 +19,10 @@ Add JAVA_HOME to /etc/environment
 vim /etc/environment
 JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
 ```
+or
+```sh
+echo "JAVA_HOME=$(which java)" | sudo tee -a /etc/environment
+```
 
 Source the envirounment file again
 ```sh
@@ -27,22 +31,42 @@ source /etc/environment
 
 make sure java home details are returned.
 ```sh
-$echo JAVA_HOME
+echo $JAVA_HOME
 ```
 
 If you have multiple java versions installed then you can refer to this [link](https://linuxize.com/post/install-java-on-ubuntu-20-04/) to set default.
 
 __Installing Hadoop__
 
+You can check out the video which I referred while installing hadoop on ubuntu [here](https://www.youtube.com/watch?v=l2n124ioO1I)
 
-_bashrc add java home_
+_Create a user hadoop_
 
+```sh
+adduser hadoop
+```
+_download hadoop_
+You can use `wget` and download the tarball hadoop file on /usr/local or /opt.
 
-_bashrc add hadoop variables_
+_extract the tarball file_
+
+```sh
+tar -xvf <filename>
+```
+
+_create symlink_
+
+For easier access create a symlink of hadoop to actual hadoop extracted folder. (This is nice to have as its easier to refer to /hadoop vs /hadoop-2.9.2 etc..)
+
+```sh
+sudo ln -s ./hadoop-2.9.2 hadoo
+```
+
+_bashrc add env variables_
+Configure the java home and hadoop env variables in your bashrc or /etc/envirounment file for system wide. For all (this and below mentioned config files) check out the sub dir in this folder.
 
 
 _Create hdfs dirs_
-
 
 - data directory
 - Namenode directory
@@ -165,3 +189,67 @@ Was looking at running my first hadoop program using java.
 https://examples.javacodegeeks.com/enterprise-java/apache-hadoop/hadoop-hello-world-example/
 
 ---
+
+
+## Parquet and Avro
+
+Hadoop file formats.
+
+- Avro is a row based storage format.
+- Parquet is a col based storage format.
+- They are self describing formats.
+- They use compression
+- Parquet is geared towards analytical query. e.g. Write once and read many times. Magnitude slower than Avro on the write aspects.
+- Avro is good for write operations (faster than Parquet), querying are slower. Optimized for write operations. 
+- Avro has been around longer than Parquet.
+- Avro and parquet support idea of schema evolution. (Lets say you have a order system, today you capture 100 fields for each order. You write that order to hadoop but tomorrow you add 10 more fields which means now for all new orders you will have 100 fields which means schema has evolved). Parquet does not fully support all types of schema evoloution, only supports append (This video was 2017 so may have changed). i.e. you can add cols, but cannot change cols. Where as Avro supports much feature rich schema evolution.
+- General guideline is if you have a workload for analytics you should consider parquet. Where as for ETL workloads Avro is much preferred. (As an example if you have a analyst who does `SELECT A, B, C from XYZ` then these types of queries are better suited for Parquet, however if you have queries which are scanning the entire table lets say reading each row and then transforming it etc... then in those cases Avro is preferred.)
+- Its common in data lake where you do not necessary know the down stream applications which are going to consume your data from your hadoop cluster in those scenarios you can duplicate the data in both formats.
+- Its also common the primary data format is Avro because of schema evolution. You can also create Parquet on demand based on the query engine you are using (e.g. Impala which works with Parquet)
+
+
+### Parquet
+
+- Parquet uses a hybrid partitioning model. Where the data is stored as cols (every n row where n could be lets say 3). Its sort of a hybrid storage model. (row and col combined.)
+- A parquet file is not actually a single file but is a dir (may be with sub dirs)
+
+```
+./examplefile/
+/examplefile/part-000-xxx-yyy-zzz.snappy.parquet
+/examplefile/part-111-xxx-yyy-zzz.snappy.parquet
+```
+
+Data organization
+
+![](https://raw.githubusercontent.com/apache/parquet-format/master/doc/images/FileLayout.gif)
+
+- Row groups - horizontal partitioning (default 128MB) - A single file can have multiple row groups.
+- Column chunks - Columnar storage
+- Actual data in pages (default 1MB)
+    - Data page will have metadata as well such as min, max value total # of values etc...
+- Metadata is also stored at row group level which is stored in the footer.
+
+
+_Encdoing schemes_
+
+There are 2 primary encoding schemes (in actual there are more than 2)
+- Plain encoding
+- RLE_Dictionary encoding
+
+![](https://miro.medium.com/max/3566/1*LcqLXYUMybED7IdE-BsmUg.png)
+
+- There is only 1 dictionary per col chunk.
+- If your dict gets too big it will default to plain encoding. There is a configurable parameter `parquet.dictionary.page.size` which you can customize.
+- You can also decrease row group size `parquet.block.size`
+
+You can use parquet.tools to inspect a parquet file.
+
+As we stated that each row group has the min/max stats in the footer. If you enable the `spark.sql.parkquet.filterPushdown` then when do you queries like `select * from x where y > 100` it will read the footer and check if that row group (which is 128MB) is worth reading or not. Which can amount to saving significant read time/data.
+
+Parquet can also check values in the dicts to see if the row group needs to be read. Use the config `parquet.filter.dictionary.enabled` for controlling the behaviour.
+
+You can also save a parquet file by a particular column e.g. by date, so this column will become a part of your file directory structure speeding up access. `df.write.partitionby("date").parquet(...)`. If you know the query beforehand then this will help as it will only read the relevant files by the specified date.
+
+To have good optimization avoid having too many small files as every file brings overhead. You can all `df.repartition(...).write.parquet(...)`.
+
+The opposite is also true as to avoid few huge files.

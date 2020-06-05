@@ -333,6 +333,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-hadoop" class="md-nav__link">
+    Installing Hadoop
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technology-stack" class="md-nav__link">
     Technology Stack
   </a>
@@ -1166,6 +1173,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-hadoop" class="md-nav__link">
+    Installing Hadoop
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#technology-stack" class="md-nav__link">
     Technology Stack
   </a>
@@ -1210,6 +1224,46 @@
                 
                 
                 <h1 id="hadoop">Hadoop</h1>
+<h2 id="installing-hadoop">Installing Hadoop</h2>
+<p><strong>Installing Java</strong></p>
+<p>Installing Java1.8</p>
+<div class="codehilite"><pre><span></span><code>sudo apt install openjdk-8-jdk  
+</code></pre></div>
+
+
+<p>Check java version</p>
+<div class="codehilite"><pre><span></span><code>java -version
+</code></pre></div>
+
+
+<p>Add JAVA_HOME to /etc/environment</p>
+<div class="codehilite"><pre><span></span><code>vim /etc/environment
+<span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java&quot;</span>
+</code></pre></div>
+
+
+<p>Source the envirounment file again</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">source</span> /etc/environment
+</code></pre></div>
+
+
+<p>make sure java home details are returned.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">$echo</span> JAVA_HOME
+</code></pre></div>
+
+
+<p>If you have multiple java versions installed then you can refer to this <a href="https://linuxize.com/post/install-java-on-ubuntu-20-04/">link</a> to set default.</p>
+<p><strong>Installing Hadoop</strong></p>
+<p><em>bashrc add java home</em></p>
+<p><em>bashrc add hadoop variables</em></p>
+<p><em>Create hdfs dirs</em></p>
+<ul>
+<li>data directory</li>
+<li>Namenode directory</li>
+<li>Datanode directory</li>
+</ul>
+<p>when I create these directories these are blank and do not contain anything (just blank of level folders, when hadoop uses them then it adds information to this directory.)</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt; TODO - https://www.youtube.com/watch?v=l2n124ioO1I &gt;&gt;&gt;&gt;&gt;</p>
 <h2 id="technology-stack">Technology Stack</h2>
 <ul>
 <li><a href="https://ambari.apache.org/">Ambari</a> : making hadoop management simpler</li>

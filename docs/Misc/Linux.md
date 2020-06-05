@@ -16,6 +16,18 @@ The root system starts at `/`. Below listed are some of the important dirs and t
 - tmp - where temporary files live
 - var - There are various dirs in it but check out `/var/log`. The linux system pretty much logs everything and you can find some details here. (Mostly used for trouble shooting)
 
+
+### Env variables
+
+Check this [link](https://www.tecmint.com/set-unset-environment-variables-in-linux/) for details.
+
+- `.bashrc` - This file is user specific file that gets loaded each time user creates a new local session i.e. in simple words, opens a new terminal. All environment variables created in this file would take effect every time a new local session is started.
+- `.bash_profile` - This file is user specific remote login file. Environment variables listed in this file are invoked every time the user is logged in remotely i.e. using ssh session. If this file is not present, system looks for either .bash_login or .profile files.
+- `/etc/envirounment` - This file is system wide file for creating, editing or removing any environment variables. Environment variables created in this file are accessible all throughout the system, by each and every user, both locally and remotely.
+- `/etc/bash.bashrc` - System wide bashrc file. This file is loaded once for every user, each time that user opens a local terminal session. Environment variables created in this file are accessible for all users but only through local terminal session. When any user on that machine is accessed remotely via a remote login session, these variables would not be visible.
+- `/etc/profile` - System wide profile file. All the variables created in this file are accessible by every user on the system, but only if that user’s session is invoked remotely, i.e. via remote login. Any variable in this file will not be accessible for local login session i.e. when user opens a new terminal on his local system.
+
+
 ## Useful commands
 
 __Tar__
