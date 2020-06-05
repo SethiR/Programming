@@ -45,10 +45,4 @@
 		<name>yarn.resourcemanager.address</name>
 		<value>127.0.0.1:8050</value>
 	</property>
-
-	<property>
-		<name></name>
-		<value></value>
-	</property>
-
 </configuration>

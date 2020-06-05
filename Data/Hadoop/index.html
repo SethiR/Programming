@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
     
     
       
@@ -19,14 +19,14 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.18ac144a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.616af814.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
       
         
         
-        <meta name="theme-color" content="">
+        <meta name="theme-color" content="#009688">
       
     
     
@@ -49,7 +49,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="red">
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="red">
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -367,6 +367,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#parquet-and-avro" class="md-nav__link">
+    Parquet and Avro
+  </a>
+  
+    <nav class="md-nav" aria-label="Parquet and Avro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parquet" class="md-nav__link">
+    Parquet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -382,6 +402,30 @@
   <li class="md-nav__item">
     <a href="../SQL/" title="SQL" class="md-nav__link">
       SQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Spark/" title="Spark" class="md-nav__link">
+      Spark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../scala/" title="Scala" class="md-nav__link">
+      Scala
     </a>
   </li>
 
@@ -1207,6 +1251,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#parquet-and-avro" class="md-nav__link">
+    Parquet and Avro
+  </a>
+  
+    <nav class="md-nav" aria-label="Parquet and Avro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parquet" class="md-nav__link">
+    Parquet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1227,7 +1291,7 @@
 <h2 id="installing-hadoop">Installing Hadoop</h2>
 <p><strong>Installing Java</strong></p>
 <p>Installing Java1.8</p>
-<div class="codehilite"><pre><span></span><code>sudo apt install openjdk-8-jdk  
+<div class="codehilite"><pre><span></span><code>sudo apt install openjdk-8-jdk
 </code></pre></div>
 
 
@@ -1242,20 +1306,44 @@
 </code></pre></div>
 
 
+<p>or</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;JAVA_HOME=</span><span class="k">$(</span>which java<span class="k">)</span><span class="s2">&quot;</span> <span class="p">|</span> sudo tee -a /etc/environment
+</code></pre></div>
+
+
 <p>Source the envirounment file again</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">source</span> /etc/environment
 </code></pre></div>
 
 
 <p>make sure java home details are returned.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">$echo</span> JAVA_HOME
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
 </code></pre></div>
 
 
 <p>If you have multiple java versions installed then you can refer to this <a href="https://linuxize.com/post/install-java-on-ubuntu-20-04/">link</a> to set default.</p>
 <p><strong>Installing Hadoop</strong></p>
-<p><em>bashrc add java home</em></p>
-<p><em>bashrc add hadoop variables</em></p>
+<p>You can check out the video which I referred while installing hadoop on ubuntu <a href="https://www.youtube.com/watch?v=l2n124ioO1I">here</a></p>
+<p><em>Create a user hadoop</em></p>
+<div class="codehilite"><pre><span></span><code>adduser hadoop
+</code></pre></div>
+
+
+<p><em>download hadoop</em>
+You can use <code>wget</code> and download the tarball hadoop file on /usr/local or /opt.</p>
+<p><em>extract the tarball file</em></p>
+<div class="codehilite"><pre><span></span><code>tar -xvf &lt;filename&gt;
+</code></pre></div>
+
+
+<p><em>create symlink</em></p>
+<p>For easier access create a symlink of hadoop to actual hadoop extracted folder. (This is nice to have as its easier to refer to /hadoop vs /hadoop-2.9.2 etc..)</p>
+<div class="codehilite"><pre><span></span><code>sudo ln -s ./hadoop-2.9.2 hadoo
+</code></pre></div>
+
+
+<p><em>bashrc add env variables</em>
+Configure the java home and hadoop env variables in your bashrc or /etc/envirounment file for system wide. For all (this and below mentioned config files) check out the sub dir in this folder.</p>
 <p><em>Create hdfs dirs</em></p>
 <ul>
 <li>data directory</li>
@@ -1348,6 +1436,59 @@ drwxr-xr-x   - maria_dev hdfs          <span class="m">0</span> <span class="m">
 <p>Was looking at running my first hadoop program using java.
 https://examples.javacodegeeks.com/enterprise-java/apache-hadoop/hadoop-hello-world-example/</p>
 <hr />
+<h2 id="parquet-and-avro">Parquet and Avro</h2>
+<p>Hadoop file formats.</p>
+<ul>
+<li>Avro is a row based storage format.</li>
+<li>Parquet is a col based storage format.</li>
+<li>They are self describing formats.</li>
+<li>They use compression</li>
+<li>Parquet is geared towards analytical query. e.g. Write once and read many times. Magnitude slower than Avro on the write aspects.</li>
+<li>Avro is good for write operations (faster than Parquet), querying are slower. Optimized for write operations. </li>
+<li>Avro has been around longer than Parquet.</li>
+<li>Avro and parquet support idea of schema evolution. (Lets say you have a order system, today you capture 100 fields for each order. You write that order to hadoop but tomorrow you add 10 more fields which means now for all new orders you will have 100 fields which means schema has evolved). Parquet does not fully support all types of schema evoloution, only supports append (This video was 2017 so may have changed). i.e. you can add cols, but cannot change cols. Where as Avro supports much feature rich schema evolution.</li>
+<li>General guideline is if you have a workload for analytics you should consider parquet. Where as for ETL workloads Avro is much preferred. (As an example if you have a analyst who does <code>SELECT A, B, C from XYZ</code> then these types of queries are better suited for Parquet, however if you have queries which are scanning the entire table lets say reading each row and then transforming it etc... then in those cases Avro is preferred.)</li>
+<li>Its common in data lake where you do not necessary know the down stream applications which are going to consume your data from your hadoop cluster in those scenarios you can duplicate the data in both formats.</li>
+<li>Its also common the primary data format is Avro because of schema evolution. You can also create Parquet on demand based on the query engine you are using (e.g. Impala which works with Parquet)</li>
+</ul>
+<h3 id="parquet">Parquet</h3>
+<ul>
+<li>Parquet uses a hybrid partitioning model. Where the data is stored as cols (every n row where n could be lets say 3). Its sort of a hybrid storage model. (row and col combined.)</li>
+<li>A parquet file is not actually a single file but is a dir (may be with sub dirs)</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="err">./examplefile/</span>
+<span class="err">/examplefile/part-000-xxx-yyy-zzz.snappy.parquet</span>
+<span class="err">/examplefile/part-111-xxx-yyy-zzz.snappy.parquet</span>
+</code></pre></div>
+
+
+<p>Data organization</p>
+<p><img alt="" src="https://raw.githubusercontent.com/apache/parquet-format/master/doc/images/FileLayout.gif" /></p>
+<ul>
+<li>Row groups - horizontal partitioning (default 128MB) - A single file can have multiple row groups.</li>
+<li>Column chunks - Columnar storage</li>
+<li>Actual data in pages (default 1MB)<ul>
+<li>Data page will have metadata as well such as min, max value total # of values etc...</li>
+</ul>
+</li>
+<li>Metadata is also stored at row group level which is stored in the footer.</li>
+</ul>
+<p><em>Encdoing schemes</em></p>
+<p>There are 2 primary encoding schemes (in actual there are more than 2)
+- Plain encoding
+- RLE_Dictionary encoding</p>
+<p><img alt="" src="https://miro.medium.com/max/3566/1*LcqLXYUMybED7IdE-BsmUg.png" /></p>
+<ul>
+<li>There is only 1 dictionary per col chunk.</li>
+<li>If your dict gets too big it will default to plain encoding. There is a configurable parameter <code>parquet.dictionary.page.size</code> which you can customize.</li>
+<li>You can also decrease row group size <code>parquet.block.size</code></li>
+</ul>
+<p>You can use parquet.tools to inspect a parquet file.</p>
+<p>As we stated that each row group has the min/max stats in the footer. If you enable the <code>spark.sql.parkquet.filterPushdown</code> then when do you queries like <code>select * from x where y &gt; 100</code> it will read the footer and check if that row group (which is 128MB) is worth reading or not. Which can amount to saving significant read time/data.</p>
+<p>Parquet can also check values in the dicts to see if the row group needs to be read. Use the config <code>parquet.filter.dictionary.enabled</code> for controlling the behaviour.</p>
+<p>You can also save a parquet file by a particular column e.g. by date, so this column will become a part of your file directory structure speeding up access. <code>df.write.partitionby("date").parquet(...)</code>. If you know the query beforehand then this will help as it will only read the relevant files by the specified date.</p>
+<p>To have good optimization avoid having too many small files as every file brings overhead. You can all <code>df.repartition(...).write.parquet(...)</code>.</p>
+<p>The opposite is also true as to avoid few huge files.</p>
                 
               
               

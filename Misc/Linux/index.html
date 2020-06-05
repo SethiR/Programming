@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
     
     
       
@@ -19,14 +19,14 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.18ac144a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.616af814.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
       
         
         
-        <meta name="theme-color" content="">
+        <meta name="theme-color" content="#009688">
       
     
     
@@ -49,7 +49,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="red">
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="red">
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -310,6 +310,30 @@
   <li class="md-nav__item">
     <a href="../../Data/SQL/" title="SQL" class="md-nav__link">
       SQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/Spark/" title="Spark" class="md-nav__link">
+      Spark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/scala/" title="Scala" class="md-nav__link">
+      Scala
     </a>
   </li>
 
@@ -775,6 +799,19 @@
     File structure
   </a>
   
+    <nav class="md-nav" aria-label="File structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#env-variables" class="md-nav__link">
+    Env variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1204,6 +1241,19 @@
     File structure
   </a>
   
+    <nav class="md-nav" aria-label="File structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#env-variables" class="md-nav__link">
+    Env variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1291,6 +1341,15 @@
 <li>root - root user does not a dir in <code>/home</code>. It stores in <code>/root</code></li>
 <li>tmp - where temporary files live</li>
 <li>var - There are various dirs in it but check out <code>/var/log</code>. The linux system pretty much logs everything and you can find some details here. (Mostly used for trouble shooting)</li>
+</ul>
+<h3 id="env-variables">Env variables</h3>
+<p>Check this <a href="https://www.tecmint.com/set-unset-environment-variables-in-linux/">link</a> for details.</p>
+<ul>
+<li><code>.bashrc</code> - This file is user specific file that gets loaded each time user creates a new local session i.e. in simple words, opens a new terminal. All environment variables created in this file would take effect every time a new local session is started.</li>
+<li><code>.bash_profile</code> - This file is user specific remote login file. Environment variables listed in this file are invoked every time the user is logged in remotely i.e. using ssh session. If this file is not present, system looks for either .bash_login or .profile files.</li>
+<li><code>/etc/envirounment</code> - This file is system wide file for creating, editing or removing any environment variables. Environment variables created in this file are accessible all throughout the system, by each and every user, both locally and remotely.</li>
+<li><code>/etc/bash.bashrc</code> - System wide bashrc file. This file is loaded once for every user, each time that user opens a local terminal session. Environment variables created in this file are accessible for all users but only through local terminal session. When any user on that machine is accessed remotely via a remote login session, these variables would not be visible.</li>
+<li><code>/etc/profile</code> - System wide profile file. All the variables created in this file are accessible by every user on the system, but only if that user’s session is invoked remotely, i.e. via remote login. Any variable in this file will not be accessible for local login session i.e. when user opens a new terminal on his local system.</li>
 </ul>
 <h2 id="useful-commands">Useful commands</h2>
 <p><strong>Tar</strong></p>
