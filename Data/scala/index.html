@@ -1156,6 +1156,8 @@
 
 
 <p><strong>Data types</strong></p>
+<p>Scala Tye system</p>
+<p><img alt="" src="https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg" /></p>
 <ul>
 <li>Byte</li>
 <li>Boolean</li>
@@ -1169,30 +1171,22 @@
 <p>To get a really big number you can use the <code>BigInt</code>.</p>
 <p>To get big decimal you can use <code>BigDecimal</code></p>
 <p>All datatypes are objects in Scala.</p>
-<p>Importing libraries.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span> <span class="nn">scala.math._</span>
+<p>Unit is similar to void in java. (No return)</p>
+<p><strong>Creating variables</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">val</span> <span class="n">x</span> <span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1234</span><span class="o">;</span>
 </code></pre></div>
 
 
-<p>Ternary operator</p>
-<div class="codehilite"><pre><span></span><code><span class="k">val</span> <span class="n">canVote</span> <span class="k">=</span> <span class="k">if</span><span class="o">(</span><span class="n">age</span> <span class="o">&gt;=</span><span class="mi">18</span><span class="o">)</span> <span class="s">&quot;yes&quot;</span> <span class="k">else</span> <span class="s">&quot;no&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">var</span> <span class="n">y</span> <span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="mi">234234</span><span class="o">;</span>
 </code></pre></div>
 
 
-<p>If statement</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="o">(){</span>
-
-<span class="o">}</span>
-<span class="k">else</span> <span class="k">if</span><span class="o">(){</span>
-
-<span class="o">}</span>
-<span class="k">else</span><span class="o">{</span>
-
-<span class="o">}</span>
+<div class="codehilite"><pre><span></span><code><span class="k">val</span> <span class="n">z</span> <span class="k">:</span> <span class="kt">Char</span> <span class="o">=</span> <span class="sc">&#39;Z&#39;</span><span class="o">;</span>
 </code></pre></div>
 
 
-<p>To come out of scala shell you can type <code>:q</code></p>
+<div class="codehilite"><pre><span></span><code><span class="k">val</span> <span class="o">(</span><span class="n">myVar1</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">myVar2</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="nc">Pair</span><span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+</code></pre></div>
                 
               
               
