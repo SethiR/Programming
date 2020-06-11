@@ -15,6 +15,10 @@ comment
 
 __Data types__
 
+Scala Tye system
+
+![](https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg)
+
 - Byte
 - Boolean
 - Char
@@ -30,31 +34,23 @@ To get big decimal you can use `BigDecimal`
 
 All datatypes are objects in Scala.
 
+Unit is similar to void in java. (No return)
 
-Importing libraries.
 
-```scala
-import scala.math._
-```
-
-Ternary operator
+__Creating variables__
 
 ```scala
-val canVote = if(age >=18) "yes" else "no"
+val x : Int = 1234;
 ```
-
-If statement
 
 ```scala
-if (){
-
-}
-else if(){
-
-}
-else{
-
-}
+var y : Long = 234234;
 ```
 
-To come out of scala shell you can type `:q`
+```scala
+val z : Char = 'Z';
+```
+
+```scala
+val (myVar1: Int, myVar2: String) = Pair(40, "Foo")
+```

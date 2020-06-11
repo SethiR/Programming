@@ -1,7 +1,0 @@
-extends: default
-page:
-  layout: portrait
-  margin: [0.75in, 1in, 0.75in, 1in]
-  size: Letter
-base:
-  font-color: #ff0000

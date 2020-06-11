@@ -8,7 +8,7 @@ theme:
     - tabs
   palette:
     # scheme: slate # Dark Theme
-    primary: white
+    primary: teal
     accent: red
 
 markdown_extensions:

@@ -1,4 +1,4 @@
-import os
+# import os
 # os.environ["PYSPARK_PYTHON"] = "/home/rs/Softwares/bin/python3.7"
 # os.environ["PYSPARK_DRIVER_PYTHON"] = "/usr/bin/python3.7"
 
