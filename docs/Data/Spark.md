@@ -2,8 +2,9 @@
 
 ## Pyspark Install steps taken
 
+_Spark Download_
 
-_Trial 1_
+Trial 1:
 
 - Pyspark 2.4.5 was only working with python 3.7 and not python 3.8
 - Ubuntu came by default with python 3.7 so I had to install python 3.7 
@@ -22,7 +23,14 @@ export SPARK_HOME=/opt/spark
 export PATH=$SPARK_HOME/bin:$PATH
 ```
 
-_Trial 2_
+Trial 2:
+
+Download spark from Apache spark website, un-tar it in some dir. Create a python venv or download Anaconda distribution, whatever you feel comfortable.
+
+Set the `PYSPARK_PYTHON` variable in `conf/spark-env.sh`. For example, if Python executable is installed under /opt/anaconda3/bin/python3: `PYSPARK_PYTHON='/opt/anaconda3/bin/python3`
+
+
+_PIP Pyspark_
 
 This time I did things a little differently. I created a `venv` of python3.7 and installed pyspark. The system does not even have apache spark downloaded and insalled. Looks like this is not needed and pyspark (which is of size 225MB) comes with spark built in.
 
@@ -600,7 +608,300 @@ Getting the first row.
 ```py
 >>> df.first()
 Row(DEST_COUNTRY_NAME='United States', ORIGIN_COUNTRY_NAME='Romania', count=15)
+>>> row1 = df.first()
+>>> row1
+Row(DEST_COUNTRY_NAME='United States', ORIGIN_COUNTRY_NAME='Romania', count=15)
+>>> row1[0]
+'United States'
+>>> row1[1]
+'Romania'
 ```
 
 You can also create new rows.
+
+```py
+>>> myRow = Row("US", "Canada", 12)
+```
+
+You can convert the dataframe into temporary table where you can do sql queries on them.
+
+You can also convert `Row` into `DataFrame` by using the function `createDataFrame`.
+
+Doing simple queries on df.
+
+```py
+>>> df.select("DEST_COUNTRY_NAME").show(2)
++-----------------+
+|DEST_COUNTRY_NAME|
++-----------------+
+|    United States|
+|    United States|
++-----------------+
+only showing top 2 rows
+
+>>> df.select(expr("DEST_COUNTRY_NAME AS destination")).show(2)
++-------------+
+|  destination|
++-------------+
+|United States|
+|United States|
++-------------+
+only showing top 2 rows
+
+# SelectExpr --> Select from a DataFrame using a set of SQL expressions.
+# In below example it creates a new col using comparison of 2 cols.
+>>> df.selectExpr("*", "(DEST_COUNTRY_NAME = ORIGIN_COUNTRY_NAME) as withinCountry").show(2)
++-----------------+-------------------+-----+-------------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|withinCountry|
++-----------------+-------------------+-----+-------------+
+|    United States|            Romania|   15|        false|
+|    United States|            Croatia|    1|        false|
++-----------------+-------------------+-----+-------------+
+only showing top 2 rows
+
+>>> df.selectExpr("*",("ORIGIN_COUNTRY_NAME = 'Romania'")).show(2)
++-----------------+-------------------+-----+-------------------------------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|(ORIGIN_COUNTRY_NAME = Romania)|                     true|
+|    United States|            Croatia|    1|                          false|
++-----------------+-------------------+-----+-------------------------------+
+only showing top 2 rows
+
+# Instead of using the selectExpr you can also use select and use expr function
+# where you need to create a new col using sql statement as shown below.
+# expr is avaiable from pyspark.sql.functions so do the following
+# >>> from pyspark.sql.functions import *
+>>> df.select("*",expr("ORIGIN_COUNTRY_NAME = 'Romania'")).show(2)
++-----------------+-------------------+-----+-------------------------------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|(ORIGIN_COUNTRY_NAME = Romania)|
++-----------------+-------------------+-----+-------------------------------+
+|    United States|            Romania|   15|                           true|
+|    United States|            Croatia|    1|                          false|
++-----------------+-------------------+-----+-------------------------------+
+only showing top 2 rows
+
+# Creating a new col (count *2)
+>>> df.select("*",(df["count"]*2)).show(2)
++-----------------+-------------------+-----+-----------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|(count * 2)|
++-----------------+-------------------+-----+-----------+
+|    United States|            Romania|   15|         30|
+|    United States|            Croatia|    1|          2|
++-----------------+-------------------+-----+-----------+
+only showing top 2 rows
+
+
+# Rename that col.
+>>> df.select("*",(df["count"]*2).alias("2day")).show(2)
++-----------------+-------------------+-----+----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|2day|
++-----------------+-------------------+-----+----+
+|    United States|            Romania|   15|  30|
+|    United States|            Croatia|    1|   2|
++-----------------+-------------------+-----+----+
+only showing top 2 rows
+```
+
+Adding a new cols as literals
+
+```py
+# Adding a new col with value 1 will return a new df.
+>>> df.select("*", lit(1)).show(2)
++-----------------+-------------------+-----+---+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|  1|
++-----------------+-------------------+-----+---+
+|    United States|            Romania|   15|  1|
+|    United States|            Croatia|    1|  1|
++-----------------+-------------------+-----+---+
+only showing top 2 rows
+
+# you can do the same using withColumn <-- This is a more formal way
+>>> df.withColumn("One", lit(1)).show(2)
++-----------------+-------------------+-----+---+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|One|
++-----------------+-------------------+-----+---+
+|    United States|            Romania|   15|  1|
+|    United States|            Croatia|    1|  1|
++-----------------+-------------------+-----+---+
+only showing top 2 rows
+
+# As you see withColumn takes 2 args, 1) col name 2) expr
+>>> df.withColumn("withinCountry", expr("DEST_COUNTRY_NAME == ORIGIN_COUNTRY_NAME")).show(2)
++-----------------+-------------------+-----+-------------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|withinCountry|
++-----------------+-------------------+-----+-------------+
+|    United States|            Romania|   15|        false|
+|    United States|            Croatia|    1|        false|
++-----------------+-------------------+-----+-------------+
+```
+
+- You can also rename cols using func withColumnRenamed `df.withColumnRenamed("org_name", "new_name")`. If you wish to use some char which is now allowed esacpe it using `
+- You can remove cols `df.drop("col_name1", "col_name_2")`
+- You can cast the col into different type `df.withColumn("count2", col("count).cast("long"))`
+
+
+Filtering rows.
+
+```py
+>>> df.filter(col("count") < 2).show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|    United States|            Croatia|    1|
+|    United States|          Singapore|    1|
++-----------------+-------------------+-----+
+only showing top 2 rows
+```
+
+You can also use where to do the same thing.
+
+
+```py
+>>> df.where(col("count") < 2).show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|    United States|            Croatia|    1|
+|    United States|          Singapore|    1|
++-----------------+-------------------+-----+
+only showing top 2 rows
+```
+
+Adding multiple where clauses
+
+```py
+>>> df.where(col("count") < 2).where(col("ORIGIN_COUNTRY_NAME") != "Croatia").show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|    United States|          Singapore|    1|
+|          Moldova|      United States|    1|
++-----------------+-------------------+-----+
+only showing top 2 rows
+```
+
+Getting unique rows (based on cols selected)
+
+```py
+>>> df.select("ORIGIN_COUNTRY_NAME").distinct().count()
+125
+>>> df.select("ORIGIN_COUNTRY_NAME","count").distinct().count()
+220
+```
+
+Getting a sample data out of df.
+
+```py
+>>> df.sample(fraction = .1).count()
+23
+
+>>> df.sample(withReplacement = False, fraction = .5, seed = 5).count()
+126
+```
+
+Random Splits --> Creates multiple dataframes
+
+```py
+>>> df.randomSplit([0.1, 0.5, 0.4], seed = 4)                                                   
+[DataFrame[DEST_COUNTRY_NAME: string, ORIGIN_COUNTRY_NAME: string, count: bigint], DataFrame[DES
+_COUNTRY_NAME: string, ORIGIN_COUNTRY_NAME: string, count: bigint], DataFrame[DEST_COUNTRY_NAME:
+string, ORIGIN_COUNTRY_NAME: string, count: bigint]]                                            
+>>>                                                                                             
+>>> len(df.randomSplit([0.1, 0.5, 0.4], seed = 4))                                              
+3                                                                                               
+```
+
+Concatenate and Appending rows (Union)
+
+Two dataframes which are to be concatenated should have the same schema
+
+```py
+# lets first split df into df1 and df2.
+>>> df1, df2 = df.randomSplit([.5, .5])                                          
+>>> df1.count()                                                                  
+127                                                                              
+>>> df2.count()                                                                  
+129                                                                              
+
+# Both have same schema
+>>> df1.schema == df2.schema
+True
+
+>>> df1.union(df2).count()
+256
+
+# Putting some where clauses in union
+>>> df1.union(df2).where("count = 1").show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|     Burkina Faso|      United States|    1|
+|           Cyprus|      United States|    1|
++-----------------+-------------------+-----+
+only showing top 2 rows
+
+>>> df1.union(df2).where("count = 1").where(col("ORIGIN_COUNTRY_NAME") != "United States").show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|    United States|            Croatia|    1|
+|    United States|             Cyprus|    1|
++-----------------+-------------------+-----+
+only showing top 2 rows
+
+>>> df1.union(df2).where("count = 1").where(col("ORIGIN_COUNTRY_NAME") != "United States").where(col("DEST_COUNTRY_NAME") != "United States").show(2)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
++-----------------+-------------------+-----+
+```
+
+Sort or orderBy --> they both work the same way. `df.sort()` `df.orderBy()`
+
+```py
+>>> df.orderBy(col("count")).show(10)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|         Suriname|      United States|    1|
+|    United States|             Cyprus|    1|
+|    United States|          Gibraltar|    1|
+|           Cyprus|      United States|    1|
+|          Moldova|      United States|    1|
+|     Burkina Faso|      United States|    1|
+|    United States|            Croatia|    1|
+|         Djibouti|      United States|    1|
+|           Zambia|      United States|    1|
+|    United States|            Estonia|    1|
++-----------------+-------------------+-----+
+only showing top 10 rows
+
+>>> df.orderBy(col("count"), "DEST_COUNTRY_NAME").show(10)
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|     Burkina Faso|      United States|    1|
+|    Cote d'Ivoire|      United States|    1|
+|           Cyprus|      United States|    1|
+|         Djibouti|      United States|    1|
+|        Indonesia|      United States|    1|
+|             Iraq|      United States|    1|
+|           Kosovo|      United States|    1|
+|            Malta|      United States|    1|
+|          Moldova|      United States|    1|
+|    New Caledonia|      United States|    1|
++-----------------+-------------------+-----+
+only showing top 10 rows
+
+>>> df.orderBy(col("count").desc()).show(5)
++-----------------+-------------------+------+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME| count|
++-----------------+-------------------+------+
+|    United States|      United States|370002|
+|    United States|             Canada|  8483|
+|           Canada|      United States|  8399|
+|    United States|             Mexico|  7187|
+|           Mexico|      United States|  7140|
++-----------------+-------------------+------+
+only showing top 5 rows
+```
 

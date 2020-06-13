@@ -1,0 +1,1890 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Spark - Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="red">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spark" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="Notes" class="md-header-nav__button md-logo" aria-label="Notes">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notes
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Spark
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../Hadoop/" class="md-tabs__link md-tabs__link--active">
+          Data
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Frontend/JS-01-Basics/" class="md-tabs__link">
+          Frontend
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Java/Java-collections.org/" class="md-tabs__link">
+          Java
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Machine%20Learning/Linear%20Regression/" class="md-tabs__link">
+          Machine Learning
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Misc/Linux/" class="md-tabs__link">
+          Misc
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Python/Arrays/" class="md-tabs__link">
+          Python
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notes" class="md-nav__button md-logo" aria-label="Notes">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Data
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Data" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Hadoop/" title="Hadoop" class="md-nav__link">
+      Hadoop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SQL/" title="SQL" class="md-nav__link">
+      SQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Spark
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Spark" class="md-nav__link md-nav__link--active">
+      Spark
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pyspark-install-steps-taken" class="md-nav__link">
+    Pyspark Install steps taken
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spark-overview" class="md-nav__link">
+    Spark Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Spark Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spark-toolset-overview" class="md-nav__link">
+    Spark Toolset Overview
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-api" class="md-nav__link">
+    Structured API
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../scala/" title="Scala" class="md-nav__link">
+      Scala
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Frontend
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Frontend" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Frontend
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-01-Basics/" title="JS-01-Basics" class="md-nav__link">
+      JS-01-Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-02-Functions/" title="JS-02-Functions" class="md-nav__link">
+      JS-02-Functions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-03-Objects/" title="JS-03-Objects" class="md-nav__link">
+      JS-03-Objects
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-04-Arrays/" title="JS-04-Arrays" class="md-nav__link">
+      JS-04-Arrays
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/Tailwind%20CSS/" title="Tailwind CSS" class="md-nav__link">
+      Tailwind CSS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/Web%20Technologies/" title="Web Technologies" class="md-nav__link">
+      Web Technologies
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/the-circle-of-ds/" title="The circle of Data Science." class="md-nav__link">
+      The circle of Data Science.
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Java
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Java" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-collections.org/" title="Java collections.org" class="md-nav__link">
+      Java collections.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-core_java.org/" title="Java core java.org" class="md-nav__link">
+      Java core java.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-core_platform.org/" title="Java core platform.org" class="md-nav__link">
+      Java core platform.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-database_with_JDBC.org/" title="Java database with JDBC.org" class="md-nav__link">
+      Java database with JDBC.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-design_patterns_creational.org/" title="Java design patterns creational.org" class="md-nav__link">
+      Java design patterns creational.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-generics.org/" title="Java generics.org" class="md-nav__link">
+      Java generics.org
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/Java-overview_of_the_java_world.org/" title="Java overview of the java world.org" class="md-nav__link">
+      Java overview of the java world.org
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Machine Learning
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Machine Learning" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Machine Learning
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Linear%20Regression/" title="1. Regularization" class="md-nav__link">
+      1. Regularization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Logistic%20Regression/" title="Logistic Regression" class="md-nav__link">
+      Logistic Regression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/MultiLayerPerceptron/" title="1. Multi Layer Perceptron" class="md-nav__link">
+      1. Multi Layer Perceptron
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Overview%20of%20Supervised%20Learning/" title="Overview of Supervised Learning" class="md-nav__link">
+      Overview of Supervised Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Pandas/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Sklearn/" title="Sklearn" class="md-nav__link">
+      Sklearn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Terms/" title="Model Parameters" class="md-nav__link">
+      Model Parameters
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-8" type="checkbox" id="nav-5-8">
+    
+    <label class="md-nav__link" for="nav-5-8">
+      Nlp
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Nlp" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Nlp
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/nlp/NPL/" title="NPL" class="md-nav__link">
+      NPL
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Misc
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Misc" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Misc
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Misc/Linux/" title="Linux" class="md-nav__link">
+      Linux
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Python
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Python" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Arrays/" title="Arrays" class="md-nav__link">
+      Arrays
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Bytes/" title="Bytes" class="md-nav__link">
+      Bytes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Callables/" title="Callables" class="md-nav__link">
+      Callables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Context%20Managers/" title="Context Managers" class="md-nav__link">
+      Context Managers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Data%20Model%20Methods/" title="Data Model Methods" class="md-nav__link">
+      Data Model Methods
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/DataClasses/" title="DataClasses" class="md-nav__link">
+      DataClasses
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Decorators/" title="Decorators" class="md-nav__link">
+      Decorators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Dict/" title="Dict" class="md-nav__link">
+      Dict
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Disassembler%20for%20Python%20bytecode/" title="Disassembler for Python bytecode" class="md-nav__link">
+      Disassembler for Python bytecode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Enum/" title="Enum" class="md-nav__link">
+      Enum
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Functions/" title="Functions" class="md-nav__link">
+      Functions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Generator/" title="Generator" class="md-nav__link">
+      Generator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Isolating%20Envirounments%20in%20Python/" title="Isolating Envirounments in Python" class="md-nav__link">
+      Isolating Envirounments in Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/List/" title="List" class="md-nav__link">
+      List
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/MRO/" title="MRO" class="md-nav__link">
+      MRO
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Sets/" title="Sets" class="md-nav__link">
+      Sets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Slots/" title="Slots" class="md-nav__link">
+      Slots
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Subclassing%20built-ins/" title="Subclassing built-ins" class="md-nav__link">
+      Subclassing built-ins
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Tuples/" title="Tuples" class="md-nav__link">
+      Tuples
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Weakref/" title="Weakref" class="md-nav__link">
+      Weakref
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/django/" title="Django" class="md-nav__link">
+      Django
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/foundations/" title="Foundations" class="md-nav__link">
+      Foundations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/metaprogramming/" title="Metaprogramming" class="md-nav__link">
+      Metaprogramming
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pyspark-install-steps-taken" class="md-nav__link">
+    Pyspark Install steps taken
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spark-overview" class="md-nav__link">
+    Spark Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Spark Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spark-toolset-overview" class="md-nav__link">
+    Spark Toolset Overview
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-api" class="md-nav__link">
+    Structured API
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="spark">Spark</h1>
+<h2 id="pyspark-install-steps-taken">Pyspark Install steps taken</h2>
+<p><em>Trial 1</em></p>
+<ul>
+<li>Pyspark 2.4.5 was only working with python 3.7 and not python 3.8</li>
+<li>Ubuntu came by default with python 3.7 so I had to install python 3.7 <ul>
+<li>I built from source in /opt</li>
+<li>Created a link as <code>/usr/bin/python3.7</code> pointing to <code>/opt/python3.3.7/python</code></li>
+<li>Configured <code>update-alternatives</code> to make python3.7 default.</li>
+</ul>
+</li>
+<li>Installed Spark in <code>/opt</code> (nothing more than wget the 2.4.5 spark)</li>
+<li>Created a system link <code>/opt/spark</code> pointing to <code>/opt/spark2.xxxx</code></li>
+<li>As I did not have <code>python</code> on my system and only had <code>python3</code> I added the following to <code>/spark/conf/spark-env.sh</code></li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">PYSPARK_PYTHON</span><span class="o">=</span>python3
+</code></pre></div>
+
+
+<ul>
+<li>Added the following in my <code>.bashrc</code></li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$SPARK_HOME</span>/bin:<span class="nv">$PATH</span>
+</code></pre></div>
+
+
+<p><em>Trial 2</em></p>
+<p>This time I did things a little differently. I created a <code>venv</code> of python3.7 and installed pyspark. The system does not even have apache spark downloaded and insalled. Looks like this is not needed and pyspark (which is of size 225MB) comes with spark built in.</p>
+<p>So this means we can test spark applications on my laptop with just a <code>pip3 install pyspark</code> and we'll see how to submit them to yarn cluster when the time comes.</p>
+<h2 id="spark-overview">Spark Overview</h2>
+<ul>
+<li>In Memory Computing</li>
+</ul>
+<p><strong>Spark shell</strong></p>
+<ul>
+<li><code>spark-shell</code> is located in spark/bin</li>
+<li>To goto spark shell execute the above <code>./spark-shell</code></li>
+<li>In spark-shell you have 2 variables by default <code>sc</code> and <code>spark</code></li>
+<li><code>:help</code></li>
+<li><code>:history</code></li>
+</ul>
+<p><strong>RDD</strong></p>
+<p>RDD is basic unit of data on which all operations are performed. RDD is immutable collection of data (which can be distributed). RDD is split into multiple partitions which are computed on different nodes.</p>
+<p>RDD can be created on any hadoop input source (that is supported by hadoop).</p>
+<p>Spark automatically partitions RDDs and distributes the partitions across different nodes. A partition in spark is an atomic chunk of data (logical division of data) stored on a node in the cluster.</p>
+<p>We can create RDD using
+- Parallalize method - Takes in a sequence (like list or array) and # of partitions you need the data split on.
+- CreateDataFrame method</p>
+<p>parallelize method</p>
+<div class="codehilite"><pre><span></span><code>from pyspark.sql import SparkSession
+
+<span class="nv">spark</span> <span class="o">=</span> SparkSession.builder.appName<span class="o">(</span><span class="s2">&quot;Python Spark create RDD example&quot;</span><span class="o">)</span>.config<span class="o">(</span><span class="s2">&quot;local[*]&quot;</span><span class="o">)</span>.getOrCreate<span class="o">()</span>
+
+<span class="nv">df</span> <span class="o">=</span> spark.sparkContext.parallelize<span class="o">([(</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>, <span class="s1">&#39;a b c&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="m">4</span>, <span class="m">5</span>, <span class="m">6</span>, <span class="s1">&#39;d e f&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="m">7</span>, <span class="m">8</span>, <span class="m">9</span>, <span class="s1">&#39;g h i&#39;</span><span class="o">)])</span>.toDF<span class="o">([</span><span class="s1">&#39;col1&#39;</span>, <span class="s1">&#39;col2&#39;</span>, <span class="s1">&#39;col3&#39;</span>,<span class="s1">&#39;col4&#39;</span><span class="o">])</span>
+
+print<span class="o">(</span>df<span class="o">)</span>
+</code></pre></div>
+
+
+<p>createDataFrame method</p>
+<div class="codehilite"><pre><span></span><code>from pyspark.sql import SparkSession
+
+<span class="nv">spark</span> <span class="o">=</span> SparkSession.builder.appName<span class="o">(</span><span class="s2">&quot;Python Spark create RDD example&quot;</span><span class="o">)</span>.config<span class="o">(</span><span class="s2">&quot;local[*]&quot;</span><span class="o">)</span>.getOrCreate<span class="o">()</span>
+
+<span class="nv">df</span> <span class="o">=</span> spark.createDataFrame<span class="o">([</span>
+    <span class="o">(</span><span class="m">1</span>,<span class="s1">&#39;Joe&#39;</span>,2000,1<span class="o">)</span>,
+    <span class="o">(</span><span class="m">1</span>, <span class="s1">&#39;Joe&#39;</span>, <span class="m">2000</span>, <span class="m">1</span><span class="o">)</span>,
+    <span class="o">(</span><span class="m">1</span>, <span class="s1">&#39;Joe&#39;</span>, <span class="m">2000</span>, <span class="m">1</span><span class="o">)</span>,
+    <span class="o">(</span><span class="m">1</span>, <span class="s1">&#39;Joe&#39;</span>, <span class="m">2000</span>, <span class="m">1</span><span class="o">)</span>,<span class="o">]</span>,
+    <span class="o">[</span><span class="s1">&#39;ID&#39;</span>,<span class="s1">&#39;Name&#39;</span>,<span class="s1">&#39;Salary&#39;</span>,<span class="s1">&#39;Department&#39;</span><span class="o">]</span>
+<span class="o">)</span>
+df.show<span class="o">()</span>
+df.printSchema<span class="o">()</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="o">+</span><span class="c1">---+----+------+----------+</span>
+<span class="o">|</span> <span class="n">ID</span><span class="o">|</span><span class="n">Name</span><span class="o">|</span><span class="n">Salary</span><span class="o">|</span><span class="n">Department</span><span class="o">|</span>
+<span class="o">+</span><span class="c1">---+----+------+----------+</span>
+<span class="o">|</span>  <span class="mi">1</span><span class="o">|</span> <span class="n">Joe</span><span class="o">|</span>  <span class="mi">2000</span><span class="o">|</span>         <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>  <span class="mi">1</span><span class="o">|</span> <span class="n">Joe</span><span class="o">|</span>  <span class="mi">2000</span><span class="o">|</span>         <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>  <span class="mi">1</span><span class="o">|</span> <span class="n">Joe</span><span class="o">|</span>  <span class="mi">2000</span><span class="o">|</span>         <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>  <span class="mi">1</span><span class="o">|</span> <span class="n">Joe</span><span class="o">|</span>  <span class="mi">2000</span><span class="o">|</span>         <span class="mi">1</span><span class="o">|</span>
+<span class="o">+</span><span class="c1">---+----+------+----------+</span>
+
+<span class="n">root</span>
+ <span class="o">|</span><span class="c1">-- ID: long (nullable = true)</span>
+ <span class="o">|</span><span class="c1">-- Name: string (nullable = true)</span>
+ <span class="o">|</span><span class="c1">-- Salary: long (nullable = true)</span>
+ <span class="o">|</span><span class="c1">-- Department: long (nullable = true)</span>
+</code></pre></div>
+
+
+<p>Data can also be read from 
+- csv files
+- postgres database
+- HDFS</p>
+<p>Lets see some examples in Scala as well.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">#</span> <span class="nc">Scala</span> <span class="n">example</span>
+<span class="k">#</span> <span class="nc">Create</span> <span class="n">an</span> <span class="n">array</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">intArray</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">)</span>
+<span class="n">intArray</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">)</span>
+
+<span class="k">#</span> <span class="nc">Creating</span> <span class="n">an</span> <span class="nc">RDD</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">intRdd</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">intArray</span><span class="o">)</span>
+
+<span class="k">#</span> <span class="nc">See</span> <span class="n">the</span> <span class="n">first</span> <span class="n">method</span> <span class="n">in</span> <span class="n">your</span> <span class="nc">RDD</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">first</span><span class="o">()</span>
+<span class="n">res1</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">#</span> <span class="nc">Use</span> <span class="n">the</span> <span class="n">take</span> <span class="n">method</span> <span class="n">to</span> <span class="n">get</span> <span class="n">various</span> <span class="n">elements</span> <span class="n">from</span> <span class="nc">RDD</span>
+<span class="k">#</span> <span class="nc">Refer</span> <span class="n">to</span> <span class="n">spark</span> <span class="n">docs</span> <span class="k">for</span> <span class="n">scala</span><span class="o">/</span><span class="n">python</span> <span class="n">etc</span><span class="o">...</span> <span class="k">for</span> <span class="n">details</span> <span class="n">on</span> <span class="n">methods</span> <span class="n">such</span> <span class="n">as</span> <span class="n">take</span><span class="o">.</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>  <span class="k">#</span> <span class="n">takes</span> <span class="n">first</span> <span class="n">n</span> <span class="n">elements</span><span class="o">.</span>
+<span class="n">res2</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+
+<span class="k">#</span> <span class="n">to</span> <span class="n">get</span> <span class="n">all</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">an</span> <span class="n">rdd</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">collect</span><span class="o">()</span>
+<span class="n">res4</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">)</span>
+
+<span class="k">#</span> <span class="nc">Executing</span> <span class="n">on</span> <span class="n">each</span> <span class="n">rdd</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">collect</span><span class="o">().</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">)</span>
+<span class="mi">1</span>                                       
+<span class="mi">2</span>                                       
+<span class="mi">3</span>                                       
+<span class="mi">4</span>                                       
+<span class="mi">5</span>                                       
+<span class="mi">6</span>                                       
+
+<span class="k">#</span> <span class="nc">Checking</span> <span class="n">partition</span> <span class="n">size</span><span class="o">.</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">partitions</span><span class="o">.</span><span class="n">size</span>
+<span class="n">res10</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">4</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Python example</span>
+<span class="c1"># Similarly the RDD can be created in python. (Perf implications)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">intRdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">intRdd</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">list</span><span class="s1">&#39;&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">intRdd</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>         
+<span class="o">...</span>                         
+<span class="mi">1</span>                           
+<span class="mi">4</span>                           
+</code></pre></div>
+
+
+<p>There are 2 main types of Spark operations (Details in the below sections)
+- Spark Transformations - Construct a new RDD from a previous one.
+- Spark Actions - compute a result based on RDD, either return it to driver program or save it to external storage.</p>
+<p>Lets look at examples.</p>
+<p>The methods which we will see (which we will call on lists/sequences are standard scala methods such as <code>map</code>, <code>filter</code>, <code>flatmap</code> or <code>distinct</code>. So probably studying scala is not just about the per for RDD but its also how scala functions and what scala functions are utilized in spark (even though they are performed on an RDD and not scala Array or Vector))</p>
+<div class="codehilite"><pre><span></span><code>scala&gt; val <span class="nv">sentences</span> <span class="o">=</span> Array<span class="o">(</span><span class="s2">&quot;Today is monday&quot;</span>, <span class="s2">&quot;The quick brown fox jumped over the lazy dog&quot;</span>, <span class="s2">&quot;Hi There&quot;</span><span class="o">)</span>
+scala&gt; val <span class="nv">sentRdd</span> <span class="o">=</span> sc.parallelize<span class="o">(</span>sentences<span class="o">)</span>
+
+<span class="c1"># Filter function (a standard scala function as well)</span>
+scala&gt; val <span class="nv">filterRdd</span> <span class="o">=</span> sentRdd.filter<span class="o">(</span><span class="nv">line</span> <span class="o">=</span>&gt; line.length &gt; <span class="m">12</span><span class="o">)</span>
+
+scala&gt; filterRdd.collect.foreach<span class="o">(</span>println<span class="o">)</span>
+Today is monday
+The quick brown fox jumped over the lazy dog
+
+<span class="c1"># Map function (a standard scala map function)</span>
+scala&gt; val <span class="nv">mapRdd</span> <span class="o">=</span> sentRdd.map<span class="o">(</span><span class="nv">line</span> <span class="o">=</span>&gt; line.length<span class="o">)</span>
+scala&gt; mapRdd.collect<span class="o">()</span>
+res14: Array<span class="o">[</span>Int<span class="o">]</span> <span class="o">=</span> Array<span class="o">(</span><span class="m">15</span>, <span class="m">44</span>, <span class="m">8</span><span class="o">)</span>
+
+<span class="c1"># ex 2 with map --&gt; here it creates an array of array</span>
+scala&gt; val <span class="nv">mapRdd2</span> <span class="o">=</span> sentRdd.map<span class="o">(</span><span class="nv">line</span> <span class="o">=</span>&gt; line.split<span class="o">(</span><span class="s2">&quot; &quot;</span><span class="o">))</span>
+scala&gt; mapRdd2.collect<span class="o">()</span>
+res15: Array<span class="o">[</span>Array<span class="o">[</span>String<span class="o">]]</span> <span class="o">=</span> Array<span class="o">(</span>Array<span class="o">(</span>Today, is, monday<span class="o">)</span>, Array<span class="o">(</span>The, quick, brown, fox, jumped, over, the, lazy, dog<span class="o">)</span>, Array<span class="o">(</span>Hi, There<span class="o">))</span>
+
+<span class="c1"># Flatmap will flatten out the array of arrays and create just array.</span>
+scala&gt; val <span class="nv">mapRdd3</span> <span class="o">=</span> sentRdd.flatMap<span class="o">(</span><span class="nv">line</span> <span class="o">=</span>&gt; line.split<span class="o">(</span><span class="s2">&quot; &quot;</span><span class="o">))</span>
+mapRdd3: org.apache.spark.rdd.RDD<span class="o">[</span>String<span class="o">]</span> <span class="o">=</span> MapPartitionsRDD<span class="o">[</span><span class="m">7</span><span class="o">]</span> at flatMap at &lt;console&gt;:25
+
+scala&gt; mapRdd3.collect<span class="o">()</span>
+res16: Array<span class="o">[</span>String<span class="o">]</span> <span class="o">=</span> Array<span class="o">(</span>Today, is, monday, The, quick, brown, fox, jumped, over, the, lazy, dog, Hi, There<span class="o">)</span>
+</code></pre></div>
+
+
+<p>Lets see very similar examples in Python. You will see that its very similar the diff is mainly in using lambda funcs in Python vs fatarrow =&gt; functions in Scala.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Today is monday&quot;</span><span class="p">,</span> <span class="s2">&quot;The quick brown fox jumped over the lazy dog&quot;</span><span class="p">,</span> <span class="s2">&quot;Hi There&quot;</span><span class="p">]</span>  
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sentRdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>                                                          
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd</span> <span class="o">=</span> <span class="n">sentRdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span> <span class="p">)</span>                                          
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>                                                                             
+<span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>                                                                              
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd2</span> <span class="o">=</span><span class="n">sentRdd</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span> <span class="p">)</span>                                       
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd2</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>                                                                            
+<span class="p">[</span><span class="s1">&#39;Today is monday&#39;</span><span class="p">,</span> <span class="s1">&#39;The quick brown fox jumped over the lazy dog&#39;</span><span class="p">]</span>                              
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd3</span> <span class="o">=</span> <span class="n">sentRdd</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span> <span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mapRdd3</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;Today&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;monday&#39;</span><span class="p">,</span> <span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;fox&#39;</span><span class="p">,</span> <span class="s1">&#39;jumped&#39;</span><span class="p">,</span> <span class="s1">&#39;over&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;Hi&#39;</span><span class="p">,</span> <span class="s1">&#39;There&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+
+<hr />
+<p>Spark applications consist of </p>
+<ul>
+<li>Driver program - This runs your <code>main()</code> function</li>
+<li>A set of executor processes.</li>
+</ul>
+<p>The executors will pretty much be running spark code but the driver program can be written in number of different languages exposed via spark api.</p>
+<hr />
+<p><strong>Scala or Python</strong></p>
+<p>Lets look at Spark toolkit.</p>
+<ul>
+<li>Low Level API's<ul>
+<li>RDD's</li>
+<li>Distributed variables.</li>
+</ul>
+</li>
+<li>Structured API's<ul>
+<li>Datasets</li>
+<li>Dataframes</li>
+<li>SQL</li>
+</ul>
+</li>
+</ul>
+<p>If you are using Structured API's the choice of language does not matter because Spark will reduce the code to low level API's (mor efficiently than you could ever write RDD or distributed variable). If for some reason the structured api does not fit your need then its recommended you switch to Scala. (Note that you can sill write everything in Python but just write a small portion in Scala where it leverages custom RDD, Distribute variables).</p>
+<p>My strategy is to stick to Python for structured API's and dive in Scala for low level api's.</p>
+<hr />
+<p><strong>DataFrame</strong></p>
+<p>The dataframe concept in spark is a little different than Python/R where the data can reside only on 1 machine. However in spark the data underneath that dataframe can reside on multiple machines. Its easy to convert pandas DF to spark.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;My App&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;local[*]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">number</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">number</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+------+</span>
+<span class="o">|</span><span class="n">number</span><span class="o">|</span>
+<span class="o">+------+</span>
+<span class="o">|</span>     <span class="mi">0</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">2</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">3</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">4</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">5</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">6</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">7</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">8</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">9</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">10</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">11</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">12</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">13</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">14</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">15</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">16</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">17</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">18</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">19</span><span class="o">|</span>
+<span class="o">+------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">20</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Transformations</strong></p>
+<p>In spark the core datastructures are immutable, they cannot be changed once created.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">div_by_2</span> <span class="o">=</span> <span class="n">number</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;number % 2 = 0&quot;</span><span class="p">)</span>
+<span class="c1"># At this point a new df is not created as it will execute/evaluate this lazyly when someone will reqeust acess to it as we&#39;ll do next.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">div_by_2</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+------+</span>
+<span class="o">|</span><span class="n">number</span><span class="o">|</span>
+<span class="o">+------+</span>
+<span class="o">|</span>     <span class="mi">0</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">2</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">4</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">6</span><span class="o">|</span>
+<span class="o">|</span>     <span class="mi">8</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">10</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">12</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">14</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">16</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">18</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">20</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">22</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">24</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">26</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">28</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">30</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">32</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">34</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">36</span><span class="o">|</span>
+<span class="o">|</span>    <span class="mi">38</span><span class="o">|</span>
+<span class="o">+------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">20</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>There are 2 types of transformations 
+- narrow : each partition will contribute to only 1 output partition
+- wide : input partition contributing to many output partitions. (shuffle)</p>
+<hr />
+<p><strong>Action</strong></p>
+<p>Transformations build a logical data transformation plan. To trigger computation we run action.</p>
+<p>e.g.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">div_by_2</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">500</span>
+</code></pre></div>
+
+
+<p>By doing count we 
+- Started a spark job that runs filter transformation (divisible by 2), a narrow transformation.
+- Aggregation (counting total) which is a wide transformation.</p>
+<hr />
+<p><strong>Spark UI</strong></p>
+<p>You can check out spark UI @ http://localhost:4040/</p>
+<hr />
+<p><strong>Example</strong></p>
+<p>A simple example where we read data from csv into a spark df.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;local[*]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="n">flight_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;2015-summary.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># As of now the Dataframe has set # of cols and unspecified rows (because it did not read all rows)</span>
+<span class="c1"># -- Think lazy evaulation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">flight_df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">())</span>
+
+<span class="c1"># Returns first &#39;n&#39; # of rows.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flight_df</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># The explain command prints out the &#39;Plan&#39; which spark will take provide output.</span>
+<span class="c1"># Read from bottom to top. Bottom being step 1 and top being last step.</span>
+<span class="c1"># Remember .sort() does not modify the df but returns a new df.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flight_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">explain</span><span class="p">())</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">You can also adjust the # of partitions using the below config</span>
+<span class="sd">spark.conf.set(&quot;spark.sql.shuffle.partitions&quot;,&quot;5&quot;)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Dataframes and SQL</strong></p>
+<p>Spark can run transformations regardless of the language SQL or DataFrame (Scala, Python, R or Java). In the end all transformations (high level api's) are converted down into a physical plan.</p>
+<p>This example shows how we can do SQL queries on a df which we convert to a view (temp table).</p>
+<p>There is no performance diff as they compile down to the same plan.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;local[*]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="n">flight_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;2015-summary.csv&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># SQL WAY</span>
+<span class="c1"># convert the df into a temp view table which you can run sql queries on</span>
+<span class="n">flight_df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;flight_df_sql&quot;</span><span class="p">)</span>  <span class="c1"># The df flight_df creates a table (view)  flight_df_sql</span>
+<span class="c1"># Now we can do select query on flight_df_sql as though it was a table</span>
+<span class="n">sqlWay</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT DEST_COUNTRY_NAME, count(1)</span>
+<span class="s2">    FROM flight_df_sql</span>
+<span class="s2">    GROUP BY DEST_COUNTRY_NAME</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1"># DF WAY</span>
+<span class="n">dfWay</span> <span class="o">=</span> <span class="n">flight_df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="n">sqlWay</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
+<span class="n">dfWay</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="o">==</span> Physical <span class="nv">Plan</span> <span class="o">==</span>
+*<span class="o">(</span><span class="m">2</span><span class="o">)</span> HashAggregate<span class="o">(</span><span class="nv">keys</span><span class="o">=[</span>DEST_COUNTRY_NAME#10<span class="o">]</span>, <span class="nv">functions</span><span class="o">=[</span>count<span class="o">(</span><span class="m">1</span><span class="o">)])</span>
++- Exchange hashpartitioning<span class="o">(</span>DEST_COUNTRY_NAME#10, <span class="m">200</span><span class="o">)</span>
+   +- *<span class="o">(</span><span class="m">1</span><span class="o">)</span> HashAggregate<span class="o">(</span><span class="nv">keys</span><span class="o">=[</span>DEST_COUNTRY_NAME#10<span class="o">]</span>, <span class="nv">functions</span><span class="o">=[</span>partial_count<span class="o">(</span><span class="m">1</span><span class="o">)])</span>
+      +- *<span class="o">(</span><span class="m">1</span><span class="o">)</span> FileScan csv <span class="o">[</span>DEST_COUNTRY_NAME#10<span class="o">]</span> Batched: false, Format: CSV, Location: InMemoryFileIndex<span class="o">[</span>file:/home/rs/MEGA/repositories/technotes/docs/Data/spark/2015-summary.csv<span class="o">]</span>, PartitionFilters: <span class="o">[]</span>, PushedFilters: <span class="o">[]</span>, ReadSchema: struct&lt;DEST_COUNTRY_NAME:string&gt;
+
+<span class="o">==</span> Physical <span class="nv">Plan</span> <span class="o">==</span>
+*<span class="o">(</span><span class="m">2</span><span class="o">)</span> HashAggregate<span class="o">(</span><span class="nv">keys</span><span class="o">=[</span>DEST_COUNTRY_NAME#10<span class="o">]</span>, <span class="nv">functions</span><span class="o">=[</span>count<span class="o">(</span><span class="m">1</span><span class="o">)])</span>
++- Exchange hashpartitioning<span class="o">(</span>DEST_COUNTRY_NAME#10, <span class="m">200</span><span class="o">)</span>
+   +- *<span class="o">(</span><span class="m">1</span><span class="o">)</span> HashAggregate<span class="o">(</span><span class="nv">keys</span><span class="o">=[</span>DEST_COUNTRY_NAME#10<span class="o">]</span>, <span class="nv">functions</span><span class="o">=[</span>partial_count<span class="o">(</span><span class="m">1</span><span class="o">)])</span>
+      +- *<span class="o">(</span><span class="m">1</span><span class="o">)</span> FileScan csv <span class="o">[</span>DEST_COUNTRY_NAME#10<span class="o">]</span> Batched: false, Format: CSV, Location: InMemoryFileIndex<span class="o">[</span>file:/home/rs/MEGA/repositories/technotes/docs/Data/spark/2015-summary.csv<span class="o">]</span>, PartitionFilters: <span class="o">[]</span>, PushedFilters: <span class="o">[]</span>, ReadSchema: struct&lt;DEST_COUNTRY_NAME:string&gt;
+</code></pre></div>
+
+
+<p>Executing simple queries in DF or SQL</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT max(count) from flight_df_sql</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="o">[</span>Row<span class="o">(</span>max<span class="o">(</span>count<span class="o">)=</span><span class="m">370002</span><span class="o">)]</span>
+</code></pre></div>
+
+
+<p>A little more complicated example</p>
+<div class="codehilite"><pre><span></span><code><span class="n">maxSql</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT DEST_COUNTRY_NAME, sum(count) as destination_total</span>
+<span class="s2">FROM flight_df_sql</span>
+<span class="s2">GROUP BY DEST_COUNTRY_NAME</span>
+<span class="s2">ORDER BY sum(count) DESC</span>
+<span class="s2">LIMIT 5</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">maxSql</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>+-----------------+-----------------+
+<span class="p">|</span>DEST_COUNTRY_NAME<span class="p">|</span>destination_total<span class="p">|</span>
++-----------------+-----------------+
+<span class="p">|</span>    United States<span class="p">|</span>           <span class="m">411352</span><span class="p">|</span>
+<span class="p">|</span>           Canada<span class="p">|</span>             <span class="m">8399</span><span class="p">|</span>
+<span class="p">|</span>           Mexico<span class="p">|</span>             <span class="m">7140</span><span class="p">|</span>
+<span class="p">|</span>   United Kingdom<span class="p">|</span>             <span class="m">2025</span><span class="p">|</span>
+<span class="p">|</span>            Japan<span class="p">|</span>             <span class="m">1548</span><span class="p">|</span>
++-----------------+-----------------+
+</code></pre></div>
+
+
+<hr />
+<h3 id="spark-toolset-overview">Spark Toolset Overview</h3>
+<p><strong>Running prod applications</strong></p>
+<p>You can use <code>spark-submit</code> to send your code to a cluster and execute it there.</p>
+<p>Scala example</p>
+<div class="codehilite"><pre><span></span><code>./spark-submit --class org.apache.spark.examples.SparkPi --master <span class="nb">local</span> ../examples/jars/spark-examples_2.11-2.4.5.jar <span class="m">10</span>
+</code></pre></div>
+
+
+<p>Python example</p>
+<div class="codehilite"><pre><span></span><code>./spark-submit --master <span class="nb">local</span> ../examples/src/main/python/pi.py <span class="m">10</span>
+</code></pre></div>
+
+
+<p>By changing the <code>master</code> argument of <code>spark-submit</code>, we can also submit the same application to a cluster running Spark’s standalone cluster manager, Mesos or YARN.</p>
+<hr />
+<p><strong>Datasets</strong></p>
+<p>Datasets are used for writing statically typed code in Java &amp; Scala. Its not avaibale in Python or R.</p>
+<p>The Dataset API gives users the ability to assign a Java/Scala class to the records within a DataFrame and manipulate it as a collection of typed objects, similar to a Java ArrayList or Scala Seq. </p>
+<p>e.g. for our flights data which has 3 cols. So in a sense each row in our csv or parquet file (in this instance) becomes an object of class Flight.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">case</span> <span class="k">class</span> <span class="nc">Flight</span><span class="o">(</span><span class="nc">DEST_COUNTRY_NAME</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span>
+                  <span class="nc">ORIGIN_COUNTRY_NAME</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span>
+                  <span class="n">count</span><span class="k">:</span> <span class="kt">BigInt</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">flightsDF</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="o">(</span><span class="s">&quot;/data/flight-data/parquet/2010-summary.parquet/&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">flights</span> <span class="k">=</span> <span class="n">flightsDF</span><span class="o">.</span><span class="n">as</span><span class="o">[</span><span class="kt">Flight</span><span class="o">]</span>
+</code></pre></div>
+
+
+<p>One final advantage is that when you call collect or take on a Dataset, it will collect objects of the proper type in your Dataset, not DataFrame Rows</p>
+<p>One great thing about Datasets is that you can use them only when you need or want to. After we’ve performed our manipulations, Spark can automatically turn it back into a DataFrame, and we can manipulate it further by using the hundreds of functions that Spark includes. This makes it easy to drop down to lower level, perform type-safe coding when necessary, and move higher up to SQL for more rapid analysis. </p>
+<hr />
+<p><strong>Structured Streaming</strong></p>
+<p>Structured Streaming is a high-level API for stream processing. <Will skip this for now and revisit later in the book></p>
+<hr />
+<p><strong>ML &amp; Advanced Analytics</strong></p>
+<hr />
+<p><strong>Lower Level API's</strong></p>
+<p>There are some things that you might use RDDs for, especially when you’re reading or manipulating raw data, but for the most part you should stick to the Structured APIs. RDDs are available in Scala as well as Python. However, they’re not equivalent.  (Hint : at RDD level prefer Scala)</p>
+<p>There are basically no instances in modern Spark, for which you should be using RDDs instead of the structured APIs beyond manipulating some very raw unprocessed and unstructured data.</p>
+<h2 id="structured-api">Structured API</h2>
+<p>DataFrames are untyped and DataSets are typed. Datasets API are only available in Scala or Java.</p>
+<p><strong>Overview of structured api execution</strong></p>
+<ul>
+<li>Write DF, SQL, Dataset code.</li>
+<li>Spark converts to a logical plan.</li>
+<li>Spark converts from logical to physical plan + optimizations.</li>
+<li>Executes physical plan as RDD manipulations.</li>
+</ul>
+<p><strong>Spark Types</strong></p>
+<p>Listed below how to create a Spark Type in scala and py. For list of all sparktypes check out the <a href="https://spark.apache.org/docs/latest/sql-reference.html">reference</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">#</span> <span class="nc">Scala</span>
+<span class="k">import</span> <span class="nn">org.apache.spark.sql.types._</span>
+<span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">ByteType</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Python</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ByteType</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>These sparktypes are used to instanciate or declare a col to be of certain type.</p>
+<p>Lets create a dataframe using a json file. As we have seen that scala and py can both be used for these high level api's I'll use either. (No prferences).</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Creating a dataframe</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;D:/Documents/MEGA/repositories/technotes/docs/Data/spark/2015-summary.json&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+<span class="n">DataFrame</span><span class="p">[</span><span class="n">DEST_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="n">bigint</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<span class="n">root</span>
+ <span class="o">|--</span> <span class="n">DEST_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">count</span><span class="p">:</span> <span class="n">long</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Row</span><span class="p">(</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;Romania&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">15</span><span class="p">)]</span>
+</code></pre></div>
+
+
+<p>Schema defines the col names of a DataFrame. (We can let spark read/infer the schema or define explicitly ourselves.) Note for spark in prod usage, its best to define explicit schema.</p>
+<p>The schema is of <code>StructType</code>, lets see an example as read the abvoe json file with explict manual schema. Refer to the docs <a href="https://spark.apache.org/docs/2.2.0/api/python/pyspark.sql.html#pyspark.sql.types.StructField">here</a></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># in Python</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="n">StructField</span><span class="p">,</span> <span class="n">StructType</span><span class="p">,</span> <span class="n">StringType</span><span class="p">,</span> <span class="n">LongType</span>
+<span class="n">myManualSchema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">LongType</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span><span class="s2">&quot;world&quot;</span><span class="p">})</span>
+<span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">schema</span><span class="p">(</span><span class="n">myManualSchema</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;D:/Documents/MEGA/repositories/technotes/docs/Data/spark/2015-summary.json&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Checking cols of a df. (you can loop on them its a list)</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">[</span><span class="s1">&#39;DEST_COUNTRY_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;ORIGIN_COUNTRY_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p>Getting the first row.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">Row</span><span class="p">(</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;Romania&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>You can also create new rows.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../SQL/" title="SQL" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                SQL
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../scala/" title="Scala" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Scala
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://linkedin.com/in/squidfunk" target="_blank" rel="noopener" title="linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
