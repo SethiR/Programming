@@ -1247,7 +1247,8 @@
                 
                 <h1 id="spark">Spark</h1>
 <h2 id="pyspark-install-steps-taken">Pyspark Install steps taken</h2>
-<p><em>Trial 1</em></p>
+<p><em>Spark Download</em></p>
+<p>Trial 1:</p>
 <ul>
 <li>Pyspark 2.4.5 was only working with python 3.7 and not python 3.8</li>
 <li>Ubuntu came by default with python 3.7 so I had to install python 3.7 <ul>
@@ -1272,7 +1273,10 @@
 </code></pre></div>
 
 
-<p><em>Trial 2</em></p>
+<p>Trial 2:</p>
+<p>Download spark from Apache spark website, un-tar it in some dir. Create a python venv or download Anaconda distribution, whatever you feel comfortable.</p>
+<p>Set the <code>PYSPARK_PYTHON</code> variable in <code>conf/spark-env.sh</code>. For example, if Python executable is installed under /opt/anaconda3/bin/python3: <code>PYSPARK_PYTHON='/opt/anaconda3/bin/python3</code></p>
+<p><em>PIP Pyspark</em></p>
 <p>This time I did things a little differently. I created a <code>venv</code> of python3.7 and installed pyspark. The system does not even have apache spark downloaded and insalled. Looks like this is not needed and pyspark (which is of size 225MB) comes with spark built in.</p>
 <p>So this means we can test spark applications on my laptop with just a <code>pip3 install pyspark</code> and we'll see how to submit them to yarn cluster when the time comes.</p>
 <h2 id="spark-overview">Spark Overview</h2>
@@ -1771,10 +1775,287 @@ res16: Array<span class="o">[</span>String<span class="o">]</span> <span class="
 <p>Getting the first row.</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 <span class="n">Row</span><span class="p">(</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;Romania&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">row1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">row1</span>
+<span class="n">Row</span><span class="p">(</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">=</span><span class="s1">&#39;Romania&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">row1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="s1">&#39;United States&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">row1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="s1">&#39;Romania&#39;</span>
 </code></pre></div>
 
 
 <p>You can also create new rows.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">myRow</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="s2">&quot;Canada&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>You can convert the dataframe into temporary table where you can do sql queries on them.</p>
+<p>You can also convert <code>Row</code> into <code>DataFrame</code> by using the function <code>createDataFrame</code>.</p>
+<p>Doing simple queries on df.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span>
+<span class="o">+-----------------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>
+<span class="o">+-----------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">expr</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME AS destination&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-------------+</span>
+<span class="o">|</span>  <span class="n">destination</span><span class="o">|</span>
+<span class="o">+-------------+</span>
+<span class="o">|</span><span class="n">United</span> <span class="n">States</span><span class="o">|</span>
+<span class="o">|</span><span class="n">United</span> <span class="n">States</span><span class="o">|</span>
+<span class="o">+-------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="c1"># SelectExpr --&gt; Select from a DataFrame using a set of SQL expressions.</span>
+<span class="c1"># In below example it creates a new col using comparison of 2 cols.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;(DEST_COUNTRY_NAME = ORIGIN_COUNTRY_NAME) as withinCountry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="n">withinCountry</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>        <span class="n">false</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>        <span class="n">false</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME = &#39;Romania&#39;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+-------------------------------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="p">(</span><span class="n">ORIGIN_COUNTRY_NAME</span> <span class="o">=</span> <span class="n">Romania</span><span class="p">)</span><span class="o">|</span>                     <span class="n">true</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>                          <span class="n">false</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="c1"># Instead of using the selectExpr you can also use select and use expr function</span>
+<span class="c1"># where you need to create a new col using sql statement as shown below.</span>
+<span class="c1"># expr is avaiable from pyspark.sql.functions so do the following</span>
+<span class="c1"># &gt;&gt;&gt; from pyspark.sql.functions import *</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span><span class="n">expr</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME = &#39;Romania&#39;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+-------------------------------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="p">(</span><span class="n">ORIGIN_COUNTRY_NAME</span> <span class="o">=</span> <span class="n">Romania</span><span class="p">)</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------------------------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>                           <span class="n">true</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>                          <span class="n">false</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="c1"># Creating a new col (count *2)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+-----------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="p">(</span><span class="n">count</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-----------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>         <span class="mi">30</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>          <span class="mi">2</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-----------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+
+<span class="c1"># Rename that col.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;2day&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="mi">2</span><span class="n">day</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>  <span class="mi">30</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>   <span class="mi">2</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>Adding a new cols as literals</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Adding a new col with value 1 will return a new df.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>  <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>  <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>  <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="c1"># you can do the same using withColumn &lt;-- This is a more formal way</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;One&quot;</span><span class="p">,</span> <span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="n">One</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>  <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>  <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+---+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="c1"># As you see withColumn takes 2 args, 1) col name 2) expr</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;withinCountry&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME == ORIGIN_COUNTRY_NAME&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span><span class="n">withinCountry</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>        <span class="n">false</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>        <span class="n">false</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+-------------+</span>
+</code></pre></div>
+
+
+<ul>
+<li>You can also rename cols using func withColumnRenamed <code>df.withColumnRenamed("org_name", "new_name")</code>. If you wish to use some char which is now allowed esacpe it using `</li>
+<li>You can remove cols <code>df.drop("col_name1", "col_name_2")</code></li>
+<li>You can cast the col into different type <code>df.withColumn("count2", col("count).cast("long"))</code></li>
+</ul>
+<p>Filtering rows.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>          <span class="n">Singapore</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>You can also use where to do the same thing.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>          <span class="n">Singapore</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>Adding multiple where clauses</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;Croatia&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>          <span class="n">Singapore</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>          <span class="n">Moldova</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>Getting unique rows (based on cols selected)</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">125</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">,</span><span class="s2">&quot;count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">220</span>
+</code></pre></div>
+
+
+<p>Getting a sample data out of df.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">fraction</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">23</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">withReplacement</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">fraction</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">126</span>
+</code></pre></div>
+
+
+<p>Random Splits --&gt; Creates multiple dataframes</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>                                                   
+<span class="p">[</span><span class="n">DataFrame</span><span class="p">[</span><span class="n">DEST_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="n">bigint</span><span class="p">],</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">DES</span>
+<span class="n">_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="n">bigint</span><span class="p">],</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">DEST_COUNTRY_NAME</span><span class="p">:</span>
+<span class="n">string</span><span class="p">,</span> <span class="n">ORIGIN_COUNTRY_NAME</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="n">bigint</span><span class="p">]]</span>                                            
+<span class="o">&gt;&gt;&gt;</span>                                                                                             
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">4</span><span class="p">))</span>                                              
+<span class="mi">3</span>                                                                                               
+</code></pre></div>
+
+
+<p>Concatenate and Appending rows (Union)</p>
+<p>Two dataframes which are to be concatenated should have the same schema</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># lets first split df into df1 and df2.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="p">,</span> <span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">])</span>                                          
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>                                                                  
+<span class="mi">127</span>                                                                              
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df2</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>                                                                  
+<span class="mi">129</span>                                                                              
+
+<span class="c1"># Both have same schema</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">schema</span> <span class="o">==</span> <span class="n">df2</span><span class="o">.</span><span class="n">schema</span>
+<span class="kc">True</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">256</span>
+
+<span class="c1"># Putting some where clauses in union</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;count = 1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>     <span class="n">Burkina</span> <span class="n">Faso</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Cyprus</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;count = 1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;United States&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>             <span class="n">Cyprus</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;count = 1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;ORIGIN_COUNTRY_NAME&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;United States&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;DEST_COUNTRY_NAME&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;United States&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+</code></pre></div>
+
+
+<p>Sort or orderBy --&gt; they both work the same way. <code>df.sort()</code> <code>df.orderBy()</code></p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>         <span class="n">Suriname</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>             <span class="n">Cyprus</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>          <span class="n">Gibraltar</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Cyprus</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>          <span class="n">Moldova</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>     <span class="n">Burkina</span> <span class="n">Faso</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>         <span class="n">Djibouti</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Zambia</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Estonia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">10</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">),</span> <span class="s2">&quot;DEST_COUNTRY_NAME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>     <span class="n">Burkina</span> <span class="n">Faso</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">Cote</span> <span class="n">d</span><span class="s1">&#39;Ivoire|      United States|    1|</span>
+<span class="o">|</span>           <span class="n">Cyprus</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>         <span class="n">Djibouti</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>        <span class="n">Indonesia</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>             <span class="n">Iraq</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Kosovo</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>            <span class="n">Malta</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>          <span class="n">Moldova</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">New</span> <span class="n">Caledonia</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">10</span> <span class="n">rows</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">+-----------------+-------------------+------+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span> <span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+------+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span><span class="mi">370002</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>             <span class="n">Canada</span><span class="o">|</span>  <span class="mi">8483</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Canada</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>  <span class="mi">8399</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>             <span class="n">Mexico</span><span class="o">|</span>  <span class="mi">7187</span><span class="o">|</span>
+<span class="o">|</span>           <span class="n">Mexico</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>  <span class="mi">7140</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">5</span> <span class="n">rows</span>
+</code></pre></div>
                 
               
               
