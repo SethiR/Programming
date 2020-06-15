@@ -905,3 +905,301 @@ only showing top 10 rows
 only showing top 5 rows
 ```
 
+Limiting rows
+
+```py
+>>> df.limit(4).show()
++-----------------+-------------------+-----+
+|DEST_COUNTRY_NAME|ORIGIN_COUNTRY_NAME|count|
++-----------------+-------------------+-----+
+|    United States|            Romania|   15|
+|    United States|            Croatia|    1|
+|    United States|            Ireland|  344|
+|            Egypt|      United States|   15|
++-----------------+-------------------+-----+
+```
+
+You can also repartition the data using `df.repartition(4)` command and check the # of partitions using `df.rdd.getNumPartition()` in py and `df.rdd.getNumPartition` in scala.
+
+You can also repartition based on a column. `df.repartition(col("DEST_COUNTRY_NAME"))`. Coalesce, on the other hand, will not incur a full shuffle and will try to combine partitions. `df.repartition(5, col("DEST_COUNTRY_NAME")).coalesce(2)`
+
+You can also "collect" the data in the driver i.e. the local machine by using `df.collect()`
+
+
+---
+
+There are many functions in Spark you should check them out at: - 
+- API - http://spark.apache.org/docs/latest/api/scala/#package (Change python in link and remome #package)
+- DataFrameStatFunctions
+- DataFrameNaFunctions
+
+I have noticed that Python API docs are not as good as Scala versions. You may with to check out the scala docs and then see if they have similar in python because the structured api is almost identical in both the scenarios.
+
+---
+
+__Boolean__
+
+Lets pick up another dataset now (retail) and do some operations on it.
+
+```py
+>>> df = spark.read.format("csv").option("header","true").option("inferSchema","true").load("D:/Documents/MEGA/repositories/technotes/docs/Data/spark/retail.csv")
+>>> df.printSchema()
+root
+ |-- InvoiceNo: string (nullable = true)
+ |-- StockCode: string (nullable = true)
+ |-- Description: string (nullable = true)
+ |-- Quantity: integer (nullable = true)
+ |-- InvoiceDate: timestamp (nullable = true)
+ |-- UnitPrice: double (nullable = true)
+ |-- CustomerID: double (nullable = true)
+ |-- Country: string (nullable = true)
+
+>>> df.where(col("InvoiceNo") == 'C579889').show()
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|InvoiceNo|StockCode|         Description|Quantity|        InvoiceDate|UnitPrice|CustomerID|       Country|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|  C579889|    23245|SET OF 3 REGENCY ...|      -8|2011-12-01 08:12:00|     4.15|   13853.0|United Kingdom|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+
+>>> df.where(col("InvoiceNo") == 'C579889').select("Country","StockCode").show()
++--------------+---------+
+|       Country|StockCode|
++--------------+---------+
+|United Kingdom|    23245|
++--------------+---------+
+
+# Stacking records vertically --> show function argument
+>>> df.where(col("InvoiceNo") != 'C579889').select("Country","StockCode").show(n=2,vertical=True)
+-RECORD 0-------------------
+ Country   | United Kingdom
+ StockCode | 84947
+-RECORD 1-------------------
+ Country   | United Kingdom
+ StockCode | 23374
+only showing top 2 rows
+
+
+>>> df.where("InvoiceNo <> 579889").show(1)
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|InvoiceNo|StockCode|         Description|Quantity|        InvoiceDate|UnitPrice|CustomerID|       Country|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|   579899|    23301|GARDENERS KNEELIN...|      24|2011-12-01 08:33:00|     1.65|   15687.0|United Kingdom|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+ ```
+
+If Boolean statements (which we were doing above using where clause or other conditions e.g. == or <> or !=) are expressed serially (one after the other), Spark will flatten all of these filters into one statement and perform the filter at the same time, creating the and statement for us.
+
+
+Lets check out another function `instr` --> which finds substring. If you make it `== 1` it means that the substring is on position 1 (index 0 usually). If you make it `>1` would mean that the substring is not the starting of the string but is present. `0` would mean its not present.
+
+```py
+>>> df.where(instr(col("StockCode"), "22699") == 1).show()
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|InvoiceNo|StockCode|         Description|Quantity|        InvoiceDate|UnitPrice|CustomerID|       Country|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+|   579927|    22699|ROSES REGENCY TEA...|       6|2011-12-01 09:20:00|     2.95|   12572.0|       Germany|
+|   579938|    22699|ROSES REGENCY TEA...|       6|2011-12-01 10:18:00|     2.95|   14146.0|United Kingdom|
+|  C579945|    22699|ROSES REGENCY TEA...|      -1|2011-12-01 10:41:00|     2.95|   15993.0|United Kingdom|
+|   580066|    22699|ROSES REGENCY TEA...|       6|2011-12-01 13:33:00|     2.95|   14309.0|United Kingdom|
+|   580115|    22699|ROSES REGENCY TEA...|       4|2011-12-01 16:22:00|     5.79|      null|United Kingdom|
++---------+---------+--------------------+--------+-------------------+---------+----------+--------------+
+```
+
+You can chain where clause and make & or | statements 
+```py
+DOTCodeFilter = col("StockCode") == "DOT"
+priceFilter = col("UnitPrice") > 600
+descripFilter = instr(col("Description"), "POSTAGE") >= 1
+
+df.withColumn("isExpensive", DOTCodeFilter & (priceFilter | descripFilter))\
+    .where("isExpensive")\
+    .select("unitPrice", "isExpensive").show(5)
+```
+
+
+---
+
+__Numbers__
+
+```py
+>>> df.selectExpr(
+... "CustomerId",
+... "(POWER((Quantity * UnitPrice), 2.0) + 5) as realQuantity").show(2)
++----------+------------------+
+|CustomerId|      realQuantity|
++----------+------------------+
+|   13853.0|1107.2400000000002|
+|   15197.0|            6.5625|
++----------+------------------+
+only showing top 2 rows
+```
+
+For rounding use `round` or `bround` functions.
+
+You can calculate the co-relation b/w cols (numerical only)
+
+```py
+>>> df.stat.corr("Quantity","UnitPrice")
+-0.027002171285054978
+```
+
+Similar to pandas you can call the describe function `describe()` to get statistical info about the data.
+
+```py
+>>> df.describe().show()
++-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+
+|summary|        InvoiceNo|         StockCode|         Description|          Quantity|         UnitPrice|        CustomerID|       Country|
++-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+
+|  count|             2901|              2901|                2900|              2901|              2901|              2226|          2901|
+|   mean|580069.6631130064|27023.362062615102|                null| 9.244743192002758|3.5609996552912917| 15423.48382749326|          null|
+| stddev|64.35305942291521|15666.751318292843|                null|28.675161860070975| 19.63596763946906|1701.1005317996028|          null|
+|    min|           579899|             10135| 50'S CHRISTMAS G...|               -18|               0.0|           12553.0|          EIRE|
+|    max|          C580131|              POST|ZINC WILLIE WINKI...|              1200|           1042.84|           18130.0|United Kingdom|
++-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+
+```
+
+There are many other statistical functions avaiable such as `freqItems` or `approxQuantile` etc...
+
+Also there is a function `monotonically_increasing_id()` which generates row # starting from 0.
+
+---
+
+__Strings__
+
+`initcap` -- makes first word capital
+
+```py
+>>> df.select(initcap(col("Description"))).show(10)
++--------------------+
+|initcap(Description)|
++--------------------+
+|Set Of 3 Regency ...|
+|Antique Silver Te...|
+|Red Spot Paper Gi...|
+|Multi Colour Silv...|
+|Botanical Gardens...|
+|French Style Stor...|
+|Sweetheart Bird H...|
+|Ceramic Cake Stan...|
+|Glass Apothecary ...|
+|Egg Cup Henrietta...|
++--------------------+
+only showing top 10 rows
+```
+
+Other functions to manipulate the case --> `lower`, `upper`
+
+Another trivial task is adding or removing spaces around a string. You can do this by using lpad, ltrim, rpad and rtrim, trim:
+
+Spark also supports regular expressions. Spark takes advantage of the complete power of Java regular expressions. There are two key functions in Spark that you’ll need in order to perform regular expression tasks: `regexp_extract` and `regexp_replace`. These functions extract values and replace values, respectively.
+
+
+Below we ceate a new col 'No COLOR' by replacing individual colors with text "COLOR" on description col.
+```py
+>>> regex_string = "BLACK|WHITE|RED|GREEN|BLUE" 
+>>> df.select(regexp_replace(col("Description"), regex_string, "COLOR").alias("NO COLOR"), col("Description")).show(3)
++--------------------+--------------------+
+|            NO COLOR|         Description|
++--------------------+--------------------+
+|SET OF 3 REGENCY ...|SET OF 3 REGENCY ...|
+|ANTIQUE SILVER TE...|ANTIQUE SILVER TE...|
+|COLOR SPOT PAPER ...|RED SPOT PAPER GI...|
++--------------------+--------------------+
+```
+
+To replace every occurance of a character use `translate` function.
+
+```py
+>>> df.select(translate(col("Description"), "LEET", "1337").alias("New"), col("Description").alias("OLD")).show(10)
++--------------------+--------------------+
+|                 New|                 OLD|
++--------------------+--------------------+
+|S37 OF 3 R3G3NCY ...|SET OF 3 REGENCY ...|
+|AN7IQU3 SI1V3R 73...|ANTIQUE SILVER TE...|
+|R3D SPO7 PAP3R GI...|RED SPOT PAPER GI...|
+|MU17I CO1OUR SI1V...|MULTI COLOUR SILV...|
+|BO7ANICA1 GARD3NS...|BOTANICAL GARDENS...|
+|FR3NCH S7Y13 S7OR...|FRENCH STYLE STOR...|
+|SW337H3AR7 BIRD H...|SWEETHEART BIRD H...|
+|C3RAMIC CAK3 S7AN...|CERAMIC CAKE STAN...|
+|G1ASS APO7H3CARY ...|GLASS APOTHECARY ...|
+|3GG CUP H3NRI377A...|EGG CUP HENRIETTA...|
++--------------------+--------------------+
+only showing top 10 rows
+```
+
+You can use the method `contains` to check for a substring. In python you don't need to explicityly call `contains` but can use the `instr` method as shown above.
+
+__Date and timestamps__
+
+Creating a df with current date and current timestamp.
+
+```py
+>>> spark.range(10).withColumn("today", current_date()).withColumn("Time", current_timestamp()).show(4, False)
++---+----------+-----------------------+
+|id |today     |Time                   |
++---+----------+-----------------------+
+|0  |2020-06-13|2020-06-13 21:13:44.232|
+|1  |2020-06-13|2020-06-13 21:13:44.232|
+|2  |2020-06-13|2020-06-13 21:13:44.232|
+|3  |2020-06-13|2020-06-13 21:13:44.232|
++---+----------+-----------------------+
+only showing top 4 rows
+```
+
+The schema will look something like this
+
+```
+root
+ |-- id: long (nullable = false)
+ |-- today: date (nullable = false)
+ |-- Time: timestamp (nullable = false)
+```
+
+Adding or sub dates `date_add()` `date_sub()`
+
+```py
+>>> df.select(col("today"), date_sub(col("today"), 5), date_add(col("today"), 5) ).show(1)
++----------+------------------+------------------+
+|     today|date_sub(today, 5)|date_add(today, 5)|
++----------+------------------+------------------+
+|2020-06-13|        2020-06-08|        2020-06-18|
++----------+------------------+------------------+
+only showing top 1 row
+```
+
+To calculate the diff b/w dates you can use the functions `datediff`, `months_between`. The `to_date` function allows you to convert a string to a date, optionally with a specified format. You can also convert to timestamp using `to_timestamp` function which always requires a format to be passed in.
+
+You can compare dates using `>` and other usual operators.
+
+
+__Working with nulls in the data__
+
+As a best practice, you should always use nulls to represent missing or empty data in your DataFrames. Spark can optimize working with null values more than it can if you use empty strings etc... When interacting with nulls use the .na subpackage on a DataFrame.
+
+Various functions to use -- (check out the docs if you wish to learn more) -- `df.na.drop()` `df.na.drop('any')` `df.na.fill()` `df.na.replace()`
+
+__Working with complex types__
+
+- Structs
+- Arrays
+- Map
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## References
+
+- [Spark Submit - Python Jobs](https://becominghuman.ai/real-world-python-workloads-on-spark-standalone-clusters-2246346c7040)
