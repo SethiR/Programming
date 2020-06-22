@@ -207,7 +207,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Misc/Linux/" class="md-tabs__link">
+        <a href="../../Misc/bash/" class="md-tabs__link">
           Misc
         </a>
       
@@ -300,6 +300,18 @@
   <li class="md-nav__item">
     <a href="../Hadoop/" title="Hadoop" class="md-nav__link">
       Hadoop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Kafka/" title="Kafka" class="md-nav__link">
+      Kafka
     </a>
   </li>
 
@@ -836,7 +848,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Misc/Linux/" title="Linux" class="md-nav__link">
+    <a href="../../Misc/bash/" title="Bash/Shell Scripting" class="md-nav__link">
+      Bash/Shell Scripting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Misc/linx/" title="Linux" class="md-nav__link">
       Linux
     </a>
   </li>
@@ -2314,6 +2338,42 @@ res16: Array<span class="o">[</span>String<span class="o">]</span> <span class="
 <li>Arrays</li>
 <li>Map</li>
 </ul>
+<p><strong>Structs</strong></p>
+<p>You can think of structs as DataFrames within DataFrames.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">complexDF</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">struct</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">,</span> <span class="s2">&quot;InvoiceNo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;complex&quot;</span><span class="p">))</span>   <span class="c1"># creating a struct.</span>
+
+<span class="c1"># The above will create a df with col &#39;complex&#39; which has Description adn InvoiceNo in it.</span>
+
+<span class="c1"># You can query it as below.</span>
+<span class="n">complexDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;complex.Description&quot;</span><span class="p">)</span>
+<span class="n">complexDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;complex&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getField</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">))</span>
+</code></pre></div>
+
+
+<p>We can also query all values in the struct by using *. This brings up all the columns to the top-level DataFrame:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">complexDF</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;complex.*&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><strong>Arrays</strong></p>
+<p>Lets say you have a column such as description, you can split that by space into an array of words.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">split</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">),</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Then you can use <code>array_contains</code> methods to look into the array.</p>
+<p>You can also explode an array into multiple fields using explode <code>explode(col("splitted")))</code>.</p>
+<p><strong>Maps</strong></p>
+<p>Maps are created by using the map function and key-value pairs of columns. </p>
+<div class="codehilite"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;InvoiceNo&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;complex_map&quot;</span><span class="p">))</span>\
+<span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;complex_map[&#39;WHITE METAL LANTERN&#39;]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><strong>Json</strong></p>
+<p>TBD</p>
+<p><strong>UDF</strong></p>
+<p>Udf's are user defined functions.</p>
 <hr />
 <h2 id="references">References</h2>
 <ul>
