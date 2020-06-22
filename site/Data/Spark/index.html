@@ -390,6 +390,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1229,6 +1236,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2056,6 +2070,255 @@ res16: Array<span class="o">[</span>String<span class="o">]</span> <span class="
 <span class="o">+-----------------+-------------------+------+</span>
 <span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">5</span> <span class="n">rows</span>
 </code></pre></div>
+
+
+<p>Limiting rows</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span><span class="n">DEST_COUNTRY_NAME</span><span class="o">|</span><span class="n">ORIGIN_COUNTRY_NAME</span><span class="o">|</span><span class="n">count</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Romania</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Croatia</span><span class="o">|</span>    <span class="mi">1</span><span class="o">|</span>
+<span class="o">|</span>    <span class="n">United</span> <span class="n">States</span><span class="o">|</span>            <span class="n">Ireland</span><span class="o">|</span>  <span class="mi">344</span><span class="o">|</span>
+<span class="o">|</span>            <span class="n">Egypt</span><span class="o">|</span>      <span class="n">United</span> <span class="n">States</span><span class="o">|</span>   <span class="mi">15</span><span class="o">|</span>
+<span class="o">+-----------------+-------------------+-----+</span>
+</code></pre></div>
+
+
+<p>You can also repartition the data using <code>df.repartition(4)</code> command and check the # of partitions using <code>df.rdd.getNumPartition()</code> in py and <code>df.rdd.getNumPartition</code> in scala.</p>
+<p>You can also repartition based on a column. <code>df.repartition(col("DEST_COUNTRY_NAME"))</code>. Coalesce, on the other hand, will not incur a full shuffle and will try to combine partitions. <code>df.repartition(5, col("DEST_COUNTRY_NAME")).coalesce(2)</code></p>
+<p>You can also "collect" the data in the driver i.e. the local machine by using <code>df.collect()</code></p>
+<hr />
+<p>There are many functions in Spark you should check them out at: - 
+- API - http://spark.apache.org/docs/latest/api/scala/#package (Change python in link and remome #package)
+- DataFrameStatFunctions
+- DataFrameNaFunctions</p>
+<p>I have noticed that Python API docs are not as good as Scala versions. You may with to check out the scala docs and then see if they have similar in python because the structured api is almost identical in both the scenarios.</p>
+<hr />
+<p><strong>Boolean</strong></p>
+<p>Lets pick up another dataset now (retail) and do some operations on it.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;D:/Documents/MEGA/repositories/technotes/docs/Data/spark/retail.csv&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<span class="n">root</span>
+ <span class="o">|--</span> <span class="n">InvoiceNo</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">StockCode</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">Description</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">Quantity</span><span class="p">:</span> <span class="n">integer</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">InvoiceDate</span><span class="p">:</span> <span class="n">timestamp</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">UnitPrice</span><span class="p">:</span> <span class="n">double</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">CustomerID</span><span class="p">:</span> <span class="n">double</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+ <span class="o">|--</span> <span class="n">Country</span><span class="p">:</span> <span class="n">string</span> <span class="p">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="n">true</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;InvoiceNo&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;C579889&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span><span class="n">InvoiceNo</span><span class="o">|</span><span class="n">StockCode</span><span class="o">|</span>         <span class="n">Description</span><span class="o">|</span><span class="n">Quantity</span><span class="o">|</span>        <span class="n">InvoiceDate</span><span class="o">|</span><span class="n">UnitPrice</span><span class="o">|</span><span class="n">CustomerID</span><span class="o">|</span>       <span class="n">Country</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span>  <span class="n">C579889</span><span class="o">|</span>    <span class="mi">23245</span><span class="o">|</span><span class="n">SET</span> <span class="n">OF</span> <span class="mi">3</span> <span class="n">REGENCY</span> <span class="o">...|</span>      <span class="o">-</span><span class="mi">8</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">4.15</span><span class="o">|</span>   <span class="mf">13853.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;InvoiceNo&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;C579889&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span><span class="s2">&quot;StockCode&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+--------------+---------+</span>
+<span class="o">|</span>       <span class="n">Country</span><span class="o">|</span><span class="n">StockCode</span><span class="o">|</span>
+<span class="o">+--------------+---------+</span>
+<span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>    <span class="mi">23245</span><span class="o">|</span>
+<span class="o">+--------------+---------+</span>
+
+<span class="c1"># Stacking records vertically --&gt; show function argument</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;InvoiceNo&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;C579889&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span><span class="s2">&quot;StockCode&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">-</span><span class="n">RECORD</span> <span class="mi">0</span><span class="o">-------------------</span>
+ <span class="n">Country</span>   <span class="o">|</span> <span class="n">United</span> <span class="n">Kingdom</span>
+ <span class="n">StockCode</span> <span class="o">|</span> <span class="mi">84947</span>
+<span class="o">-</span><span class="n">RECORD</span> <span class="mi">1</span><span class="o">-------------------</span>
+ <span class="n">Country</span>   <span class="o">|</span> <span class="n">United</span> <span class="n">Kingdom</span>
+ <span class="n">StockCode</span> <span class="o">|</span> <span class="mi">23374</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;InvoiceNo &lt;&gt; 579889&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span><span class="n">InvoiceNo</span><span class="o">|</span><span class="n">StockCode</span><span class="o">|</span>         <span class="n">Description</span><span class="o">|</span><span class="n">Quantity</span><span class="o">|</span>        <span class="n">InvoiceDate</span><span class="o">|</span><span class="n">UnitPrice</span><span class="o">|</span><span class="n">CustomerID</span><span class="o">|</span>       <span class="n">Country</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span>   <span class="mi">579899</span><span class="o">|</span>    <span class="mi">23301</span><span class="o">|</span><span class="n">GARDENERS</span> <span class="n">KNEELIN</span><span class="o">...|</span>      <span class="mi">24</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">08</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">1.65</span><span class="o">|</span>   <span class="mf">15687.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+ <span class="err">```</span>
+
+<span class="n">If</span> <span class="n">Boolean</span> <span class="n">statements</span> <span class="p">(</span><span class="n">which</span> <span class="n">we</span> <span class="n">were</span> <span class="n">doing</span> <span class="n">above</span> <span class="n">using</span> <span class="n">where</span> <span class="n">clause</span> <span class="ow">or</span> <span class="n">other</span> <span class="n">conditions</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="o">==</span> <span class="ow">or</span> <span class="o">&lt;&gt;</span> <span class="ow">or</span> <span class="o">!=</span><span class="p">)</span> <span class="n">are</span> <span class="n">expressed</span> <span class="n">serially</span> <span class="p">(</span><span class="n">one</span> <span class="n">after</span> <span class="n">the</span> <span class="n">other</span><span class="p">),</span> <span class="n">Spark</span> <span class="n">will</span> <span class="n">flatten</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">these</span> <span class="n">filters</span> <span class="n">into</span> <span class="n">one</span> <span class="n">statement</span> <span class="ow">and</span> <span class="n">perform</span> <span class="n">the</span> <span class="nb">filter</span> <span class="n">at</span> <span class="n">the</span> <span class="n">same</span> <span class="n">time</span><span class="p">,</span> <span class="n">creating</span> <span class="n">the</span> <span class="ow">and</span> <span class="n">statement</span> <span class="k">for</span> <span class="n">us</span><span class="o">.</span>
+
+
+<span class="n">Lets</span> <span class="n">check</span> <span class="n">out</span> <span class="n">another</span> <span class="n">function</span> <span class="err">`</span><span class="n">instr</span><span class="err">`</span> <span class="o">--&gt;</span> <span class="n">which</span> <span class="n">finds</span> <span class="n">substring</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">make</span> <span class="n">it</span> <span class="err">`</span><span class="o">==</span> <span class="mi">1</span><span class="err">`</span> <span class="n">it</span> <span class="n">means</span> <span class="n">that</span> <span class="n">the</span> <span class="n">substring</span> <span class="ow">is</span> <span class="n">on</span> <span class="n">position</span> <span class="mi">1</span> <span class="p">(</span><span class="n">index</span> <span class="mi">0</span> <span class="n">usually</span><span class="p">)</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">make</span> <span class="n">it</span> <span class="err">`</span><span class="o">&gt;</span><span class="mi">1</span><span class="err">`</span> <span class="n">would</span> <span class="n">mean</span> <span class="n">that</span> <span class="n">the</span> <span class="n">substring</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">the</span> <span class="n">starting</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span> <span class="n">but</span> <span class="ow">is</span> <span class="n">present</span><span class="o">.</span> <span class="err">`</span><span class="mi">0</span><span class="err">`</span> <span class="n">would</span> <span class="n">mean</span> <span class="n">its</span> <span class="ow">not</span> <span class="n">present</span><span class="o">.</span>
+
+<span class="err">```</span><span class="n">py</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">instr</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;StockCode&quot;</span><span class="p">),</span> <span class="s2">&quot;22699&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span><span class="n">InvoiceNo</span><span class="o">|</span><span class="n">StockCode</span><span class="o">|</span>         <span class="n">Description</span><span class="o">|</span><span class="n">Quantity</span><span class="o">|</span>        <span class="n">InvoiceDate</span><span class="o">|</span><span class="n">UnitPrice</span><span class="o">|</span><span class="n">CustomerID</span><span class="o">|</span>       <span class="n">Country</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+<span class="o">|</span>   <span class="mi">579927</span><span class="o">|</span>    <span class="mi">22699</span><span class="o">|</span><span class="n">ROSES</span> <span class="n">REGENCY</span> <span class="n">TEA</span><span class="o">...|</span>       <span class="mi">6</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">2.95</span><span class="o">|</span>   <span class="mf">12572.0</span><span class="o">|</span>       <span class="n">Germany</span><span class="o">|</span>
+<span class="o">|</span>   <span class="mi">579938</span><span class="o">|</span>    <span class="mi">22699</span><span class="o">|</span><span class="n">ROSES</span> <span class="n">REGENCY</span> <span class="n">TEA</span><span class="o">...|</span>       <span class="mi">6</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">10</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">2.95</span><span class="o">|</span>   <span class="mf">14146.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">|</span>  <span class="n">C579945</span><span class="o">|</span>    <span class="mi">22699</span><span class="o">|</span><span class="n">ROSES</span> <span class="n">REGENCY</span> <span class="n">TEA</span><span class="o">...|</span>      <span class="o">-</span><span class="mi">1</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">10</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">2.95</span><span class="o">|</span>   <span class="mf">15993.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">|</span>   <span class="mi">580066</span><span class="o">|</span>    <span class="mi">22699</span><span class="o">|</span><span class="n">ROSES</span> <span class="n">REGENCY</span> <span class="n">TEA</span><span class="o">...|</span>       <span class="mi">6</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">13</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">2.95</span><span class="o">|</span>   <span class="mf">14309.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">|</span>   <span class="mi">580115</span><span class="o">|</span>    <span class="mi">22699</span><span class="o">|</span><span class="n">ROSES</span> <span class="n">REGENCY</span> <span class="n">TEA</span><span class="o">...|</span>       <span class="mi">4</span><span class="o">|</span><span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span> <span class="mi">16</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span>     <span class="mf">5.79</span><span class="o">|</span>      <span class="n">null</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">+---------+---------+--------------------+--------+-------------------+---------+----------+--------------+</span>
+</code></pre></div>
+
+
+<p>You can chain where clause and make &amp; or | statements </p>
+<div class="codehilite"><pre><span></span><code><span class="n">DOTCodeFilter</span> <span class="o">=</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;StockCode&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;DOT&quot;</span>
+<span class="n">priceFilter</span> <span class="o">=</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">600</span>
+<span class="n">descripFilter</span> <span class="o">=</span> <span class="n">instr</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">),</span> <span class="s2">&quot;POSTAGE&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;isExpensive&quot;</span><span class="p">,</span> <span class="n">DOTCodeFilter</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">priceFilter</span> <span class="o">|</span> <span class="n">descripFilter</span><span class="p">))</span>\
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;isExpensive&quot;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;unitPrice&quot;</span><span class="p">,</span> <span class="s2">&quot;isExpensive&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Numbers</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+<span class="o">...</span> <span class="s2">&quot;CustomerId&quot;</span><span class="p">,</span>
+<span class="o">...</span> <span class="s2">&quot;(POWER((Quantity * UnitPrice), 2.0) + 5) as realQuantity&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">+----------+------------------+</span>
+<span class="o">|</span><span class="n">CustomerId</span><span class="o">|</span>      <span class="n">realQuantity</span><span class="o">|</span>
+<span class="o">+----------+------------------+</span>
+<span class="o">|</span>   <span class="mf">13853.0</span><span class="o">|</span><span class="mf">1107.2400000000002</span><span class="o">|</span>
+<span class="o">|</span>   <span class="mf">15197.0</span><span class="o">|</span>            <span class="mf">6.5625</span><span class="o">|</span>
+<span class="o">+----------+------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">2</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>For rounding use <code>round</code> or <code>bround</code> functions.</p>
+<p>You can calculate the co-relation b/w cols (numerical only)</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">stat</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="s2">&quot;Quantity&quot;</span><span class="p">,</span><span class="s2">&quot;UnitPrice&quot;</span><span class="p">)</span>
+<span class="o">-</span><span class="mf">0.027002171285054978</span>
+</code></pre></div>
+
+
+<p>Similar to pandas you can call the describe function <code>describe()</code> to get statistical info about the data.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="o">+-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+</span>
+<span class="o">|</span><span class="n">summary</span><span class="o">|</span>        <span class="n">InvoiceNo</span><span class="o">|</span>         <span class="n">StockCode</span><span class="o">|</span>         <span class="n">Description</span><span class="o">|</span>          <span class="n">Quantity</span><span class="o">|</span>         <span class="n">UnitPrice</span><span class="o">|</span>        <span class="n">CustomerID</span><span class="o">|</span>       <span class="n">Country</span><span class="o">|</span>
+<span class="o">+-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+</span>
+<span class="o">|</span>  <span class="n">count</span><span class="o">|</span>             <span class="mi">2901</span><span class="o">|</span>              <span class="mi">2901</span><span class="o">|</span>                <span class="mi">2900</span><span class="o">|</span>              <span class="mi">2901</span><span class="o">|</span>              <span class="mi">2901</span><span class="o">|</span>              <span class="mi">2226</span><span class="o">|</span>          <span class="mi">2901</span><span class="o">|</span>
+<span class="o">|</span>   <span class="n">mean</span><span class="o">|</span><span class="mf">580069.6631130064</span><span class="o">|</span><span class="mf">27023.362062615102</span><span class="o">|</span>                <span class="n">null</span><span class="o">|</span> <span class="mf">9.244743192002758</span><span class="o">|</span><span class="mf">3.5609996552912917</span><span class="o">|</span> <span class="mf">15423.48382749326</span><span class="o">|</span>          <span class="n">null</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">stddev</span><span class="o">|</span><span class="mf">64.35305942291521</span><span class="o">|</span><span class="mf">15666.751318292843</span><span class="o">|</span>                <span class="n">null</span><span class="o">|</span><span class="mf">28.675161860070975</span><span class="o">|</span> <span class="mf">19.63596763946906</span><span class="o">|</span><span class="mf">1701.1005317996028</span><span class="o">|</span>          <span class="n">null</span><span class="o">|</span>
+<span class="o">|</span>    <span class="nb">min</span><span class="o">|</span>           <span class="mi">579899</span><span class="o">|</span>             <span class="mi">10135</span><span class="o">|</span> <span class="mi">50</span><span class="s1">&#39;S CHRISTMAS G...|               -18|               0.0|           12553.0|          EIRE|</span>
+<span class="o">|</span>    <span class="nb">max</span><span class="o">|</span>          <span class="n">C580131</span><span class="o">|</span>              <span class="n">POST</span><span class="o">|</span><span class="n">ZINC</span> <span class="n">WILLIE</span> <span class="n">WINKI</span><span class="o">...|</span>              <span class="mi">1200</span><span class="o">|</span>           <span class="mf">1042.84</span><span class="o">|</span>           <span class="mf">18130.0</span><span class="o">|</span><span class="n">United</span> <span class="n">Kingdom</span><span class="o">|</span>
+<span class="o">+-------+-----------------+------------------+--------------------+------------------+------------------+------------------+--------------+</span>
+</code></pre></div>
+
+
+<p>There are many other statistical functions avaiable such as <code>freqItems</code> or <code>approxQuantile</code> etc...</p>
+<p>Also there is a function <code>monotonically_increasing_id()</code> which generates row # starting from 0.</p>
+<hr />
+<p><strong>Strings</strong></p>
+<p><code>initcap</code> -- makes first word capital</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">initcap</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">)))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">+--------------------+</span>
+<span class="o">|</span><span class="n">initcap</span><span class="p">(</span><span class="n">Description</span><span class="p">)</span><span class="o">|</span>
+<span class="o">+--------------------+</span>
+<span class="o">|</span><span class="n">Set</span> <span class="n">Of</span> <span class="mi">3</span> <span class="n">Regency</span> <span class="o">...|</span>
+<span class="o">|</span><span class="n">Antique</span> <span class="n">Silver</span> <span class="n">Te</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Red</span> <span class="n">Spot</span> <span class="n">Paper</span> <span class="n">Gi</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Multi</span> <span class="n">Colour</span> <span class="n">Silv</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Botanical</span> <span class="n">Gardens</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">French</span> <span class="n">Style</span> <span class="n">Stor</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Sweetheart</span> <span class="n">Bird</span> <span class="n">H</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Ceramic</span> <span class="n">Cake</span> <span class="n">Stan</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">Glass</span> <span class="n">Apothecary</span> <span class="o">...|</span>
+<span class="o">|</span><span class="n">Egg</span> <span class="n">Cup</span> <span class="n">Henrietta</span><span class="o">...|</span>
+<span class="o">+--------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">10</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>Other functions to manipulate the case --&gt; <code>lower</code>, <code>upper</code></p>
+<p>Another trivial task is adding or removing spaces around a string. You can do this by using lpad, ltrim, rpad and rtrim, trim:</p>
+<p>Spark also supports regular expressions. Spark takes advantage of the complete power of Java regular expressions. There are two key functions in Spark that you’ll need in order to perform regular expression tasks: <code>regexp_extract</code> and <code>regexp_replace</code>. These functions extract values and replace values, respectively.</p>
+<p>Below we ceate a new col 'No COLOR' by replacing individual colors with text "COLOR" on description col.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">regex_string</span> <span class="o">=</span> <span class="s2">&quot;BLACK|WHITE|RED|GREEN|BLUE&quot;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">regexp_replace</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">),</span> <span class="n">regex_string</span><span class="p">,</span> <span class="s2">&quot;COLOR&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;NO COLOR&quot;</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">+--------------------+--------------------+</span>
+<span class="o">|</span>            <span class="n">NO</span> <span class="n">COLOR</span><span class="o">|</span>         <span class="n">Description</span><span class="o">|</span>
+<span class="o">+--------------------+--------------------+</span>
+<span class="o">|</span><span class="n">SET</span> <span class="n">OF</span> <span class="mi">3</span> <span class="n">REGENCY</span> <span class="o">...|</span><span class="n">SET</span> <span class="n">OF</span> <span class="mi">3</span> <span class="n">REGENCY</span> <span class="o">...|</span>
+<span class="o">|</span><span class="n">ANTIQUE</span> <span class="n">SILVER</span> <span class="n">TE</span><span class="o">...|</span><span class="n">ANTIQUE</span> <span class="n">SILVER</span> <span class="n">TE</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">COLOR</span> <span class="n">SPOT</span> <span class="n">PAPER</span> <span class="o">...|</span><span class="n">RED</span> <span class="n">SPOT</span> <span class="n">PAPER</span> <span class="n">GI</span><span class="o">...|</span>
+<span class="o">+--------------------+--------------------+</span>
+</code></pre></div>
+
+
+<p>To replace every occurance of a character use <code>translate</code> function.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">translate</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">),</span> <span class="s2">&quot;LEET&quot;</span><span class="p">,</span> <span class="s2">&quot;1337&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;New&quot;</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;OLD&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">+--------------------+--------------------+</span>
+<span class="o">|</span>                 <span class="n">New</span><span class="o">|</span>                 <span class="n">OLD</span><span class="o">|</span>
+<span class="o">+--------------------+--------------------+</span>
+<span class="o">|</span><span class="n">S37</span> <span class="n">OF</span> <span class="mi">3</span> <span class="n">R3G3NCY</span> <span class="o">...|</span><span class="n">SET</span> <span class="n">OF</span> <span class="mi">3</span> <span class="n">REGENCY</span> <span class="o">...|</span>
+<span class="o">|</span><span class="n">AN7IQU3</span> <span class="n">SI1V3R</span> <span class="mf">73.</span><span class="o">..|</span><span class="n">ANTIQUE</span> <span class="n">SILVER</span> <span class="n">TE</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">R3D</span> <span class="n">SPO7</span> <span class="n">PAP3R</span> <span class="n">GI</span><span class="o">...|</span><span class="n">RED</span> <span class="n">SPOT</span> <span class="n">PAPER</span> <span class="n">GI</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">MU17I</span> <span class="n">CO1OUR</span> <span class="n">SI1V</span><span class="o">...|</span><span class="n">MULTI</span> <span class="n">COLOUR</span> <span class="n">SILV</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">BO7ANICA1</span> <span class="n">GARD3NS</span><span class="o">...|</span><span class="n">BOTANICAL</span> <span class="n">GARDENS</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">FR3NCH</span> <span class="n">S7Y13</span> <span class="n">S7OR</span><span class="o">...|</span><span class="n">FRENCH</span> <span class="n">STYLE</span> <span class="n">STOR</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">SW337H3AR7</span> <span class="n">BIRD</span> <span class="n">H</span><span class="o">...|</span><span class="n">SWEETHEART</span> <span class="n">BIRD</span> <span class="n">H</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">C3RAMIC</span> <span class="n">CAK3</span> <span class="n">S7AN</span><span class="o">...|</span><span class="n">CERAMIC</span> <span class="n">CAKE</span> <span class="n">STAN</span><span class="o">...|</span>
+<span class="o">|</span><span class="n">G1ASS</span> <span class="n">APO7H3CARY</span> <span class="o">...|</span><span class="n">GLASS</span> <span class="n">APOTHECARY</span> <span class="o">...|</span>
+<span class="o">|</span><span class="mi">3</span><span class="n">GG</span> <span class="n">CUP</span> <span class="n">H3NRI377A</span><span class="o">...|</span><span class="n">EGG</span> <span class="n">CUP</span> <span class="n">HENRIETTA</span><span class="o">...|</span>
+<span class="o">+--------------------+--------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">10</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>You can use the method <code>contains</code> to check for a substring. In python you don't need to explicityly call <code>contains</code> but can use the <code>instr</code> method as shown above.</p>
+<p><strong>Date and timestamps</strong></p>
+<p>Creating a df with current date and current timestamp.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;today&quot;</span><span class="p">,</span> <span class="n">current_date</span><span class="p">())</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">current_timestamp</span><span class="p">())</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="o">+---+----------+-----------------------+</span>
+<span class="o">|</span><span class="nb">id</span> <span class="o">|</span><span class="n">today</span>     <span class="o">|</span><span class="n">Time</span>                   <span class="o">|</span>
+<span class="o">+---+----------+-----------------------+</span>
+<span class="o">|</span><span class="mi">0</span>  <span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span><span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span> <span class="mi">21</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mf">44.232</span><span class="o">|</span>
+<span class="o">|</span><span class="mi">1</span>  <span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span><span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span> <span class="mi">21</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mf">44.232</span><span class="o">|</span>
+<span class="o">|</span><span class="mi">2</span>  <span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span><span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span> <span class="mi">21</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mf">44.232</span><span class="o">|</span>
+<span class="o">|</span><span class="mi">3</span>  <span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span><span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span> <span class="mi">21</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mf">44.232</span><span class="o">|</span>
+<span class="o">+---+----------+-----------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">4</span> <span class="n">rows</span>
+</code></pre></div>
+
+
+<p>The schema will look something like this</p>
+<div class="codehilite"><pre><span></span><code><span class="err">root</span>
+<span class="err"> |-- id: long (nullable = false)</span>
+<span class="err"> |-- today: date (nullable = false)</span>
+<span class="err"> |-- Time: timestamp (nullable = false)</span>
+</code></pre></div>
+
+
+<p>Adding or sub dates <code>date_add()</code> <code>date_sub()</code></p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;today&quot;</span><span class="p">),</span> <span class="n">date_sub</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;today&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span> <span class="n">date_add</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;today&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">+----------+------------------+------------------+</span>
+<span class="o">|</span>     <span class="n">today</span><span class="o">|</span><span class="n">date_sub</span><span class="p">(</span><span class="n">today</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">|</span><span class="n">date_add</span><span class="p">(</span><span class="n">today</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">|</span>
+<span class="o">+----------+------------------+------------------+</span>
+<span class="o">|</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">13</span><span class="o">|</span>        <span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">08</span><span class="o">|</span>        <span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">18</span><span class="o">|</span>
+<span class="o">+----------+------------------+------------------+</span>
+<span class="n">only</span> <span class="n">showing</span> <span class="n">top</span> <span class="mi">1</span> <span class="n">row</span>
+</code></pre></div>
+
+
+<p>To calculate the diff b/w dates you can use the functions <code>datediff</code>, <code>months_between</code>. The <code>to_date</code> function allows you to convert a string to a date, optionally with a specified format. You can also convert to timestamp using <code>to_timestamp</code> function which always requires a format to be passed in.</p>
+<p>You can compare dates using <code>&gt;</code> and other usual operators.</p>
+<p><strong>Working with nulls in the data</strong></p>
+<p>As a best practice, you should always use nulls to represent missing or empty data in your DataFrames. Spark can optimize working with null values more than it can if you use empty strings etc... When interacting with nulls use the .na subpackage on a DataFrame.</p>
+<p>Various functions to use -- (check out the docs if you wish to learn more) -- <code>df.na.drop()</code> <code>df.na.drop('any')</code> <code>df.na.fill()</code> <code>df.na.replace()</code></p>
+<p><strong>Working with complex types</strong></p>
+<ul>
+<li>Structs</li>
+<li>Arrays</li>
+<li>Map</li>
+</ul>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://becominghuman.ai/real-world-python-workloads-on-spark-standalone-clusters-2246346c7040">Spark Submit - Python Jobs</a></li>
+</ul>
                 
               
               

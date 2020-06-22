@@ -1186,16 +1186,52 @@ __Working with complex types__
 - Map
 
 
+__Structs__
 
+You can think of structs as DataFrames within DataFrames.
 
+```py
+complexDF = df.select(struct("Description", "InvoiceNo").alias("complex"))   # creating a struct.
 
+# The above will create a df with col 'complex' which has Description adn InvoiceNo in it.
 
+# You can query it as below.
+complexDF.select("complex.Description")
+complexDF.select(col("complex").getField("Description"))
+```
 
+We can also query all values in the struct by using *. This brings up all the columns to the top-level DataFrame:
+```py
+complexDF.select("complex.*")
+```
 
+__Arrays__
 
+Lets say you have a column such as description, you can split that by space into an array of words.
 
+```py
+split(col("Description"), " ")
+```
+Then you can use `array_contains` methods to look into the array.
 
+You can also explode an array into multiple fields using explode `explode(col("splitted")))`.
 
+__Maps__
+
+Maps are created by using the map function and key-value pairs of columns. 
+
+```py
+df.select(map(col("Description"), col("InvoiceNo")).alias("complex_map"))\
+.selectExpr("complex_map['WHITE METAL LANTERN']").show(2)
+```
+
+__Json__
+
+TBD
+
+__UDF__
+
+Udf's are user defined functions.
 
 
 ---
