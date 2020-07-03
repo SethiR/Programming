@@ -5,3 +5,12 @@ auto writes the code for `__init__()`, `__repr__()` and `__eq__()`
 dunder methods. It also can make the instance frozen by taking in an
 argument `frozen=True` in the decorator as an argument, thus the
 instance can be hashable.
+
+```py
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class FrozenVector:
+    x: int
+    y: int
+```

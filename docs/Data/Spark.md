@@ -1236,6 +1236,29 @@ Udf's are user defined functions.
 
 ---
 
+__Aggregations__
+
+- `df.count()`
+- `df.countDistinct()` e.g. `df.select(countDistinct("StockCode")).show()`
+- `approx_count_distinct()`
+- `first()` - e.g. `df.select(first("StockCode"), last("StockCode")).show()`
+- `last()`
+- `min` & `max` --> `df.select(min("Quantity"), max("Quantity")).show()`
+- `sum()`
+- `sumdistinct()`
+- `avg()`
+- variance - `var_samp()`or `var_pop()`
+- standard deviation - `stddev_pop` or `stddev_samp`
+- and others
+
+__Grouping__
+
+```py
+df.groupBy("InvoiceNo").agg(
+count("Quantity").alias("quan"),
+expr("count(Quantity)")).show()
+```
+
 ## References
 
 - [Spark Submit - Python Jobs](https://becominghuman.ai/real-world-python-workloads-on-spark-standalone-clusters-2246346c7040)

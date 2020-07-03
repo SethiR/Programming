@@ -6,6 +6,43 @@ them are covered below. For details of other methods please check out
 this ref link from [python
 docs](https://docs.python.org/3/reference/datamodel.html)
 
+
+## `__call__`
+
+Allows the instance to be called with the parentheses syntax: `instance()`
+
+
+```py
+class A:
+
+    def __init__(self):
+        print("In Init")
+
+    def __call__(self, *args, **kwargs):
+        print("In Call")
+
+
+a = A() # In Init
+a() # In Call --> instance() --> invokes the __call__ function.
+```
+
+There can be various uses as shown below.
+
+```py
+class TriangleArea:
+    
+    def __call__(self, a, b, c):
+        p = (a + b + c) / 2
+        result = (p * (p - a) * (p - b) * (p - c)) ** 0.5
+        return result
+    
+    
+area = TriangleArea()
+
+print(area(3, 4, 5))
+```
+
+
 ## `__getitem__`
 
 The `__getitem__` function if implemented on a class will support the
