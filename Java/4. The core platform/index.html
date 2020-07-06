@@ -1,0 +1,2140 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.3">
+    
+    
+      
+        <title>4. The core platform - Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#core-platform-and-libraries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="Notes" class="md-header-nav__button md-logo" aria-label="Notes">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notes
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              4. The core platform
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Data/Hadoop/" class="md-tabs__link">
+          Data
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Frontend/JS-01-Basics/" class="md-tabs__link">
+          Frontend
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../1.%20Overview%20of%20the%20JVM%20World/" class="md-tabs__link md-tabs__link--active">
+          Java
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Machine%20Learning/Linear%20Regression/" class="md-tabs__link">
+          Machine Learning
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Misc/bash/" class="md-tabs__link">
+          Misc
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Python/Arrays/" class="md-tabs__link">
+          Python
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notes" class="md-nav__button md-logo" aria-label="Notes">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Data
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Data" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/Hadoop/" title="Hadoop" class="md-nav__link">
+      Hadoop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/Kafka/" title="Kafka" class="md-nav__link">
+      Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/SQL/" title="SQL" class="md-nav__link">
+      SQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/Spark/" title="Spark" class="md-nav__link">
+      Spark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/avro/" title="Avro File" class="md-nav__link">
+      Avro File
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Data/scala/" title="Scala" class="md-nav__link">
+      Scala
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Frontend
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Frontend" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Frontend
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-01-Basics/" title="JS-01-Basics" class="md-nav__link">
+      JS-01-Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-02-Functions/" title="JS-02-Functions" class="md-nav__link">
+      JS-02-Functions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-03-Objects/" title="JS-03-Objects" class="md-nav__link">
+      JS-03-Objects
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/JS-04-Arrays/" title="JS-04-Arrays" class="md-nav__link">
+      JS-04-Arrays
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/Tailwind%20CSS/" title="Tailwind CSS" class="md-nav__link">
+      Tailwind CSS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/Web%20Technologies/" title="Web Technologies" class="md-nav__link">
+      Web Technologies
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Frontend/the-circle-of-ds/" title="The circle of Data Science." class="md-nav__link">
+      The circle of Data Science.
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Java
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Java" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.%20Overview%20of%20the%20JVM%20World/" title="1. Overview of the JVM World" class="md-nav__link">
+      1. Overview of the JVM World
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.%20Core%20Java/" title="2. Core Java" class="md-nav__link">
+      2. Core Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../20.%20Design%20patterns%20-%20creational/" title="20. Design patterns creational" class="md-nav__link">
+      20. Design patterns   creational
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.%20Collections/" title="3. Collections" class="md-nav__link">
+      3. Collections
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        4. The core platform
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="4. The core platform" class="md-nav__link md-nav__link--active">
+      4. The core platform
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#streams" class="md-nav__link">
+    Streams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    Strings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-app-execution" class="md-nav__link">
+    Controlling App Execution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-log-system" class="md-nav__link">
+    Java Log System
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-threading-and-concurrency" class="md-nav__link">
+    Multi-threading and concurrency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-info-reflection" class="md-nav__link">
+    Runtime Info &amp; Reflection
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../6.%20Database%20with%20JDBC/" title="6. Database with JDBC" class="md-nav__link">
+      6. Database with JDBC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../99.%20IDE/" title="IDE" class="md-nav__link">
+      IDE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Generics/" title="Generics" class="md-nav__link">
+      Generics
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Machine Learning
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Machine Learning" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Machine Learning
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Linear%20Regression/" title="1. Regularization" class="md-nav__link">
+      1. Regularization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Logistic%20Regression/" title="Logistic Regression" class="md-nav__link">
+      Logistic Regression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/MultiLayerPerceptron/" title="1. Multi Layer Perceptron" class="md-nav__link">
+      1. Multi Layer Perceptron
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Overview%20of%20Supervised%20Learning/" title="Overview of Supervised Learning" class="md-nav__link">
+      Overview of Supervised Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Pandas/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Sklearn/" title="Sklearn" class="md-nav__link">
+      Sklearn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/Terms/" title="Model Parameters" class="md-nav__link">
+      Model Parameters
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-8" type="checkbox" id="nav-5-8">
+    
+    <label class="md-nav__link" for="nav-5-8">
+      Nlp
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Nlp" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Nlp
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Machine%20Learning/nlp/NPL/" title="NPL" class="md-nav__link">
+      NPL
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Misc
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Misc" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Misc
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Misc/bash/" title="Bash/Shell Scripting" class="md-nav__link">
+      Bash/Shell Scripting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Misc/linx/" title="Linux" class="md-nav__link">
+      Linux
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Python
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Python" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Arrays/" title="Arrays" class="md-nav__link">
+      Arrays
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Bytes/" title="Bytes" class="md-nav__link">
+      Bytes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Callables/" title="Callables" class="md-nav__link">
+      Callables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Context%20Managers/" title="Context Managers" class="md-nav__link">
+      Context Managers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Data%20Model%20Methods/" title="Data Model Methods" class="md-nav__link">
+      Data Model Methods
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/DataClasses/" title="DataClasses" class="md-nav__link">
+      DataClasses
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Decorators/" title="Decorators" class="md-nav__link">
+      Decorators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Dict/" title="Dict" class="md-nav__link">
+      Dict
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Disassembler%20for%20Python%20bytecode/" title="Disassembler for Python bytecode" class="md-nav__link">
+      Disassembler for Python bytecode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Enum/" title="Enum" class="md-nav__link">
+      Enum
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Functions/" title="Functions" class="md-nav__link">
+      Functions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Generator/" title="Generator" class="md-nav__link">
+      Generator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Isolating%20Envirounments%20in%20Python/" title="Isolating Envirounments in Python" class="md-nav__link">
+      Isolating Envirounments in Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/List/" title="List" class="md-nav__link">
+      List
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/MRO/" title="MRO" class="md-nav__link">
+      MRO
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Sets/" title="Sets" class="md-nav__link">
+      Sets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Slots/" title="Slots" class="md-nav__link">
+      Slots
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Subclassing%20built-ins/" title="Subclassing built-ins" class="md-nav__link">
+      Subclassing built-ins
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Tuples/" title="Tuples" class="md-nav__link">
+      Tuples
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/Weakref/" title="Weakref" class="md-nav__link">
+      Weakref
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/django/" title="Django" class="md-nav__link">
+      Django
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/foundations/" title="Foundations" class="md-nav__link">
+      Foundations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Python/metaprogramming/" title="Metaprogramming" class="md-nav__link">
+      Metaprogramming
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#streams" class="md-nav__link">
+    Streams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    Strings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-app-execution" class="md-nav__link">
+    Controlling App Execution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-log-system" class="md-nav__link">
+    Java Log System
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-threading-and-concurrency" class="md-nav__link">
+    Multi-threading and concurrency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-info-reflection" class="md-nav__link">
+    Runtime Info &amp; Reflection
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="core-platform-and-libraries">Core platform and libraries</h1>
+<h2 id="streams">Streams</h2>
+<ul>
+<li>Streams in java are ordered input and output data</li>
+<li>It provides a common input and output model</li>
+<li>Streams are unidirectional</li>
+<li>Abstracts away the underline source of destination of the data
+    (abstracts storange or where data is coming from)</li>
+<li>You can have input stream</li>
+<li>you can have output stream</li>
+<li>stream can be either a binary stream or character stream</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>Reading streams</p>
+<ul>
+<li>Binary (The base class for this is InputStream)</li>
+<li>Text (The base class for this is Reader)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>There are various methods which are used when reading stream data</p>
+<ul>
+<li>read() --> reads 1 byte at a time</li>
+<li>read(byte[] buff) or read(char[] buff) --> read the data which
+    can fit into buff</li>
+</ul>
+<p>If you see the below examples it may look like we are creating instances
+of InputStream, OutputStream, Reader or Writer. These are however
+abstract classes and cannot be instanciated. There are various
+subclasses of these which will be inherited based on the type of stream
+e.g. CharArrayWriter, StringWriter, PipedWriter, InputStreamReader,
+OutputStreamWriter etc...</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Reading one byte(binary) at a time.</span>
+<span class="n">InputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="c1">// create input stream</span>
+<span class="kt">int</span> <span class="n">intVal</span>
+
+<span class="nf">while</span><span class="p">((</span><span class="n">intVal</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="na">read</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>  <span class="c1">// end of stream is indicated by .read() method returning -1</span>
+    <span class="kt">byte</span> <span class="n">byteVal</span> <span class="o">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="n">intVal</span><span class="p">;</span>
+    <span class="c1">// now you can do something with byte value.</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1">// Reading one character at a time.</span>
+<span class="n">Reader</span> <span class="n">input</span> <span class="o">=</span> <span class="c1">// create input stream</span>
+<span class="kt">int</span> <span class="n">intVal</span>
+
+<span class="nf">while</span><span class="p">((</span><span class="n">intVal</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="na">read</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>  <span class="c1">// end of stream is indicated by .read() method returning -1</span>
+    <span class="kt">byte</span> <span class="n">byteVal</span> <span class="o">=</span> <span class="p">(</span><span class="n">chat</span><span class="p">)</span><span class="n">intVal</span><span class="p">;</span>
+    <span class="c1">// now you can do something with chat value.</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1">// Reading multiple byte(binary) at a time.</span>
+<span class="n">InputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="c1">// create input stream</span>
+<span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">byteBuff</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">10</span><span class="o">]</span><span class="p">;</span>
+
+<span class="k">while</span><span class="p">((</span><span class="n">length</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="na">read</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>  <span class="c1">// end of stream is indicated by .read() method returning -1</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>  <span class="c1">// now we have array of byte, so loop on array to get single byte and do something with it.</span>
+        <span class="kt">byte</span> <span class="n">byteVal</span> <span class="o">=</span> <span class="n">byteBuff</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+        <span class="c1">// do something with byteval.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><em>Writing values</em></p>
+<div class="codehilite"><pre><span></span><code><span class="n">OutputSteam</span> <span class="n">output</span> <span class="o">=</span> <span class="c1">// create stream</span>
+<span class="kt">byte</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="n">output</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">byteBuff</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">127</span><span class="p">};</span>
+<span class="n">output</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">byteBuff</span><span class="p">);</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">Writer</span> <span class="n">output</span> <span class="o">=</span> <span class="c1">//create stream</span>
+
+<span class="kt">char</span> <span class="n">a</span> <span class="o">=</span> <span class="sc">&#39;A&#39;</span><span class="p">;</span>  <span class="c1">// can write single char</span>
+<span class="n">output</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+
+<span class="kt">char</span><span class="o">[]</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">};</span>  <span class="c1">// can write array of char</span>
+<span class="n">output</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+
+<span class="n">String</span> <span class="n">c</span> <span class="o">=</span> <span class="s">&quot;HEllo&quot;</span><span class="p">;</span> <span class="c1">// can write a string</span>
+<span class="n">output</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>Usually when you are dealing with streams you will be using try and
+catch or try with resources and then closing down the stream as shown
+below.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">{</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="c1">// open reader;</span>
+<span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">){</span>
+
+<span class="p">}</span><span class="k">finally</span><span class="p">(){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reader</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">){</span>
+        <span class="k">try</span><span class="p">{</span>
+            <span class="n">reader</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+        <span class="p">}</span><span class="k">catch</span><span class="p">(){}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Use try with resources</strong></p>
+<p>The above close gets complicated (its still simplified on top) so use
+try with resources. Try with resources handles the following exceptions</p>
+<ul>
+<li>Automate cleans ups of 1 or more resources</li>
+<li>Handle try body</li>
+<li>Also handles close method calls and exceptions</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">(</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="c1">//open reader</span>
+<span class="p">){}</span>
+<span class="k">catch</span><span class="p">{}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>DEMO</strong></p>
+<p>Check stream --> slides and demos. The interface AutoCloseable has a
+method close. The try and catch block will auto call this method close()
+even if its not called explicitly so the resources are freed up. Also
+when you use try with resources you may get only 1 exception however
+there may be other exceptions which are not printed out. So in that case
+use method <code>getSuppressed</code> and you can loop on this and print out all
+the suppressed exceptions.</p>
+<hr />
+<p><strong>Chaining Streams</strong></p>
+<p>You can chain streams together.</p>
+<p>Java provdes FilterReader, FilterWriter, FilterInputSteam and
+FilterOutputStream abstract classes which provide easier customization
+for chaining streams.</p>
+<hr />
+<p><strong>Interacting with Files</strong></p>
+<p>java.io classes are depricated use java.nio.file for file handling.</p>
+<ul>
+<li>Use Paths class to locate something in the file system or directory.</li>
+<li>
+<p>Use Files static method to interacting with files.</p>
+<ul>
+<li>Create, copy delete etc...</li>
+<li>Open file streams like newBufferedReader, newBufferedWriter,
+    newInputStream, newOutputStream</li>
+<li>Read/write file contents using readAllLines, write</li>
+</ul>
+</li>
+</ul>
+<p>(If you see in the pluralSight course this below example was not
+accepted by Java, so modified it a little and it works)</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReadFiles</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+
+        <span class="k">try</span><span class="p">(</span>
+            <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;file.txt&quot;</span><span class="p">));</span>
+        <span class="p">){</span>
+            <span class="n">String</span> <span class="n">data</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">br</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">){</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Working with File Systems</strong></p>
+<p>When we work with file systems we usually work with computers default
+file system. java also supports specialized file systems like Zip file
+system.</p>
+<p>So we use the File System Type which represents the file system. Class
+--> FileSystem</p>
+<p>Check slide and programs for additional references. (Code demos are
+avaiable there)</p>
+<h2 id="strings">Strings</h2>
+<p>Basic concatenation and Stringbuilder are not powerful enough to create
+complicated strings. so we will be looking at more powerful ways.</p>
+<ul>
+<li>StringJoinr --> Simplifies joining a sequence of values.</li>
+<li>String formatting --> used for desired appearance.</li>
+</ul>
+<p><strong>String Joiner</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">java.util.StringJoiner</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StringJoinerDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">StringJoiner</span> <span class="n">sj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringJoiner</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">);</span>  <span class="c1">// specify the delimiter</span>
+
+        <span class="n">sj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">);</span>
+        <span class="n">sj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;beta&quot;</span><span class="p">);</span>
+        <span class="n">sj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;gama&quot;</span><span class="p">);</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">sj</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>  <span class="c1">// output --&gt; alpha, beta, gama</span>
+
+        <span class="n">sj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;def&quot;</span><span class="p">);</span>  <span class="c1">// chaining methods --&gt; return type of add is StringJoiner</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">sj</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span> <span class="c1">// output --&gt; alpha, beta, gama, abc, def</span>
+
+        <span class="n">StringJoiner</span> <span class="n">sj1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringJoiner</span><span class="p">(</span><span class="s">&quot;], [&quot;</span><span class="p">,</span> <span class="s">&quot;[&quot;</span><span class="p">,</span> <span class="s">&quot;]&quot;</span><span class="p">);</span>
+        <span class="n">sj1</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">);</span>
+        <span class="n">sj1</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;beta&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">sj1</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span> <span class="c1">// [alpha], [beta]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Format Specifiers</strong></p>
+<p>StringJoiner is pretty powerful however we sometimes need more power :)</p>
+<ul>
+<li>Focus is on how things look</li>
+<li>Not concerned with how.</li>
+<li>Use methods like --> String.format or System.out.printf(),
+    Formatter.format</li>
+</ul>
+<p>Parts of a format specifier -->
+<code>%[argument index][flags][width][precesion]conversoin</code></p>
+<p><em>Common Format Conversions</em></p>
+<ul>
+<li>d - decimal</li>
+<li>o - octal</li>
+<li>x = Hex</li>
+<li>f - float</li>
+<li>e - Scientific Notation</li>
+<li>s - String (you can also pass objects not just strings here, if the
+    class has Formattable then it will be used else will go with
+    toString)</li>
+<li>....</li>
+</ul>
+<p><em>Format Flags</em> - <code>#</code>- Include radix - 0 - 0 pad value - <code>-</code> - left
+justify - <code>,</code> - Include grouping character - <code>space</code> - Leave space for +
+or - sign for positive numbers - <code>+</code> - always show signs</p>
+<p>You can also write formatted text to a stream not just on output screen.
+There is a class called the <code>Formatter</code> class which provides formatting
+capabilities. It can help us write formatted content to any class which
+implements the <code>Appendable</code> interface. The writer stream class
+implements the <code>Appendable</code> interface.</p>
+<p>e.g.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">BufferedWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;data.txt&quot;</span><span class="p">));</span>  <span class="c1">// it will close when formatter is closed.</span>
+    <span class="k">try</span><span class="p">(</span><span class="n">Formatter</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">writer</span><span class="p">)){</span> <span class="c1">// creating a formatter over the writer stream</span>
+        <span class="n">f</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;Hello %d&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Regular Expressions</strong></p>
+<p>Just basics here --> check other places for detials</p>
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">&quot;apple, apple and orange please&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;ple\\b&quot;</span><span class="p">,</span> <span class="s">&quot;ricot&quot;</span><span class="p">);</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">&quot;apple, apple and orange please&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">s1</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;//b&quot;</span><span class="p">);</span>
+
+<span class="k">for</span><span class="p">(</span><span class="n">String</span> <span class="n">part</span> <span class="p">:</span> <span class="n">parts</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">part</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;\\w+&quot;</span><span class="p">)){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">part</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Compilation of regular expression can be very processing intensive, so
+if you are doing this in a loop or over and over again its better to
+precompile the regular expression and apply.</p>
+<p>The <code>Pattern</code> class allows us to precompile the regex and then apply.
+Then the <code>Matcher</code> class can apply the compiled regex to an
+expression/string.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">&quot;apple, apple and orange please&quot;</span><span class="p">;</span>
+<span class="n">Pattern</span> <span class="n">pattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;\\w+&quot;</span><span class="p">);</span>
+
+<span class="n">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span><span class="n">value1</span><span class="p">);</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">find</span><span class="p">()){</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<h2 id="controlling-app-execution">Controlling App Execution</h2>
+<p><strong>Command Line Arguments</strong></p>
+<p>Arguments are passed as String arrays. Each argument is a seperate
+element. (seperated by space or if space put in quotes). In intellij you
+can pass arguemnts when you <code>edit configurations</code></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span> <span class="nn">com.sethirajat.cli</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CLIargsDemo</span> <span class="p">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+
+       <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">arg</span> <span class="p">:</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+           <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+       <span class="p">}</span>
+
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Persistable Key Value Pairs</strong></p>
+<p>Apps often need persistable key value pairs for app config or initial
+load or other things like state or preferences. (Hashmap will only store
+when we are running program and its in memory). Use the
+<code>java.util.Properties</code> class for this.</p>
+<p>Properties Class --> Inherits from Hash Table.</p>
+<ul>
+<li>Keys and values are string.</li>
+<li>properties can be written to and from streams</li>
+<li>can optionally include comments</li>
+<li>supports 2 formats --> text and xml</li>
+<li>key and value are separated by : or , or first white space</li>
+<li><code>#=or =!</code> start comment line</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.InvalidPropertiesFormatException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PropertiesDemo</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//        properties_reader();</span>
+<span class="c1">//        properties_writer_xml();</span>
+        <span class="n">properties_reader_xml</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">properties_writer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+
+        <span class="n">props</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;key1&quot;</span><span class="p">,</span> <span class="s">&quot;value1&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&quot;key1&quot;</span><span class="p">));</span>
+
+        <span class="k">try</span> <span class="p">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;abc.properties&quot;</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="n">props</span><span class="p">.</span><span class="na">store</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="s">&quot;Sample properties&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">properties_reader</span><span class="p">(){</span>
+        <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+        <span class="k">try</span><span class="p">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;abc.properties&quot;</span><span class="p">))){</span>
+            <span class="n">props</span><span class="p">.</span><span class="na">load</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&quot;key1&quot;</span><span class="p">));</span>
+
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// xml will work with output streams, so the output stream has to be stored as xml.</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">properties_writer_xml</span><span class="p">(){</span>
+        <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+
+        <span class="k">try</span><span class="p">(</span><span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newOutputStream</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;abc.xml&quot;</span><span class="p">))){</span>
+
+            <span class="n">props</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;key1&quot;</span><span class="p">,</span> <span class="s">&quot;value1&quot;</span><span class="p">);</span>
+            <span class="n">props</span><span class="p">.</span><span class="na">storeToXML</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;sample properties&quot;</span><span class="p">);</span>
+
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">properties_reader_xml</span><span class="p">(){</span>
+
+        <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+
+        <span class="k">try</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newInputStream</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;abc.xml&quot;</span><span class="p">))){</span>
+            <span class="n">props</span><span class="p">.</span><span class="na">loadFromXML</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&quot;key1&quot;</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InvalidPropertiesFormatException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<p><strong>Default Properties</strong></p>
+<p>Properties can also be created with default.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">static</span> <span class="kt">void</span> <span class="nf">propertiesWithDefault</span><span class="p">(){</span>
+     <span class="n">Properties</span> <span class="n">defaults</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+     <span class="n">defaults</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;os&quot;</span><span class="p">,</span> <span class="s">&quot;Windows&quot;</span><span class="p">);</span>
+     <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">(</span><span class="n">defaults</span><span class="p">);</span> <span class="c1">// created with defaults</span>
+ <span class="p">}</span>
+</code></pre></div>
+
+
+<p>Usually a application will store default properties. For that when you
+are launching an aplication you can include .properties file in that
+application.</p>
+<hr />
+<p><strong>Default Class Loading</strong></p>
+<ul>
+<li>Classes must be in .class files</li>
+<li>Must be under package directory</li>
+</ul>
+<p><strong>Specifying class path</strong></p>
+<ul>
+<li>You can specify the class path. (if you specify path then current
+    directory has to be specified )</li>
+<li>if doing via env variables use <code>CLASSPATH</code></li>
+<li>classpath is set for all programs and projects not just for current
+    project</li>
+</ul>
+<p><strong>Class loading with -jar option</strong></p>
+<ul>
+<li>Class loading is controlled by jar file</li>
+<li>no other class loading source is used</li>
+<li>provides tight control over class loading</li>
+</ul>
+<p>e.g. =java -jar ourapp.jar=</p>
+<hr />
+<h2 id="java-log-system">Java Log System</h2>
+<p>Logs are used for various uses.</p>
+<ul>
+<li>errors</li>
+<li>usage info</li>
+<li>debug</li>
+<li>can be of different detail level</li>
+</ul>
+<p>Log System</p>
+<ul>
+<li>its centrally managed</li>
+<li>there is 1 app-wide log manager</li>
+<li>manages log system config</li>
+<li>manages objects that do actual logging</li>
+<li>class <code>LogManager</code>. There will be 1 global instance of it.</li>
+<li><code>LogManager.getLogManager</code></li>
+<li><code>Logger</code> class provides methods to do logging</li>
+<li>use <code>getLogger</code> method to get to the logger from the log manager.</li>
+<li>each logger instance is named</li>
+<li>there is also a global logger <code>GLOBAL_LOGGER_NAME</code></li>
+</ul>
+<p>Levels</p>
+<ul>
+<li>Each log entry is associated with a level</li>
+<li>Each logger has a capture level --> use <code>setLevel</code> method. The
+    logger will ignore any entry below that level</li>
+<li>
+<p>Each level has a numeric value</p>
+<ul>
+<li>7 basic log levels</li>
+<li>2 special levels for Logger</li>
+<li>you can also define custom log levels (its rare)</li>
+<li>1000 - SEVERE</li>
+<li>900 - WARNING</li>
+<li>800 - INFO</li>
+<li>700 - CONFIGURATION</li>
+<li>500 - FINE</li>
+<li>400 - FINER</li>
+<li>300 - FINEST</li>
+<li>entering - logs at fine level</li>
+<li>exiting - logs at fine level</li>
+</ul>
+</li>
+</ul>
+<p><strong>Components of the log system</strong></p>
+<ul>
+<li>Logger -> Accepts app calls</li>
+<li>
+<p>Handler -> Publishes logging info, a logger can have multiple
+    handlers</p>
+<ul>
+<li>As logger can have multiple handlers you can set level for each
+    handler. (which should be more restrictive than the logger
+    level)</li>
+</ul>
+</li>
+<li>
+<p>Formatter -> formats log info for publication. each handler has 1
+    formatter.</p>
+</li>
+</ul>
+<p>(check slides as they have a good diagram to explain this)</p>
+<p><strong>Built in Handlers</strong></p>
+<ul>
+<li>The built in handlers inherit from the Handler class</li>
+<li>
+<p>You can write custom handlers but mostly you will not</p>
+<ul>
+<li>ConsoleHandler --> writes to System.err</li>
+<li>StreamHandler --> writes to specified output stream</li>
+<li>SocketHandler --> writes to network socket</li>
+<li>
+<p>FileHandler --> writes to 1 or more files</p>
+<ul>
+<li>can output to single file</li>
+<li>
+<p>can output to rotating set of files</p>
+<ul>
+<li>specify size in bytes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>File Handler Substitution patterns values (check demo below)</p>
+<ul>
+<li>/ - Platform specific slash e.g. ./foo.txt</li>
+<li>\%T - writes to temp directory</li>
+<li>\%h - writes to home directory</li>
+<li>\%g - Rotating log generation</li>
+</ul>
+<p><strong>Built in formatters</strong></p>
+<ul>
+<li>Inherit from formatter class</li>
+<li>
+<p>XMLFormatter</p>
+<ul>
+<li>Root element log</li>
+<li>each entry goes under named record</li>
+</ul>
+</li>
+<li>
+<p>SimpleFormatter</p>
+<ul>
+<li>Formats content as simple text</li>
+<li>
+<p>Format is customizable</p>
+<ul>
+<li>Uses standard formatting notation</li>
+<li>You can customize this using
+    <code>java.util.logging.SimpleFormatter.format</code> -> pass value
+    with Java -D option when run the program (check slides)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Log Configuration File</strong></p>
+<p>You can create a configuration file for your log system. Using
+configuration file is much simpler.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">java.util.logging.ConsoleHandler.level = ALL</span>
+<span class="err">...</span>
+<span class="err">(check slide)</span>
+</code></pre></div>
+
+
+<p>then when you launch the program launch with giving file details</p>
+<div class="codehilite"><pre><span></span><code><span class="n">java</span> <span class="o">-</span><span class="n">Djava</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">logging</span><span class="p">.</span><span class="na">config</span><span class="p">.</span><span class="na">file</span> <span class="o">=</span> <span class="n">log</span><span class="p">.</span><span class="na">properties</span> <span class="n">com</span><span class="p">.</span><span class="na">pluralsight</span><span class="p">.</span><span class="na">training</span><span class="p">.</span><span class="na">Main</span> <span class="c1">// (the last one is is the app name com.plu....)</span>
+</code></pre></div>
+
+
+<p><strong>Logger Naming</strong></p>
+<ul>
+<li>Implies a parent child relationship based on the name we give the
+    loggers.</li>
+<li>Naming should be hierarchical</li>
+<li>dot seperates a level</li>
+<li>
+<p>generally tied to class\'s full name e.g. =com.sethirajat.training=
+    <code>com.sethirajat.training.Main</code> <code>com.sethirajat.training.Student</code>.</p>
+<ul>
+<li>In the above case Main and Student will auto become child
+    loggers of <code>com.sethirajat.training</code> and any log on the child
+    will be logged on the parent also.</li>
+</ul>
+</li>
+</ul>
+<p>Making the most of hierarchical system</p>
+<ul>
+<li>If a logger level is null it inherits parents level</li>
+<li>So we primarily set level on parents (and is usually restrictive)</li>
+<li>if we need more detail then we can set more detailed level on the
+    child logger</li>
+<li>
+<p>each logger also does not need to have a handler</p>
+<ul>
+<li>if there is no handler it still passes the info up to its parent
+    which will log it</li>
+<li>if needed we can add handler to child and start logging at that
+    level as well. (check slide as to how its usually set up)</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.FileSystem</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.logging.*</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LogDemo</span> <span class="p">{</span>
+
+    <span class="kd">static</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getLogManager</span><span class="p">().</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">GLOBAL_LOGGER_NAME</span><span class="p">);</span>  <span class="c1">// static reference to a logger and it can now be used anywhere inside the application</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">logManagerDemo</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">logManagerDemo</span><span class="p">(){</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">,</span> <span class="s">&quot;My first log message&quot;</span><span class="p">);</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">,</span> <span class="s">&quot;Another message&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// logp allows you to specify the class and method explicityly. log infers it.</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">logpDemo</span><span class="p">(){</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">logp</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">ALL</span><span class="p">,</span> <span class="s">&quot;LogDemo&quot;</span><span class="p">,</span> <span class="s">&quot;logpDemo&quot;</span><span class="p">,</span> <span class="s">&quot;Log message&quot;</span><span class="p">);</span>  <span class="c1">// logp supports parameters</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// this method demostrates how you can piece the components of the logger yourself.</span>
+    <span class="c1">// There are 3 components 1) Logger 2) Handler 3) Formatter</span>
+    <span class="c1">// You can arrange them as shown below (check slides for diagram)</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">logComponentsDemo</span><span class="p">(){</span>
+        <span class="n">Logger</span> <span class="n">customLogger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;com.sethirajat&quot;</span><span class="p">);</span>  <span class="c1">// if this logger does not exist it will be created</span>
+        <span class="n">Handler</span> <span class="n">h</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ConsoleHandler</span><span class="p">();</span>  <span class="c1">// using a built in handler which outputs to console.</span>
+        <span class="n">Formatter</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleFormatter</span><span class="p">();</span> <span class="c1">// using a built in formatter</span>
+        <span class="n">h</span><span class="p">.</span><span class="na">setFormatter</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+        <span class="n">customLogger</span><span class="p">.</span><span class="na">addHandler</span><span class="p">(</span><span class="n">h</span><span class="p">);</span>
+        <span class="n">customLogger</span><span class="p">.</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">ALL</span><span class="p">);</span>
+        <span class="n">customLogger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">,</span> <span class="s">&quot;We are logging this message&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// this method demonstrates how you can log to a file</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">FileHandlerDemo</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="n">Logger</span> <span class="n">customLogger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;com.sethirajat&quot;</span><span class="p">);</span>
+        <span class="n">FileHandler</span> <span class="n">h</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileHandler</span><span class="p">();</span>  <span class="c1">// also can do new FileHandler(&quot;%h/myapp_%g.log&quot;, 1000, 4) --&gt; pattern for</span>
+                                            <span class="c1">// file naming, limit, count (check official documentation by going to class or java docs.</span>
+        <span class="n">h</span><span class="p">.</span><span class="na">setFormatter</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleFormatter</span><span class="p">());</span>
+        <span class="n">customLogger</span><span class="p">.</span><span class="na">addHandler</span><span class="p">(</span><span class="n">h</span><span class="p">);</span>
+
+        <span class="n">customLogger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">,</span> <span class="s">&quot;logging&quot;</span><span class="p">);</span>
+
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+
+<hr />
+<h2 id="multi-threading-and-concurrency">Multi-threading and concurrency</h2>
+<p>What is a process</p>
+<ul>
+<li>instance of a program or application</li>
+<li>has resources such as memory</li>
+<li>has at least 1 thread</li>
+</ul>
+<p>What is a thread</p>
+<ul>
+<li>It is a sequence of programmed instructions.</li>
+<li>The thing that executes programs code</li>
+<li>utilizes process resources.</li>
+</ul>
+<p><strong>Example problem that would benefit from multithreading</strong></p>
+<p>An <code>Adder</code> class takes in file with numbers and outputs the total in
+another file.</p>
+<p>In a loop we have 6 input files and the work is done sequentially. Since
+reading from file and writing from file is non cpu task the cpu is idle.
+so we can do this problem with multithreading approach.</p>
+<p><strong>Move to multithreading</strong></p>
+<p>Its a explicit choice. you need to break the problem into parts and hand
+it off for processing.</p>
+<p>Java provides high level and low level api\'s for this.</p>
+<hr />
+<h2 id="runtime-info-reflection">Runtime Info &amp; Reflection</h2>
+<p>Reflection provdies</p>
+<ul>
+<li>Ability to examine types at runtime</li>
+<li>Dynamically execute &amp; access members</li>
+</ul>
+<p>Using reflection</p>
+<ul>
+<li>can fully examine objects at runtime</li>
+<li>interfaces implemented</li>
+<li>members</li>
+</ul>
+<p>variety of uses</p>
+<ul>
+<li>determine a types capability</li>
+<li>
+<p>tools development</p>
+<ul>
+<li>type inspector/browser</li>
+<li>Schema generation</li>
+</ul>
+</li>
+<li>
+<p>construct instances</p>
+</li>
+<li>access fields</li>
+<li>call methods</li>
+</ul>
+<p>Each type has a <code>Class</code> class instance. It describes the type in detial.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../3.%20Collections/" title="3. Collections" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                3. Collections
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../6.%20Database%20with%20JDBC/" title="6. Database with JDBC" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                6. Database with JDBC
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://linkedin.com/in/squidfunk" target="_blank" rel="noopener" title="linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4a5ba8d6.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.9b3611bd.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
