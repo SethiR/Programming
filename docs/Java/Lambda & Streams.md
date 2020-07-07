@@ -390,6 +390,15 @@ Stream methods fall into 2 categories
 - Intermediate operations -> they return new stream e.g. Filter, Map 
 - Terminal operations -> they return void and consume the stream e.g. forEach.
 
+Intermediate
+
+- map / flatmap
+- filter
+- limit / skip
+- sorted
+- distinct
+- peek
+
 If you do not call terminal operator on your stream nothing happens. This is called lazy evaluation.
 
 __Slicing__
@@ -415,3 +424,176 @@ movies.stream()
 
 - Takewhile takes a Predicate and returns movies which get true for that predicate. (akeWhile stops the stream on first false from predicate where as filter does not it iterates through entire stream)
 - Takewhile takes a Predicate and returns movies which get true for that predicate.
+- Dropwhile is opposite of dropWhile.
+
+__Sorting__
+
+```java
+movies.stream()
+    .sorted((a, b) -> a.getName().compareTo(b.getName()))
+```
+
+```java
+movies.stream()
+    .sorted(Comparator.comparing(m -> m.getName()))
+```
+
+```java
+movies.stream()
+    .sorted(Comparator.comparing(Movie::getName))
+```
+
+```java
+movies.stream()
+    .sorted(Comparator.comparing(Movie::getName).reversed())
+```
+
+
+__Unique values__
+
+```java
+movies.stream()
+    .map(Movie::getLikes)
+    .distinct()                 // unique values using distinct()
+    .forEach(System.out::println)
+```
+
+__Peeking__
+
+Lets say if you wish to peek into the stream after every operation (for debugging etc...) then you can do that with peek method.
+
+```java
+movies.stream()
+    .filter(m -> m.getLikes() > 10)
+    .peek(m -> System.out.println("filtered" + m.getName()))
+    .map(Movie::getName)
+    .peek(title -> System.out.println("map :" + title))
+    .forEach(System.out::println)
+```
+
+### Reducers
+
+All these are terminal operations.
+
+- count()
+- anyMatch(Predicate) --> returns a boolean (If any object satisfies the condition)
+- allMatch(Predicate) --> returns a boolean (If all object satisfy the condition)
+- noneMatch(Predicate) --> returns a boolean (If none object satisfy the condition)
+- findFirst() --> returns the first object. then do `.get()` to get the object.
+- findAny() --> returns any random object. then do `.get()` to get the object.
+- max(Comparator)
+- min(Comparator)
+
+General purpose reducer ==> `.reduce()`
+
+In the below example we use `reduce` to count total # of likes for all movies.
+
+```java
+movies.stream()
+    .map(m -> m.getLikes())
+    .reduce((a, b) -> a + b)  // can also do .reduce(Integer::sum)
+```
+
+The above code will return you a `Optional<Integer>` you can call `.get` (not null pointer safe) or `.orElse` for null pointer safety.
+
+If you do not wish to worry about the Optional<Integer> then you should supply a starting value e.g. 0 into the reducer so that if there are no movies it will return 0.
+
+
+```java
+movies.stream()
+    .map(m -> m.getLikes())
+    .reduce(0, Integer::sum)  // now it will return int and not Optional<Integer>
+```
+
+__Collectors__
+
+Quiet often we wish to get the result of processing (may be filtering movie or something smilar) and collect them into a list, set, map etc... for this we use collector.
+
+```java
+movies.stream()
+    .filter(m -> m.getLikes() > 10)
+    .collect(Collectors.toList())  // returns a list of movies.
+```
+
+Similar to above we have toSet, toMap
+
+```java
+movies.stream()
+    .filter(m -> m.getLikes() > 10)
+    .collect(Collectors.toMap(Movie::getName, Movie:getLikes))  // returns a hashmap of movies
+```
+
+```java
+movies.stream()
+    .filter(m -> m.getLikes() > 10)
+    .collect(Collectors.toMap(Movie::getName, m -> m))  // storing movie object instead of # of likes for hashmap value.
+```
+
+In above code you can also replace `m -> m` with `Function.identity()` which gets a value and simply returns it.
+
+```java
+movies.stream()
+    .filter(m -> m.getLikes() > 10)
+    .collect(Collectors.summingInt(Movie::getLikes))   // summing all integer values, here likes
+```
+
+Can also do the above with reduce, the above is alternative way to do it. You also have summingDouble etc...
+
+
+You also have `Collectors.summarizingInt` and other primitives where it gives you some stats about the stream integer value you passed.
+
+We also have a joining collector `Collectors.joining()` e.g. you can contactenate movies names joined with some delimiter.
+
+__Grouping__
+
+```java
+movies.stream()
+    .collect(Collectors.groupingBy(Movie::getGenere)) // this takes in a classifier,
+```
+This will return map Genere -> Movies List, you can also specify to get result in a set.
+
+```java
+collect(Collectors.groupingBy(Movie::getGenere,
+                            Collectors.toSet())) // genere to Set of movies.
+```
+
+```java
+collect(Collectors.groupingBy(Movie::getGenere,
+                            Collectors.counting())) // genere to integer # of movies in that genere
+```
+
+```java
+collect(Collectors.groupingBy(Movie::getGenere,
+                            Collectors.mapping(Movie::getName, 
+                            Collectors.joining()))) // genere to String with movie names
+```
+
+
+__Partition data__
+
+Splitting data.
+
+```java
+movies.stream()
+    .collect(Collectors.partitioningBy(m -> m.getLikes > 20))  // get a map of boolean -> movies
+```
+
+You can also tack on a second collector as we did above.
+
+__Primitive Streams__
+
+IntStream
+LongStream
+DoubleStream
+
+```java
+IntStream.of
+```
+
+```java
+IntStream.range(1,5)
+```
+
+```java
+IntStream.rangeClosed(1,5)
+```

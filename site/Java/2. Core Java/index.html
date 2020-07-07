@@ -705,6 +705,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lambda%20%26%20Streams/" title="Lambda and Streams" class="md-nav__link">
+      Lambda and Streams
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -2157,6 +2169,62 @@ object to Flight or Passenger object.</p>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Flight</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">flight</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">{</span>
 
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Another comparable example</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">Comparable Interface.</span>
+<span class="cm"> */</span>
+
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Employee</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Employee</span><span class="o">&gt;</span><span class="p">{</span>
+
+    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">Employee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="p">(</span><span class="n">Employee</span> <span class="n">o</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">id</span> <span class="o">-</span> <span class="n">o</span><span class="p">.</span><span class="na">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Employee{&quot;</span> <span class="o">+</span>
+                <span class="s">&quot;id=&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="s">&quot;, name=&#39;&quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main13</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Employee</span><span class="o">&gt;</span> <span class="n">employees</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+        <span class="n">employees</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span><span class="p">(</span><span class="mi">109</span><span class="p">,</span> <span class="s">&quot;sam nelson&quot;</span><span class="p">));</span>
+        <span class="n">employees</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&quot;pete nelson&quot;</span><span class="p">));</span>
+        <span class="n">employees</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s">&quot;becky nelson&quot;</span><span class="p">));</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">employees</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">compareTo</span><span class="p">(</span><span class="n">employees</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
+
+        <span class="n">Collections</span><span class="p">.</span><span class="na">sort</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>  <span class="c1">// Sorting employees array.</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span> <span class="p">:</span> <span class="n">employees</span><span class="p">){</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
