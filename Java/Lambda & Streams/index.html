@@ -657,6 +657,19 @@
     Streams
   </a>
   
+    <nav class="md-nav" aria-label="Streams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reducers" class="md-nav__link">
+    Reducers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1248,6 +1261,19 @@
     Streams
   </a>
   
+    <nav class="md-nav" aria-label="Streams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reducers" class="md-nav__link">
+    Reducers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1628,6 +1654,15 @@ import java.util.stream.Stream;</p>
 <span class="sx">-</span> <span class="sx">Intermediate</span> <span class="sx">operations</span> <span class="sx">-&gt;</span> <span class="sx">they</span> <span class="kr">return</span> <span class="kr">new</span> <span class="nc">stream</span> <span class="sx">e.g.</span> <span class="sx">Filter,</span> <span class="sx">Map</span> 
 <span class="sx">-</span> <span class="sx">Terminal</span> <span class="sx">operations</span> <span class="sx">-&gt;</span> <span class="sx">they</span> <span class="kr">return</span> <span class="sx">void</span> <span class="sx">and</span> <span class="sx">consume</span> <span class="sx">the</span> <span class="sx">stream</span> <span class="sx">e.g.</span> <span class="sx">forEach.</span>
 
+<span class="sx">Intermediate</span>
+
+<span class="sx">-</span> <span class="sx">map</span> <span class="sx">/</span> <span class="sx">flatmap</span>
+<span class="sx">-</span> <span class="sx">filter</span>
+<span class="sx">-</span> <span class="sx">limit</span> <span class="sx">/</span> <span class="sx">skip</span>
+<span class="sx">-</span> <span class="sx">sorted</span>
+<span class="sx">-</span> <span class="sx">distinct</span>
+<span class="sx">-</span> <span class="sx">peek</span>
+
 <span class="sx">If</span> <span class="sx">you</span> <span class="sx">do</span> <span class="sx">not</span> <span class="sx">call</span> <span class="sx">terminal</span> <span class="sx">operator</span> <span class="sx">on</span> <span class="sx">your</span> <span class="sx">stream</span> <span class="sx">nothing</span> <span class="sx">happens.</span> <span class="sx">This</span> <span class="kr">is</span> <span class="nv">called</span> <span class="kt">lazy</span> <span class="sx">evaluation.</span>
 
 <span class="sx">__Slicing__</span>
@@ -1654,7 +1689,152 @@ import java.util.stream.Stream;</p>
 <ul>
 <li>Takewhile takes a Predicate and returns movies which get true for that predicate. (akeWhile stops the stream on first false from predicate where as filter does not it iterates through entire stream)</li>
 <li>Takewhile takes a Predicate and returns movies which get true for that predicate.</li>
+<li>Dropwhile is opposite of dropWhile.</li>
 </ul>
+<p><strong>Sorting</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">sorted</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">sorted</span><span class="p">(</span><span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">sorted</span><span class="p">(</span><span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">sorted</span><span class="p">(</span><span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">).</span><span class="na">reversed</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p><strong>Unique values</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getLikes</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">distinct</span><span class="p">()</span>                 <span class="c1">// unique values using distinct()</span>
+    <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><strong>Peeking</strong></p>
+<p>Lets say if you wish to peek into the stream after every operation (for debugging etc...) then you can do that with peek method.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">peek</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;filtered&quot;</span> <span class="o">+</span> <span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">peek</span><span class="p">(</span><span class="n">title</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;map :&quot;</span> <span class="o">+</span> <span class="n">title</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h3 id="reducers">Reducers</h3>
+<p>All these are terminal operations.</p>
+<ul>
+<li>count()</li>
+<li>anyMatch(Predicate) --&gt; returns a boolean (If any object satisfies the condition)</li>
+<li>allMatch(Predicate) --&gt; returns a boolean (If all object satisfy the condition)</li>
+<li>noneMatch(Predicate) --&gt; returns a boolean (If none object satisfy the condition)</li>
+<li>findFirst() --&gt; returns the first object. then do <code>.get()</code> to get the object.</li>
+<li>findAny() --&gt; returns any random object. then do <code>.get()</code> to get the object.</li>
+<li>max(Comparator)</li>
+<li>min(Comparator)</li>
+</ul>
+<p>General purpose reducer ==&gt; <code>.reduce()</code></p>
+<p>In the below example we use <code>reduce</code> to count total # of likes for all movies.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">reduce</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>  <span class="c1">// can also do .reduce(Integer::sum)</span>
+</code></pre></div>
+
+
+<p>The above code will return you a <code>Optional&lt;Integer&gt;</code> you can call <code>.get</code> (not null pointer safe) or <code>.orElse</code> for null pointer safety.</p>
+<p>If you do not wish to worry about the Optional<Integer> then you should supply a starting value e.g. 0 into the reducer so that if there are no movies it will return 0.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Integer</span><span class="p">::</span><span class="n">sum</span><span class="p">)</span>  <span class="c1">// now it will return int and not Optional&lt;Integer&gt;</span>
+</code></pre></div>
+
+
+<p><strong>Collectors</strong></p>
+<p>Quiet often we wish to get the result of processing (may be filtering movie or something smilar) and collect them into a list, set, map etc... for this we use collector.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">())</span>  <span class="c1">// returns a list of movies.</span>
+</code></pre></div>
+
+
+<p>Similar to above we have toSet, toMap</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toMap</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">,</span> <span class="n">Movie</span><span class="p">:</span><span class="n">getLikes</span><span class="p">))</span>  <span class="c1">// returns a hashmap of movies</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toMap</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">,</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">))</span>  <span class="c1">// storing movie object instead of # of likes for hashmap value.</span>
+</code></pre></div>
+
+
+<p>In above code you can also replace <code>m -&gt; m</code> with <code>Function.identity()</code> which gets a value and simply returns it.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">summingInt</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getLikes</span><span class="p">))</span>   <span class="c1">// summing all integer values, here likes</span>
+</code></pre></div>
+
+
+<p>Can also do the above with reduce, the above is alternative way to do it. You also have summingDouble etc...</p>
+<p>You also have <code>Collectors.summarizingInt</code> and other primitives where it gives you some stats about the stream integer value you passed.</p>
+<p>We also have a joining collector <code>Collectors.joining()</code> e.g. you can contactenate movies names joined with some delimiter.</p>
+<p><strong>Grouping</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">groupingBy</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getGenere</span><span class="p">))</span> <span class="c1">// this takes in a classifier,</span>
+</code></pre></div>
+
+
+<p>This will return map Genere -&gt; Movies List, you can also specify to get result in a set.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">groupingBy</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getGenere</span><span class="p">,</span>
+                            <span class="n">Collectors</span><span class="p">.</span><span class="na">toSet</span><span class="p">()))</span> <span class="c1">// genere to Set of movies.</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">groupingBy</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getGenere</span><span class="p">,</span>
+                            <span class="n">Collectors</span><span class="p">.</span><span class="na">counting</span><span class="p">()))</span> <span class="c1">// genere to integer # of movies in that genere</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">groupingBy</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getGenere</span><span class="p">,</span>
+                            <span class="n">Collectors</span><span class="p">.</span><span class="na">mapping</span><span class="p">(</span><span class="n">Movie</span><span class="p">::</span><span class="n">getName</span><span class="p">,</span> 
+                            <span class="n">Collectors</span><span class="p">.</span><span class="na">joining</span><span class="p">())))</span> <span class="c1">// genere to String with movie names</span>
+</code></pre></div>
+
+
+<p><strong>Partition data</strong></p>
+<p>Splitting data.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">partitioningBy</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="p">.</span><span class="na">getLikes</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">))</span>  <span class="c1">// get a map of boolean -&gt; movies</span>
+</code></pre></div>
+
+
+<p>You can also tack on a second collector as we did above.</p>
+<p><strong>Primitive Streams</strong></p>
+<p>IntStream
+LongStream
+DoubleStream</p>
+<div class="codehilite"><pre><span></span><code><span class="n">IntStream</span><span class="p">.</span><span class="na">of</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">IntStream</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">IntStream</span><span class="p">.</span><span class="na">rangeClosed</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
                 
               
               
