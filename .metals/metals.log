@@ -78,3 +78,21 @@ INFO: Unsupported notification method: $/setTraceNotification
 2020.07.05 22:14:37 INFO  started: Metals version 0.9.1 in workspace '/home/rs/MEGA/repositories/technotes'
 2020.07.05 22:14:38 INFO  time: initialize in 0.63s
 2020.07.05 22:14:39 WARN  no build tool detected in workspace '/home/rs/MEGA/repositories/technotes'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Jul 05, 2020 10:40:25 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
+2020.07.05 22:40:36 INFO  shutting down Metals
+2020.07.06 08:48:43 INFO  started: Metals version 0.9.1 in workspace '/home/rs/MEGA/repositories/technotes'
+2020.07.06 08:48:44 INFO  time: initialize in 0.86s
+2020.07.06 08:48:45 WARN  no build tool detected in workspace '/home/rs/MEGA/repositories/technotes'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Jul 06, 2020 9:11:11 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
+2020.07.06 09:11:29 INFO  shutting down Metals
+2020.07.06 09:12:12 INFO  started: Metals version 0.9.1 in workspace '/home/rs/MEGA/repositories/technotes'
+2020.07.06 09:12:13 INFO  time: initialize in 0.94s
+2020.07.06 09:12:14 WARN  no build tool detected in workspace '/home/rs/MEGA/repositories/technotes'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+Jul 06, 2020 10:15:44 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTraceNotification
+2020.07.06 22:27:01 INFO  shutting down Metals
+2020.07.07 05:55:20 INFO  started: Metals version 0.9.1 in workspace '/home/rs/MEGA/repositories/technotes'
+2020.07.07 05:55:22 INFO  time: initialize in 2.3s
+2020.07.07 05:55:25 WARN  no build tool detected in workspace '/home/rs/MEGA/repositories/technotes'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 

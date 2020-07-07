@@ -182,7 +182,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Java/IDE/" class="md-tabs__link">
+        <a href="../../Java/1.%20Overview%20of%20the%20JVM%20World/" class="md-tabs__link">
           Java
         </a>
       
@@ -356,6 +356,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../avro/" title="Avro File" class="md-nav__link">
+      Avro File
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../scala/" title="Scala" class="md-nav__link">
       Scala
     </a>
@@ -512,7 +524,79 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Java/IDE/" title="IDE" class="md-nav__link">
+    <a href="../../Java/1.%20Overview%20of%20the%20JVM%20World/" title="1. Overview of the JVM World" class="md-nav__link">
+      1. Overview of the JVM World
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/2.%20Core%20Java/" title="2. Core Java" class="md-nav__link">
+      2. Core Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/20.%20Design%20patterns%20-%20creational/" title="20. Design patterns creational" class="md-nav__link">
+      20. Design patterns   creational
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/3.%20Collections/" title="3. Collections" class="md-nav__link">
+      3. Collections
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/4.%20The%20core%20platform/" title="4. The core platform" class="md-nav__link">
+      4. The core platform
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/6.%20Database%20with%20JDBC/" title="6. Database with JDBC" class="md-nav__link">
+      6. Database with JDBC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Java/99.%20IDE/" title="IDE" class="md-nav__link">
       IDE
     </a>
   </li>
@@ -524,80 +608,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Java/Java-collections.org/" title="Java collections.org" class="md-nav__link">
-      Java collections.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-core_java.org/" title="Java core java.org" class="md-nav__link">
-      Java core java.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-core_platform.org/" title="Java core platform.org" class="md-nav__link">
-      Java core platform.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-database_with_JDBC.org/" title="Java database with JDBC.org" class="md-nav__link">
-      Java database with JDBC.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-design_patterns_creational.org/" title="Java design patterns creational.org" class="md-nav__link">
-      Java design patterns creational.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-generics.org/" title="Java generics.org" class="md-nav__link">
-      Java generics.org
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Java/Java-overview_of_the_java_world.org/" title="Java overview of the java world.org" class="md-nav__link">
-      Java overview of the java world.org
+    <a href="../../Java/Generics/" title="Generics" class="md-nav__link">
+      Generics
     </a>
   </li>
 
@@ -1290,6 +1302,105 @@
 
 <span class="k">with</span> <span class="n">topic</span><span class="o">.</span><span class="n">get_sync_producer</span><span class="p">()</span> <span class="k">as</span> <span class="n">producer</span><span class="p">:</span>
     <span class="n">producer</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+
+<p>A simple Java produer -- coded by me for a test check on my laptop. Uses the weather data with 
+header where it forms the csv.</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">A simple example where we pick data from file (csv), the file has a header.</span>
+<span class="cm">The file is read and we create a map where key is the header and value</span>
+<span class="cm">is each row in the file, this map can then be converted to JSON easily.</span>
+<span class="cm"> */</span>
+
+<span class="kn">import</span> <span class="nn">com.google.gson.Gson</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.KafkaProducer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.Producer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.ProducerRecord</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">FileProcessor</span><span class="p">{</span>
+
+    <span class="n">String</span> <span class="n">fileName</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">FileProcessor</span><span class="p">(</span><span class="n">String</span> <span class="n">fileName</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">fileName</span> <span class="o">=</span> <span class="n">fileName</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">static</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">toMap</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">keys</span><span class="p">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">values</span><span class="p">){</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">keys</span><span class="p">.</span><span class="na">length</span> <span class="o">-</span><span class="mi">1</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span> <span class="n">values</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+        <span class="p">}</span>   
+        <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">boolean</span> <span class="nf">run</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">readAllLines</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// If no lines in file.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lines</span><span class="p">.</span><span class="na">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="n">String</span><span class="o">[]</span> <span class="n">header</span> <span class="o">=</span> <span class="n">lines</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span><span class="p">.</span><span class="na">subList</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">lines</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">line</span> <span class="p">:</span> <span class="n">lines</span><span class="p">){</span>
+            <span class="n">String</span><span class="o">[]</span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gson</span><span class="p">();</span>
+            <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">dataMap</span> <span class="o">=</span> <span class="n">toMap</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+            <span class="n">String</span> <span class="n">dataJSON</span> <span class="o">=</span> <span class="n">gson</span><span class="p">.</span><span class="na">toJson</span><span class="p">(</span><span class="n">dataMap</span><span class="p">);</span>
+            <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="n">dataMap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;Site Num&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">dataMap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+            <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="n">postToKafka</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">dataJSON</span><span class="p">);</span>
+            <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">postToKafka</span><span class="p">(</span><span class="n">String</span> <span class="n">key</span><span class="p">,</span> <span class="n">String</span> <span class="n">data</span><span class="p">){</span>
+        <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+        <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
+        <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;acks&quot;</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>
+        <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;key.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+        <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;value.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+
+        <span class="n">Producer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaProducer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
+
+        <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span> <span class="n">ProducerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;weatherData&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">));</span>
+        <span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main8</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">){</span>
+        <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+        <span class="n">FileProcessor</span> <span class="n">fp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileProcessor</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">fp</span><span class="p">.</span><span class="na">run</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
                 
               

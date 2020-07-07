@@ -133,3 +133,42 @@ class MyGenericList<T extends Comparable & Cloneable>{
 
 }
 ```
+
+You can also have generic methods in non generic classes as shown below and can apply certain constraints on them.
+
+
+```java
+public class Utils{
+    public static <T extends Comparable<T>> max(T first, T last){
+        // do your thing
+    }
+}
+```
+
+You can have multiple type parameters for generics as shown below.
+
+```java
+public static <K, V> void print(K key, V value){
+
+}
+```
+
+You can do the same with classes
+
+```java
+public class KeyValuePair<K, V>{
+    public K key;
+    public V value;
+
+    public KeyValuePair(K key, V value){
+        this.key = key;
+        this.value = value;
+    }
+}
+```
+
+Generics wildcards
+
+```java
+TBD
+```
